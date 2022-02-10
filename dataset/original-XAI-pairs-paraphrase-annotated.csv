@@ -1,0 +1,370 @@
+Phrase A;Phrase B;Score
+What do different features contribute?;How does it weigh different features?;4.333333333333333
+Show me what the system would predict on [another instance].;What would the system predict for [a different instance]?;5.6
+What was the result when other people used the system?;What are the results of other people using the system?;5.0
+What should be changed about the system?;How to improve the system?;4.0
+Is feature X used or not used for the predictions?;Is feature X used to make the predictions?;5.0
+What kind of data does the system learn from?;What kind of data is the machine learning system supposed to be able to handle effectively?;2.3333333333333335
+What kind of instance gets a different prediction?;What are the conditions for the same prediction?;3.3333333333333335
+How often does the system make mistakes?;When is the system incorrect?;4.0
+What is the system's overall logic?;Which factors are included in the reasoning process?;4.0
+How to change this feature to get a different prediction?;How should this feature change for this instance to get a different prediction?;5.666666666666667
+What are the biases of the data?;What was the data skew like?;4.333333333333333
+What features does the system consider?;Which attributes are used by the model?;5.666666666666667
+What would happen if we used this rule?;Why does it not use this rule?;2.6666666666666665
+Does this model use this feature X?;Is feature X used or not used for the predictions?;5.0
+What are the mechanisms that will drive the learning?;Why will the system adapt over time?;3.0
+What features does the system consider?;Which features does it take into account?;6.0
+How high do feature one values have to be to still be predicted the same thing?;In what situations is the system likely to be incorrect?;1.3333333333333333
+What features of this instance lead to the system's prediction?;Why did the system give this prediction?;4.0
+What is the highest feature one can have to still get the same prediction?;Give me the highest feature that would give me this prediction.;5.0
+Why did you ignore that data?;Why does it not use this data?;4.333333333333333
+What factors will influence the model's behavior?;Why will the system change over time?;1.3333333333333333
+What is the scope of change permitted to still get the same prediction?;What is the smallest feature one can have to still get the same result?;3.0
+What is the highest feature one can have to still get the same prediction?;Which features will result in the same prediction and which ones won't?;2.3333333333333335
+What is the sample size?;How many instances are there like this?;3.0
+What would the prediction of the class change to if a data point had A value of this attribute?;What would the system predict if this instance changes to A?;3.3333333333333335
+How accurate are the predictions?;How often does the system get it wrong?;4.0
+What algorithm is being used?;What kind of algorithm is used?;5.666666666666667
+How were the ground-truth produced?;What biases does the data have?;1.3333333333333333
+Why are instance A and instance B given the same prediction?;What are the reasons for the same prediction of A and B?;5.666666666666667
+How does input X impact the model?;What rules does it use?;1.3333333333333333
+For which kind of instances does this prediction hold?;What are the necessary features present or absent to guarantee this prediction?;3.6666666666666665
+How will this result vary over time?;What will the system drift over time?;3.3333333333333335
+What features does the system consider?;Which attributes does the model use?;6.0
+What does using this feature achieve?;Why does it use this feature?;3.6666666666666665
+How precise are the predictions?;How accurate is this prediction?;4.0
+How will the system improve over time?;How does the system become better over time?;5.666666666666667
+Give me the reason for this prediction.;What features of this instance lead to the system's prediction?;4.333333333333333
+How will the system adapt over time?;How do I know the system is improving?;3.3333333333333335
+What is the output of the system?;What does the system output mean?;3.6666666666666665
+How precise are the predictions?;What is the reliability of this result?;4.333333333333333
+How did you arrive at this number?;How is this instance given this prediction?;5.0
+Give me an instance which is similar to this.;How much data like this is the system trained on?;2.3333333333333335
+How were the ground-truth produced?;In which way were the ground-truth created?;6.0
+What are the most predictive rules?;What are the top rules it uses?;5.0
+What kind of data does the system learn from?;Which data type is the model trained on?;5.333333333333333
+What is the definition of ML terminology?;What does ML terminology mean?;5.333333333333333
+What type of output does the system give?;What kind of output does the system give?;5.666666666666667
+What is the minimum value of feature one must have to still get this prediction?;What is the lowest feature one can have to still get the same prediction?;4.666666666666667
+What will the system adapt over time?;How will the model change over time?;4.0
+How is the output used for other system component(s)?;What is the output used for?;4.333333333333333
+What will the system change over time?;What will happen to the system over time?;4.0
+What is the reason for this prediction?;Why will the system adapt over time?;1.0
+How were the ground truth given?;How were the ground-truth produced?;4.666666666666667
+What are the drawbacks of this dataset?;What are the limitations of the data?;5.0
+Where did you get this data from?;What is the source of the data?;5.666666666666667
+Is the system's performance good enough for [A]?;What percentage of predictions are correct?;1.6666666666666667
+What are the conditions for the same prediction?;What is the scope of change permitted to still get the same prediction?;4.0
+What kind of data does the system learn from?;What kind of data does it learn from?;6.0
+What do you mean by ML terminology?;What does ML terminology mean?;5.333333333333333
+For which kind of instances does this prediction hold?;What kind of instance gets a different prediction?;3.0
+What is the scope of the system's capability?Can it do [A]?;Show me the scope of [the model's] work.;4.0
+How should I interpret this result in terms of bias?;What are the biases of the data?;4.333333333333333
+What are the top features it uses?;Which features are considered by the model?;3.0
+What kind of instance gets this prediction?;What is the type of instance getting this result?;5.6
+Explain the future behavior of the system.;Why will the system change over time?;2.0
+What kind of instance gets a different prediction?;Which instances would get a different result?;5.0
+How will the accuracy/precision/recall improve?;How will the system improve over time?;4.666666666666667
+What is the scope of the system's capability?Can it do [A]?;What/where is the data from?;1.3333333333333333
+Why does it not use this feature?;Why did you ignore this feature?;5.666666666666667
+What is the system's overall logic?;What is the system's overall reasoning?;5.333333333333333
+How did you get this result?;How is this instance given this prediction?;5.333333333333333
+What is the weakness of the data?;What are the limitations of the data?;5.0
+Why are instances A and B given different predictions?;Why are A and B predicted differently?;6.0
+Why is this instance predicted P instead of Q?;Why is this instance P rather than Q?;4.666666666666667
+What are the top features it uses?;What are the input features?;3.0
+How will the model change over time?;What will the system change over time?;3.3333333333333335
+What is the probability of the wrong classification?;In what situations is the system likely to be incorrect?;3.0
+Which algorithm does X use?;What kind of algorithm is used?;4.666666666666667
+How accurate are the predictions?;What is the probability of this prediction.;3.0
+What are the rules that make this prediction?;How are the parameters set?;1.6666666666666667
+How is the output used for other system component(s)?;How do other system components use the output?;4.666666666666667
+Give me the list/names of top features.;Is feature X used or not used for the predictions?;2.0
+How will the system adapt over time?;How does the system learn to adapt?;4.333333333333333
+How should this feature change for this instance to get a different prediction?;What should I change in this instance to get a different prediction?;5.2
+What kind of data does the system learn from?;From which kind of data does the system learn?;5.666666666666667
+What are the conditions that must be met to guarantee this result?;What are the necessary features present or absent to guarantee this prediction?;4.333333333333333
+What features of this instance lead to the system's prediction?;Which features lead to the prediction?;5.333333333333333
+What is the reason for adaptation?;Why will the system adapt over time?;5.666666666666667
+Where did the data come from?;What is the source of the data?;5.666666666666667
+Why does it use this data?;Was this data selected?;3.0
+How does the system weigh different features?;How does it weigh different features?;6.0
+How does it weigh different features?;How does the model prioritize features?;5.0
+How will the system performance improve over time?;How will the system improve over time?;5.666666666666667
+What will cause the system to learn?;Why will the system adapt over time?;3.6666666666666665
+Why is this instance given this prediction?;Why do A and B have the same label?;1.6666666666666667
+Why do you use this feature?;Why does it use this feature?;5.666666666666667
+What features of this instance lead to the system's prediction?;What features are related to the prediction?;4.666666666666667
+How were the labels produced?;Where did the labels come from?;5.0
+What are the top rules it uses?;What are the most salient rules that it uses?;5.0
+How were the labels generated?;How were the labels produced?;6.0
+What is the lowest feature one can have to still get the same prediction?;What is the smallest feature one can have to still get the same result?;5.0
+Where did the data come from?;What data is the system not using?;1.0
+What is the system's overall logic?;What is the reasoning process behind this result?;3.0
+What is the importance of each feature?;How does it weigh different features?;4.0
+How does this result change over time?;What will the system drift over time?;3.3333333333333335
+How accurate are the predictions?;What percentage of predictions are correct?;5.0
+What does the system use to make predictions?;How does the system make predictions?;4.0
+In what conditions will this prediction be different?;What is the scope of change permitted to still get the same prediction?;3.6666666666666665
+How often does the system make mistakes?;How often does it get the wrong prediction?;5.333333333333333
+What are the weights of the parameters?;How are the parameters set?;4.333333333333333
+Where is the system not effective?;What are the limitations of the system?;4.333333333333333
+How is not label A?;How is this instance not predicted A?;4.666666666666667
+How certain is the system about this prediction?;How reliable are the predictions?;3.6666666666666665
+How were the ground-truth produced?;What was the source of the ground-truth?;5.0
+What is the scope of its capability?;What is the scope of the system's capability?Can it do [A]?;4.333333333333333
+Show me the scope of [the model's] work.;What does the system output mean?;2.0
+Which feature is given importance?;How does it weigh different features?;4.333333333333333
+Why is this instance predicted P instead of Q?;Why Q is not predicted but P?;5.666666666666667
+How are the parameters set?;How do the parameters influence the prediction?;1.6666666666666667
+What does this output represent?;What does the system output mean?;5.0
+What characteristic of this data must be present or absent?;What are the necessary features present or absent to guarantee this prediction?;4.666666666666667
+What would the system predict if this instance changes to A?;What do you think about this instance?;1.6666666666666667
+How can I best utilize the output of the system?;What would be best to use the output for?;5.333333333333333
+What is the reason for this prediction?;How is this instance given this prediction?;4.666666666666667
+How should this Instance change to get a different prediction?;What should I change in this instance to get a different prediction?;5.666666666666667
+What type of model is this?;What kind of algorithm is used?;3.3333333333333335
+Which feature is the model using?;Why does it use this feature?;3.3333333333333335
+What kind of mistakes is the system likely to make?;How to best avoid the mistakes made by the system.;3.6666666666666665
+What is the highest feature one can have to still get the same prediction?;What feature has the largest possible value for which one can still receive the same result?;5.333333333333333
+Why are instance A and B predicted differently?;Why is this instance predicted A instead of B?;2.3333333333333335
+What features does the system consider?;Which features are considered by the model?;5.333333333333333
+What is the justification for using that rule?;Why does it use this rule?;5.333333333333333
+How accurate are the predictions?;How often is the system correct?;5.333333333333333
+How can I best utilize the output of the system?;How can I make best use of this output?;5.333333333333333
+How are the predictions made?;How does the system make predictions?;5.666666666666667
+What are the top features it uses?;Give me the list/names of top features.;5.666666666666667
+What features of this instance lead to the system's prediction?;How was this instance given this value/category?;4.333333333333333
+Why is this instance predicted P instead of Q?;Why the result for this instance is P instead of Q?;5.666666666666667
+How often does the system make mistakes?;How often does the system get it wrong?;5.333333333333333
+What are the weaknesses of the system?;What are the limitations of the system?;5.333333333333333
+What kind of output does the system give?;What is the kind of output?;5.0
+How are the weights of the parameters set?;How are the parameters set?;4.333333333333333
+What are the top rules it uses?;What are the most important rules?;5.666666666666667
+What would the system predict if this feature of the instance changes to A?;What would the prediction of the class change to if a data point had A value of this attribute?;5.0
+Give me the reason why the system will improve over time.;Why will the system improve over time?;5.666666666666667
+What is the highest feature one can have to still get the same prediction?;For this prediction what is/are the highest value(s) of feature(s) which always leads to this prediction?;5.0
+How accurate are the predictions?;What is the confidence score of this prediction.;5.333333333333333
+How is this instance given this prediction?;Which data led to this prediction?;4.0
+What would the system predict if this instance changes to A?;What would happen if this instance changes to A?;5.333333333333333
+Which instance type gets this prediction?;What kind of instance gets this prediction?;5.666666666666667
+What kind of instance gets a different prediction?;What kind of instance gets a different result?;5.333333333333333
+How can I best utilize the output of the system?;How is the output used by other component(s)?;3.6666666666666665
+Why are instance A and instance B given the same prediction?;How are these instances the same?;4.333333333333333
+Under what conditions will this prediction not change?;What is the scope of change permitted to still get the same prediction?;5.333333333333333
+How should this Instance change to get a different prediction?;What should be the value of this feature in order to change the prediction;4.666666666666667
+What kind of algorithm is used?;What kind of algorithm is this?;5.0
+What was type of data used?;What kind of data does the system learn from?;5.333333333333333
+What is the sample size?;How many items are considered in this result?;4.666666666666667
+What is the lowest feature one can have to still get the same prediction?;For a given prediction, what is the highest value of feature one can have?;2.3333333333333335
+How is label A not applied for this instance?;How is this instance not predicted A?;4.666666666666667
+What kind of data is the system not using?;What data is the system not using?;5.0
+How should this feature change for this instance to get a different prediction?;What needs to change for this prediction to be different?;5.0
+How is the current instance given a particular prediction?;How is this instance given this prediction?;5.0
+How precise are the predictions?;What is the precision of the prediction?;5.333333333333333
+How were the ground truth given?;How much data like this is the system trained on?;2.0
+Why will the system change over time?;Why will the model change over time?;5.333333333333333
+Under which circumstances will the model be wrong?;In what situations is the system likely to be incorrect?;5.666666666666667
+What kind of mistakes is the system likely to make?;How accurate is the prediction?;3.3333333333333335
+What do different features contribute?;How does feature X impact its predictions?;3.3333333333333335
+What is the scope of the system's capability?Can it do [A]?;What would be best to use the output for?;1.6666666666666667
+Why are instance A and instance B given the same prediction?;What makes this instance different from the others?;3.0
+How will the prediction change over time?;How will the system drift over time?;5.0
+What data is the model NOT using?;What data is the system not using?;5.666666666666667
+What rule was used for this prediction?;Why does it use this rule?;2.6666666666666665
+What features of this instance lead to the system's prediction?;Which field of this instance led to this prediction?;5.333333333333333
+Why is this instance predicted P instead of Q?;Why does this instance receive P as a prediction instead of Q?;5.0
+How is label A not applied for this instance?;What is the highest feature value one can have to still get the same prediction?;1.3333333333333333
+What does this predict?;What does the system output mean?;2.6666666666666665
+Why are instance A and B predicted differently?;Why are instances A and B given different predictions?;5.666666666666667
+What will the system do with new data?;How will the system change over time?;3.6666666666666665
+What data is the system not using?;What data isn't being used by the model?;5.666666666666667
+How often does the system make mistakes?;How accurate is the system?;4.666666666666667
+In what situations is the system likely to be correct?;When is the system likely to be correct?;5.333333333333333
+How reliable are the predictions?;How sure are you about this prediction?;5.0
+Is the system's performance good enough for [A]?;Do you consider the system's performance as good enough for [A]?;5.333333333333333
+How precise are the predictions?;How accurate is the prediction?;5.333333333333333
+How is the result B for this instance possible?;How is this instance not predicted A?;3.4
+What are the biases of the data?;Which factors limit the data?;3.3333333333333335
+What is the scope of the system's capability?Can it do [A]?;Can this system do [A]?;5.0
+How should this feature change for this instance to get a different prediction?;What should be the value of this feature in order to change the prediction;5.333333333333333
+Tell me how the system improves over time.;What will the system improve over time?;4.0
+Why will the result improve over time?;Why will the system improve over time?;5.0
+In what situations is the system likely to be correct?;Where is the system likely to be valid?;5.0
+How will the system adapt over time?;How can we monitor the performance of the system over time?;3.3333333333333335
+How can I best utilize the output of the system?;What should I do with the output?;5.0
+Are the predictions accurate?;How reliable are the predictions?;5.0
+Why is this instance predicted P instead of Q?;Why prediction P is the result for this instance?;4.666666666666667
+Why are instances A and B given different predictions?;Why do you give different prediction for A and B?;5.333333333333333
+What are the top features it uses?;Which features are most used?;5.333333333333333
+What would happen if I use this rule?;Why does it not use this rule?;3.3333333333333335
+What is the sample size?;How many items are used to make this prediction?;4.666666666666667
+How would the system predict on [another instance]?;What would the system predict for [a different instance]?;5.333333333333333
+How does feature X impact its predictions?;Why is input X important to this prediction?;4.0
+What feature(s) can be removed from the example without changing the prediction?;What is the highest feature value one can have to still get the same prediction?;3.0
+Why is this instance predicted P instead of Q?;Why Q is not the result for this instance?;5.0
+What are the required features for this prediction?;What are the necessary features present or absent to guarantee this prediction?;5.0
+How does feature X impact its predictions?;What does feature X impact regarding predictions?;5.0
+Why is this instance predicted P instead of Q?;Why is this instance not a Q but a P?;5.666666666666667
+How do you set the parameter values?;How are the parameters set?;5.666666666666667
+What kind of data is the system not using?;How were the labels produced?;1.6666666666666667
+How does feature X impact its predictions?;How does input X impact the model?;4.0
+How often does the system make mistakes?;How sure are you about this prediction?;3.3333333333333335
+How should this feature change for this instance to get a different prediction?;How should this feature change for this instance to get a different result?;5.333333333333333
+What is the interpretation of this result?;What does the system output mean?;4.666666666666667
+What is the lowest feature one can have to still get the same prediction?;How much lower can the value of the feature be than this one and still give the same prediction?;4.666666666666667
+What are the rules that make this prediction?;What rules does it use?;5.0
+When is the system likely to be wrong?;In what situations is the system likely to be correct?;3.6666666666666665
+Why are instances A and B given different predictions?;Why the result for this instance is A instead of B?;2.3333333333333335
+What are the top rules it uses?;What algorithm is being used?;1.6666666666666667
+What data is the system not using?;What kind of data is not used?;5.333333333333333
+Give me the features that need to be present or absent to deliver this prediction;What are the necessary features present or absent to guarantee this prediction?;5.666666666666667
+Why will the system change over time?;What changes will happen in time?;2.6666666666666665
+How come this instance was given this prediction?;Why is this instance given this prediction?;5.333333333333333
+How to improve the model training?;How to improve the system?;4.666666666666667
+How are the parameters set?;What are the parameters of this model?;3.6666666666666665
+How is this instance given this prediction?;Which factors lead to this result?;4.333333333333333
+What is the system getting better at?;What will the system change over time?;3.3333333333333335
+What are the results of other people using the system?;Give me the results from other users.;5.333333333333333
+What data is the system not using?;Which kind of data is not being used?;5.333333333333333
+Why do instances A and B get different predictions?;Why are instances A and B given different predictions?;5.0
+Why does the model make this choice?;Why does it use this rule?;3.6666666666666665
+How many instances are there like this?;How much data like this is the system trained on?;4.333333333333333
+What is the reason for this choice?;Why does it use this rule?;3.3333333333333335
+How should this Instance change to get a different prediction?;What are the reasons for incorrect classification?;1.6666666666666667
+How are the predictions made?;What kind of algorithm is used?;4.666666666666667
+What will the system change in the future?;What will the system change over time?;5.333333333333333
+How can I best utilize the output of the system?;What use is the output of this system?;4.666666666666667
+How high do feature values have to be to still be predicted the same thing?;What is the highest feature value one can have to still get the same prediction?;5.0
+What/where is the data from?;What is the source of the data?;5.666666666666667
+What kind of mistakes is the system likely to make?;What kind of errors are likely to happen?;5.666666666666667
+What would the system predict if this feature of the instance changes to A?;How does the system make this prediction?;1.6666666666666667
+What is the highest feature one can have to still get the same prediction?;What feature(s) can be removed from the example without changing the prediction?;3.0
+What is the highest feature one can have to still get the same prediction?;What are the required features for this prediction?;2.6666666666666665
+How does it know to apply this rule?;Why does it use this rule?;5.0
+What are the reasons for incorrect classification?;In what situations is the system likely to be incorrect?;4.333333333333333
+What are the necessary conditions for this result?;What are the necessary features present or absent to guarantee this prediction?;4.666666666666667
+How was this prediction made?;How is this instance given this prediction?;6.0
+What would the system predict if this feature of the instance changes to A?;If the feature of the instance changes to A  what will the system predict?;5.666666666666667
+Which parts of the system improve over time?;What will the system improve over time?;4.0
+How much is feature X used for the predictions?;Is feature X used or not used for the predictions?;4.333333333333333
+How is the output used for other system component(s)?;What is the nature of this output?;2.0
+What is the scope of the system's capability?Can it do [A]?;How much does this system know?;3.6666666666666665
+What kind of data does the system learn from?;How many items are used to make this prediction?;2.0
+What features of this instance lead to the system's prediction?;What data element was used to make this prediction?;4.0
+What features of this instance lead to the system's prediction?;What causes the system to give this prediction?;4.333333333333333
+What is the reason given for this prediction?;What features of this instance lead to the system's prediction?;4.0
+Is there performance data published for this model?;What are the results of other people using the system?;3.3333333333333335
+Why is this data used?;Why does it use this data?;5.333333333333333
+Do you consider the system's performance as good enough for [A]?;How reliable are the predictions?;2.0
+What would have happened if I used this rule?;Why does it not use this rule?;3.6666666666666665
+What is the reason that the system will improve over time?;Why will the system improve over time?;5.666666666666667
+How does the system learn to change?;How will the system adapt over time?;4.333333333333333
+What are the limitations of the data?;Where did the labels come from?;1.3333333333333333
+How is this prediction made?;How does the system make predictions?;5.333333333333333
+What kind of mistakes is the system likely to make?;What could go wrong?;4.666666666666667
+What are the limitations of the data?;Which factors limit the data?;4.333333333333333
+How come this instance was given this class?;Why is this instance given this prediction?;5.333333333333333
+What will the system adapt over time?;What will the model learn to do?;3.6666666666666665
+How will this system improve over time?;Why will the system improve over time?;3.6666666666666665
+What are the necessary features required for this result?;What are the necessary features present or absent to guarantee this prediction?;4.666666666666667
+How should this Instance change to get a different prediction?;How can I modify this instance to get a different result?;5.333333333333333
+What is the confidence on the prediction?;How reliable are the predictions?;4.0
+Where does the learning happen?;What will the system improve over time?;1.6666666666666667
+What kind of output does the system give?;What is the nature of this output?;4.666666666666667
+How was this instance given this prediction?;How is this instance given this prediction?;5.666666666666667
+What features of this instance lead to the system's prediction?;What should I change in this instance to get a different prediction?;3.0
+What will be the change in this system after some time?;How will the system change over time?;4.333333333333333
+Why are instances A and B given different predictions?;Why is A predicted to produce X  and not B?;2.6666666666666665
+When is an instance predicted differently?;What kind of instance gets a different prediction?;4.0
+For a given prediction, what is the highest value of feature one can have?;What is the highest feature value one can have to still get the same prediction?;5.333333333333333
+Please describe the conditions under which this prediction might be incorrect.;In what situations is the system likely to be incorrect?;5.333333333333333
+Give me an overall explanation of the system.;What is the system's overall logic?;5.333333333333333
+How does it weigh different features?;What are the features of input data?;1.6666666666666667
+What features of this instance lead to the system's prediction?;What are the features of this instance?;1.6666666666666667
+What kind of mistakes is the system likely to make?;Summarize some of the types of errors that might be made by this system.;5.0
+What are the results of other people using the system?;Which field of this instance led to this prediction?;1.3333333333333333
+How can you explain this result?;Why are instances A and B given different predictions?;1.6666666666666667
+What features does the system consider?;Give me an overall explanation of the system.;1.3333333333333333
+What is the source of the data?;Give me the results from other users.;1.3333333333333333
+How do you determine these parameters?;How are the parameters set?;4.333333333333333
+In what situations is the system likely to be correct?;Under what conditions will the prediction be true?;4.666666666666667
+Why is this data useful?;How is the output used for other system component(s)?;1.3333333333333333
+What is the lowest feature one can have to still get the same prediction?;What is the highest features one can have to still get the same prediction?;1.6666666666666667
+Give me the top rules;What are the top rules it uses?;5.666666666666667
+Why does it not use this feature?;Why is this feature not used?;6.0
+What would the system predict if this feature of the instance changes to A?;What would happen if this instance changes to A?;5.0
+How does the system improve itself?;What will the system improve over time?;3.0
+Why are instance A and instance B given the same prediction?;What is the same about these instances?;3.0
+How precise are the predictions?;What are the weaknesses of the system?;1.6666666666666667
+How were the labels made?;How were the labels produced?;5.333333333333333
+What is the performance of the model?;What are the results of other people using the system?;2.0
+Show me the scope of [the model's] work.;What would the system predict for [a different instance]?;1.0
+Is the system's performance good enough for [A]?;How satisfied are you with the system's performance for [A]?;4.0
+What features of this instance lead to the system's prediction?;Which feature of this object led to this prediction?;5.0
+What would the system predict if this feature of the instance changes to A?;If the value of this feature changes to A  what will the system predict?;5.666666666666667
+What kinds of instances are predicted for?;What kind of instance gets this prediction?;2.3333333333333335
+How much data was used to make this prediction?;How much data like this is the system trained on?;4.0
+What is the lowest feature one can have to still get the same prediction?;At what feature level does this prediction happen?;3.3333333333333335
+Why did they make that prediction about this instance?;How is this instance given this prediction?;4.333333333333333
+What will the system adapt over time?;What is the system adapting to?;3.3333333333333335
+Why did the model not use this data?;Why does it not use this data?;5.333333333333333
+What is the scope of change permitted to still get the same prediction?;What is the range of change allowed before the prediction changes?;5.333333333333333
+What would the system predict if this instance changes to A?;What would be the new prediction if this instance changes to A?;5.333333333333333
+Under which circumstances will the model be wrong?;What are the limitations of the system?;4.0
+How will the system become more accurate?;What will the system adapt over time?;3.3333333333333335
+What features did it use?;What are the top features it uses?;4.0
+What are the flaws in the data?;What are the biases of the data?;4.0
+What features of this instance lead to the system's prediction?;Which data led to this prediction?;2.3333333333333335
+What is the sample size?;How many did they sample?;5.333333333333333
+What kind of data is used?;Why does it use this data?;1.3333333333333333
+Why is this instance predicted P instead of Q?;Why this instance has class P but Q does not?;3.6666666666666665
+How is feature X used for your prediction?;Is feature X used or not used for the predictions?;5.0
+What kind of errors are likely to happen?;In what situations is the system likely to be incorrect?;4.0
+Why is this instance predicted P instead of Q?;Why is not label Q?;5.0
+Why is this instance predicted P instead of Q?;Why P is predicted instead of Q?;5.333333333333333
+What are the limitations of the data?;What are the weaknesses of the data?;5.333333333333333
+Show me what the system would predict on [another instance].;How does it weigh different features?;1.3333333333333333
+Why is A predicted A but B predicted B?;Why are instances A and B given different predictions?;5.0
+Which field is the reason for the prediction?;What features of this instance lead to the system's prediction?;5.0
+Why did it give this prediction?;What rules does it use?;3.3333333333333335
+How much experience with this type of data does the system have?;How much data like this is the system trained on?;5.333333333333333
+Why is A predicted to produce X but B to produce Y?;Why are instances A and B given different predictions?;5.0
+Why did you chose not to use this rule?;Why does it not use this rule?;4.0
+What features of this instance lead to the system's prediction?;Which part of the data lead to the prediction?;4.0
+What features of this instance lead to the system's prediction?;What are the important properties of this instance that led to the prediction?;5.0
+Which dataset is used?;Why does it use this data?;2.3333333333333335
+What is the system's overall logic?;Does this model use this feature X?;1.6666666666666667
+How to improve the model?;How to improve the system?;5.666666666666667
+What features of this instance lead to the system's prediction?;What characteristics of this instance led you to this prediction?;5.333333333333333
+How will the system react to new data?;How will the system change over time?;3.0
+Give me the top rules;How does it weigh different features?;2.0
+What would the system predict if this instance changes to A?;How accurate is the system?;1.3333333333333333
+What was type of data used?;What is the source of the data?;3.3333333333333335
+What will happen to the system in the future?;How will the system change over time?;5.0
+What was the data used to create these labels?;How were the labels produced?;3.3333333333333335
+What are the biases of the data?;What biases does the data have?;5.333333333333333
+Which features does the system use?;How does it weigh different features?;2.0
+What makes this instance different from the others?;Why is this instance given this prediction?;3.6666666666666665
+How A is not the result for this instance?;How is this instance not predicted A?;6.0
+What kind of mistakes is the system likely to make?;What should I be aware of while using this system?;4.666666666666667
+What kind of output does the system give?;What does this output represent?;2.3333333333333335
+What sort of constraints are there on the data?;What are the limitations of the data?;4.666666666666667
+How was this instance given this value/category?;How is this instance given this prediction?;5.333333333333333
+What must I do to improve the system?;How to improve the system?;5.666666666666667
+How are the weights of the parameters set?;How does the system make predictions?;2.0
+What is the purpose of using this feature?;Why does it use this feature?;5.333333333333333
+Give me an example of the system drifting.;How will the system drift over time?;4.333333333333333
+Which item gets this prediction?;What kind of instance gets this prediction?;5.0
+How is this result achieved?;How does the system make predictions?;5.0
+Which feature is given importance?;How is this instance not predicted A?;1.3333333333333333
+Why is this instance predicted P instead of Q?;Give me the reason for this prediction.;3.0
+How should this Instance change to get a different prediction?;How should the instance be changed to get a different (better or worse) prediction?;5.0
+What rules does it use to make this prediction?;What rules does it use?;5.0
+Give me the reason for using this data.;Why does it use this data?;5.666666666666667
+How is feature X used for predictions?;How does feature X impact its predictions?;5.0
+How were the labels created?;How were the labels produced?;5.666666666666667
+How is the output used by other component(s)?;How is the output used for other system component(s)?;5.0
+Why are instance A and instance B given the same prediction?;Why do A and B have the same label?;5.666666666666667
+What are the rules that generated this prediction?;What rules does it use?;5.0
