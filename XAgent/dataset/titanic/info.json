@@ -1,0 +1,1 @@
+{"cat_features": ["Pclass", "Age", "Embarked", "Title", "Deck"], "num_features": ["Age", "Fare", "Family_Size"], "predict_prompt": ["Unfortunately, this person will die", "Congrats, you will survive"]}

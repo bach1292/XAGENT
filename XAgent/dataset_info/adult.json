@@ -1,0 +1,8 @@
+{"name": "adult",
+  "target_column": "income",
+  "cat_features": [],
+  "num_features": ["Age", "Hours per week","Capital Gain", "Capital Loss"],
+  "predict_prompt": ["Your profile is not so good. With this profile, your income will be <=50k", "Your profile looks good. With this profile, your income will be <50k"],
+  "why_ans": "The above graph shows important features for this prediction. The red features increase the income, while the blue features decrease it.",
+  "change_ans": ["income less than 50K", "income more than 50K"]
+}

@@ -1,0 +1,6 @@
+{"name": "titanic",
+  "target_column": "Survived",
+  "cat_features": ["Pclass", "Embarked", "Title", "Deck","Sex"],
+  "num_features": ["Age", "Fare", "Family_Size"],
+  "predict_prompt": ["Unfortunately, you will die for sure. RIP. Better luck next time!", "Congrats, you will survive"],
+  "why_ans": "Look at the graph! Red features increase the survived probability, blue features decrease the chance"}
