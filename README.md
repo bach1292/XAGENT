@@ -1,5 +1,5 @@
 # X-Agent
-This repository contains code and data to reproduce the results in the paper: Talk to the Model: A Framework for Conversational XAI Agents 
+This repository contains code and data to reproduce the results in the paper: Answering XAI questions in a conversational agent setting 
 
 ## Data
 Original data with pairs of paraphrases for XAI and their annotated scores (described in section 3) can be found [here](dataset/original-XAI-pairs-paraphrase-annotated.csv)
