@@ -8,6 +8,9 @@ import openml
 import pandas as pd
 import shap
 import sklearn
+from importlib_resources import files
+import sys
+# sys.path.append('/homes/bach/XAGENT/XAgent/Agent/')
 # from dtreeviz.trees import *
 from openml.tasks import TaskType
 import numpy as np
@@ -19,12 +22,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-from Agent.answer import Answers
-from Agent import utils
+from XAgent.Agent.answer import Answers
+from XAgent.Agent import utils
 from anchor import anchor_tabular
-
 # import the desired library
-from Agent.nlu import NLU
+from XAgent.Agent.nlu import NLU
 
 # import sys
 # sys.stdout = sys.__stdout__
@@ -195,9 +197,12 @@ class Agent:
                          self.df_display_instance, self.predicted_class, self.dataset_anchor, self.clf_anchor)
         return answer.answer(question)
 
+
+
     def get_dataset_info(self, dataset_name: str):
+
         self.intro = ""
-        with open("dataset_info/" + dataset_name + ".json") as f_in:
+        with open(files('dataset_info').joinpath(dataset_name+".json")) as f_in:
             self.data['info'] = json.load(f_in)
         if dataset_name.lower() == "mnist":
             (self.data["X"], self.data["y"]),_ = tf.keras.datasets.mnist.load_data()

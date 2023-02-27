@@ -1,10 +1,10 @@
 import pandas as pd
 import os
 import sys
-
+# sys.path.append('/homes/bach/XAGENT/XAgent/Agent')
 # silence command-line output temporarily
 # sys.stdout, sys.stderr = os.devnull, os.devnull
-
+from importlib_resources import files
 from simcse import SimCSE
 # unsilence command-line output
 
@@ -12,7 +12,7 @@ enabled = True
 class NLU:
     def __init__(self):
         self.model = SimCSE("princeton-nlp/sup-simcse-roberta-large")
-        self.df = pd.read_csv("Agent/Median_4.csv")
+        self.df = pd.read_csv(files("XAgent").joinpath('Median_4.csv'))
         self.model.build_index(list(self.df['Question']))
     def match(self, question):
         threshold = 0.5

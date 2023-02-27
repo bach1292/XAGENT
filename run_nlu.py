@@ -10,6 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
 import time
 import torch
+from importlib_resources import files
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from sklearn.feature_extraction.text import CountVectorizer
@@ -101,7 +102,7 @@ def evaluate(dataloader,model):
     return total_acc / total_count, predicted_labels, true_labels
 def run(model_name = "simcse-dnn", question_set="all"):
     # print(model_name)
-    df = pd.read_csv("Median_4.csv", index_col=0).drop_duplicates()
+    df = pd.read_csv(files("XAgent").joinpath('Median_4.csv'), index_col=0).drop_duplicates()
     if question_set == "xai":
         df = df.loc[df['Label'].isin([5, 6, 8, 11, 12, 15, 17, 20, 64, 67, 68, 69, 71, 73])]
     skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=1292)
