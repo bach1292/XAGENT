@@ -504,7 +504,7 @@
 502,How will the system drift over time?,30
 503,What kind of instance gets this prediction?,13
 504,How does the system make predictions?,7
-505,Give me the reason for this prediction.,71
+505,Give me the reason for this prediction.,69
 506,How should the instance be changed to get a different (better or worse) prediction?,11
 507,What rules does it use?,0
 508,Why does it use this data?,38

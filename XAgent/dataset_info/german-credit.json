@@ -1,0 +1,9 @@
+{"name": "german-credit",
+  "target_column": "Risk",
+  "cat_features": [],
+  "num_features": ["Age", "Job","Credit amount", "Duration"],
+  "predict_prompt": {"good":"you have a good profile",
+                      "bad":"you have a bad profile"},
+  "why_ans": "The above graph shows important features for this prediction. The red features strengthen the profile, while the blue features weaken it.",
+  "change_ans": ["bad profile", "good profile"]
+}

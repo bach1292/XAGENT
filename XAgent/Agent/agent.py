@@ -1,3 +1,9 @@
+import logging
+from datetime import datetime
+# now = datetime.now()
+# dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+# logging.basicConfig(filename=f'{dt_string}.log', level=logging.INFO)
+# logging.info('something happened')
 import openml
 
 import json
@@ -9,13 +15,17 @@ import pandas as pd
 import shap
 import sklearn
 from importlib_resources import files
+import pickle
+from XAgent.Agent import constraints
 import sys
+
 # sys.path.append('/homes/bach/XAGENT/XAgent/Agent/')
 # from dtreeviz.trees import *
 from openml.tasks import TaskType
 import numpy as np
 # print the JS visualization code to the notebook
 # shap.initjs()
+
 import pandas
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
@@ -40,10 +50,17 @@ import PIL
 MODE_INPUT = 0
 MODE_QUESTION = 1
 # MODE_DATASET = 1
+
+
+# datetime object containing current date and time
+
+
 PATH = os.path.dirname(__file__)
+
+conversations = []
 class Agent:
     def __init__(self):
-        self.dataset = None
+        self.dataset = "german-credit"
         self.current_instance = None
         self.clf = None
         self.predicted_class = None
@@ -59,6 +76,7 @@ class Agent:
         self.current_feature = None
         self.dataset_anchor = None
         self.clf_anchor = None
+        self.preprocessor = None
 
     def preprocess_question(self, question):
         for c in self.data['cls_mapping']:
@@ -119,12 +137,20 @@ class Agent:
             l_questions = ["How about your ", "What is your ", "Give me your "]
             for f, fn in zip(self.data["features"], self.data["feature_names"]):
                 self.current_feature = f
+                #categorical features
+                # print(self.data['map'])
+                #map: {'Workclass': {7: ' State-gov', 6: ' Self-emp-not-inc', 4: ' Private', 1: ' Federal-gov', 2: ' Local-gov', 0: ' ?', 5: ' Self-emp-inc', 8: ' Without-pay', 3: ' Never-worked'}
                 if f in self.data['map'].keys():
                     features = ",".join(str(x) for x in self.data['map'][f].values())
+
                     yield (random.choice(l_questions) + str(
-                        fn) + "? Please choose one of the following values: [" + features + "]")
+                        fn) + f"? Please choose one of the following values: [{features}]")
                 else:
-                    yield (random.choice(l_questions) + str(fn) + "? Please give me a number")
+                    if self.dataset == "german-credit" and f == "Job":
+                        yield (random.choice(l_questions) + str(
+                        fn) + "? Please choose one of the following numbers:" + " [0 - unskilled and non-resident, 1 - unskilled and resident, 2 - skilled, 3 - highly skilled]")
+                    else:
+                        yield (random.choice(l_questions) + str(fn) + "? Please give me a number")
                     # self.current_instance[f] = float(text)
             self.mode = MODE_QUESTION
             self.current_feature = None
@@ -134,8 +160,13 @@ class Agent:
             for k, v in self.current_instance.items():
                 display_instance[k] = [v]
             self.df_display_instance = pandas.DataFrame(display_instance)
+            # if self.dataset == "german-credit":
+            #     print(self.df_display_instance)
+            #     predict = self.clf_display.predict(self.preprocessor.transform(self.df_display_instance))[0]
+            # else:
             predict = self.clf_display.predict(self.df_display_instance)[0]
             self.predicted_class = predict
+            print(predict)
             # if predict == False:
             ans = self.data['info']['predict_prompt'][predict]
             # else:
@@ -145,57 +176,76 @@ class Agent:
             # return #self.input_collection(text)
     def collect_instance(self, text):
         f = self.current_feature
-        print(f)
+
+        # print(f)
         if f is None:
             return
+
         if f in self.data['map'].keys():
+            features = ",".join(str(x) for x in self.data['map'][f].values())
+            while(text not in self.data['map'][f].values()):
+                msg = f"The input value is not valid, please choose in one of the following values:{features}"
+                print(msg)
+                logging.log(25,f"Xagent: {msg}")
+                print('\033[91m\033[1mUser:\033[0m')
+                text = input()
+                logging.log(25,f"Xagent: {text}")
             if self.data['info']['name'] == 'adult':
                 self.current_instance[f] = str(" " + str(text))
             else:
                 self.current_instance[f] = str(text)
         else:
             self.current_instance[f] = float(text)
-    def dataset_response(self, text):
+    def dataset_response(self, text, conversations = []):
         if "dataset" in text:
             self.mode = None
             self.dataset = None
             self.current_instance = None
-            return "Please choose a dataset. We only support iris, adult, titanic and mnist at the moment ^^. Please type correctly only one of dataset names that I just listed"
+            ans = constraints.welcome_msg
+            # logging.info(ans)
+            return ans
         if self.mode is None:
-            if text not in ["iris","adult","titanic","mnist"]:
-                return "Please choose one of the datasets: iris, adult, titanic, mnist. Please type correctly only one of dataset names that I just listed"
+            if text not in ["iris","adult","titanic","mnist", "german-credit","yes"]:
+                return constraints.dataset_error_msg
             else:
-                self.dataset = text
+                if text != "yes":
+                    self.dataset = text
                 self.mode = MODE_INPUT
-                self.get_dataset_info(text)
-                print("Wait a min, I need to learn it")
+                self.get_dataset_info(self.dataset)
+                ans = constraints.wait_msg
+                logging.log(25,f"Xagent: {ans}")
+                # conversations.append(f"Xagent: {ans}")
+                print(ans)
                 self.train_model()
                 self.current_instance = {}
                 self.request_iterator = self.request_instance()
-                return "Welcome to " + text + " dataset, are you ready to input the instance?" + self.intro
+                ans = f"Welcome to {self.dataset} dataset, are you ready to input the instance?"
+                # logging.info(ans)
+                return ans
         else:
-            if self.mode == 0:
+            if self.mode == MODE_INPUT:
                 self.collect_instance(text)
                 answer = next(self.request_iterator, None)
             else:
                 question = self.preprocess_question(text)
                 #             print(question)
                 # print(question)
-                question, _ = self.nlu_model.match(question)
+                question = self.nlu_model.match(question, conversations)
                 # print(question)
                 # todo
                 answer = self.answer_question(question)
+            # logging.info(answer)
             return answer
 
     def _is_not_blank(self, s):
         return bool(s and not s.isspace())
 
-    def answer_question(self, question):
+    def answer_question(self, question, conversations=[]):
 
         answer = Answers(self.list_node, self.clf, self.clf_display, self.current_instance, question,
                          self.l_exist_classes, self.l_exist_features, self.l_instances, self.data,
-                         self.df_display_instance, self.predicted_class, self.dataset_anchor, self.clf_anchor)
-        return answer.answer(question)
+                         self.df_display_instance, self.predicted_class, self.dataset_anchor, self.clf_anchor, self.preprocessor)
+        return answer.answer(question, conversations)
 
 
 
@@ -204,6 +254,22 @@ class Agent:
         self.intro = ""
         with open(files('dataset_info').joinpath(dataset_name+".json")) as f_in:
             self.data['info'] = json.load(f_in)
+        if dataset_name.lower() == "german-credit":
+            self.data["X_display"] = self.data["X"]= pd.read_csv('dataset/german-credit/german_credit_data.csv', index_col=0)
+            self.data["y_display"]=  self.data["y"]  = self.data["X_display"]['Risk']
+            self.data["X_display"].drop(['Risk'], axis=1, inplace=True)
+            self.data["classes"] = ["bad", "good"]
+            # print(self.data["y_display"].shape())
+            self.data["cls_mapping"] = {}
+            self.data["features"] = self.data["X_display"].columns.tolist()
+            self.data["feature_names"] = self.data["features"]
+            mapping = {}
+            for f in self.data["features"]:
+                # print(f)
+                if f not in self.data['info']["num_features"]:
+                    mapping[f] = {value : value for value in self.data["X_display"][f].unique()}
+            self.data["map"] = mapping
+            return
         if dataset_name.lower() == "mnist":
             (self.data["X"], self.data["y"]),_ = tf.keras.datasets.mnist.load_data()
             self.data["classes"] = list(range(0,10))
@@ -254,12 +320,13 @@ class Agent:
             # print(self.data["y_display"].shape())
             self.data["X"] = self.data["X_display"].copy(deep=True)
             self.data["y"] = self.data["y_display"].copy(deep=True)
-            self.data["classes"] = iris.target_names
+            self.data["classes"] = list(iris.target_names)
             self.data["cls_mapping"] = {}
             self.data["features"] = features
             self.data["feature_names"] = self.data["features"]
         mapping = {}
         for f in self.data["X_display"].columns:
+            print(type(self.data["X_display"][f].dtype))
             if type(self.data["X_display"][f].dtype) == pandas.core.dtypes.dtypes.CategoricalDtype:
                 mapping[f] = dict(zip(self.data["X_display"][f].cat.codes, self.data["X_display"][f]))
                 self.data["X"][f] = self.data["X_display"][f].cat.codes
@@ -319,6 +386,11 @@ class Agent:
         return cnn
     def train_model(self):
         #         self.clf = sklearn.tree.DecisionTreeClassifier(max_depth=100)
+        if self.dataset == "german-credit":
+            self.clf = pickle.load(open(os.path.join("models/german-credit",'rf_german_credit.pkl'), "rb"))
+            self.clf_display = self.clf
+            self.preprocessor = pickle.load(open(os.path.join("models/german-credit",'preprocessor.pkl'), "rb"))
+            return
         if self.dataset == "mnist":
             self.data['X'] = self.data['X'].astype('float32') /255
             self.data['X'] = np.reshape(self.data['X'] , self.data['X'] .shape + (1,))

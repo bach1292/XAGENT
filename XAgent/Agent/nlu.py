@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import sys
+import  logging
 # sys.path.append('/homes/bach/XAGENT/XAgent/Agent')
 # silence command-line output temporarily
 # sys.stdout, sys.stderr = os.devnull, os.devnull
@@ -9,22 +10,99 @@ from simcse import SimCSE
 # unsilence command-line output
 
 enabled = True
+topk = 45
 class NLU:
     def __init__(self):
         self.model = SimCSE("princeton-nlp/sup-simcse-roberta-large")
-        self.df = pd.read_csv(files("XAgent").joinpath('Median_4.csv'))
+        self.df = pd.read_csv(files("XAgent").joinpath('Median_4.csv'), index_col=0).drop_duplicates()
         self.model.build_index(list(self.df['Question']))
-    def match(self, question):
-        threshold = 0.5
-        match_result = self.model.search(question)
-        if len(match_result) > 0:
-            match_question, score =  self.model.search(question)[0]
-            if score < threshold:
-                match_question = "unknown"
+        print(len(self.df))
+
+    def get_list_questions(self, match_results):
+        labels = []
+        questions = []
+        for question,_ in match_results:
+            label = self.df.query('Question == @question')['Label'].iloc[0]
+            if label not in labels:
+                questions.append(question)
+                labels.append(label)
+        return questions
+
+
+    def match(self, question, conversation = []):
+        threshold = 0.6
+        match_results = self.model.search(question, threshold=threshold)
+        # print("result", match_results)
+        if len(match_results) > 0:
+            match_question, score = match_results[0]
+            return match_question
         else:
-            match_question = "unknown"
-            score = 0
-        return match_question, score
+            match_results = self.model.search(question, threshold=0, top_k=topk)
+            questions = self.get_list_questions(match_results)
+            # print(match_results)
+            ans = "I am not sure what you mean. Can you please choose one of the following questions if there is a match, otherwise, choose 6 to get more questions\n"
+            print(ans)
+            # conversation.append(f"XAgent:{ans}")
+            logging.log(25, f"Xagent: {ans}")
+            for idx, question in enumerate(questions[:5]):
+                msg = f"{idx+1}. {question}"
+                print(msg)
+                ans += f"{msg}\n"
+            msg = "6. See more questions"
+            print(msg)
+            ans += f"{msg}\n"
+            msg = "Please choose the number of the corresponding question"
+            print(msg)
+            ans += f"{msg}\n"
+            conversation.append(f"Xagent: {ans}")
+            logging.log(25, f"Xagent: {ans}")
+            choice = input('\033[91m\033[1mUser:\033[0m')
+            conversation.append(f"User: {choice}")
+            logging.log(25, f"User: {choice}")
+            while(True):
+                if choice.isnumeric():
+                    if int(choice) <= topk+1:
+                        break
+                msg = "It is not a number or not appropiate number. Please choose another number"
+                print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
+                logging.log(25, f"Xagent: {msg}")
+                conversation.append(f"Xagent: {msg}")
+                choice = input('\033[91m\033[1mUser:\033[0m')
+                conversation.append(f"User: {choice}")
+                logging.log(25, f"User: {choice}")
+            # print(choice)
+            # print(str(int(choice) == 6))
+            ans = ""
+            if int(choice) == 6:
+                for idx, question in enumerate(questions[5:15], start=5):
+                    msg = f"{idx+1}. {question}"
+                    print(msg)
+                    ans+=f"{msg}\n"
+                msg = "16. None of them"
+                print(msg)
+                ans += f"{msg}\n"
+                msg = "Please choose again the number of the corresponding question"
+                print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
+                ans += f"{msg}\n"
+                conversation.append(f"Xagent: {ans}")
+                logging.log(25, f"Xagent: {ans}")
+                choice = input('\033[91m\033[1mUser:\033[0m')
+                conversation.append(f"User: {choice}")
+                logging.log(25, f"User: {choice}")
+                if int(choice) == 16:
+                    return "unknown"
+                while (True):
+                    if choice.isnumeric():
+                        if int(choice) < 16:
+                            break
+                    msg = "It is not a number or not appropiate number. Please choose another number"
+                    print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
+                    logging.log(25, f"Xagent: {msg}")
+                    choice = input('\033[91m\033[1mUser:\033[0m')
+                    conversation.append(f"User: {choice}")
+                    logging.log(25, f"User: {choice}")
+            return questions[int(choice) - 1]
+        return "unknown"
     
 
 # class NLU:

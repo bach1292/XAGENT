@@ -180,7 +180,7 @@
 178,What is the scope of the system's capability?Can it do [A]?,51
 179,What features of this instance lead to the system's prediction?,69
 180,What features of this instance lead to the system's prediction?,69
-181,What is the reason given for this prediction?,69
+181,What is the reason given for this prediction?,67
 182,Is there performance data published for this model?,44
 183,Why is this data used?,38
 184,What is the reason that the system will improve over time?,30
@@ -226,7 +226,7 @@
 224,What are the limitations of the data?,25
 225,Why is A predicted A but B predicted B?,73
 226,Which field is the reason for the prediction?,69
-227,Why did it give this prediction?,0
+227,Why did it give this prediction?,67
 228,How much experience with this type of data does the system have?,29
 229,Why is A predicted to produce X but B to produce Y?,73
 230,Why did you chose not to use this rule?,33
@@ -268,7 +268,7 @@
 266,Which attributes are used by the model?,3
 267,Is feature X used or not used for the predictions?,6
 268,Which features does it take into account?,3
-269,Why did the system give this prediction?,69
+269,Why did the system give this prediction?,67
 270,Give me the highest feature that would give me this prediction.,20
 271,Why does it not use this data?,35
 272,What kind of algorithm is used?,1
@@ -436,7 +436,7 @@
 434,Is feature X used or not used for the predictions?,6
 435,How much does this system know?,51
 436,What data element was used to make this prediction?,69
-437,What causes the system to give this prediction?,69
+437,What causes the system to give this prediction?,67
 438,What features of this instance lead to the system's prediction?,69
 439,What are the results of other people using the system?,44
 440,Why does it use this data?,38

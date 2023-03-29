@@ -1,0 +1,15 @@
+welcome_msg = "Welcome. I am a conversational agent and can explain decisions made by machine learning models. Currently, the default dataset is german-credit. Would you like to go on with this dataset? Please type 'yes' to continue, otherwise, type one of the supported dataset in this list [Adult, Iris, Titanic]?"
+dataset_error_msg = "I only support Adult, Iris, Titanic and german-credit dataset, please type a correct name"
+wait_msg = "Wait a min, I need to learn it"
+list_feature_request_msgs = ["How about your ", "What is your ", "Give me your "]
+record_info_msg = "I recorded the information {} "
+predict_msg = "you have {}"
+question_msg = "You can ask my questions about a machine learning learning model, such as: \nWhy was the prediction made? \nWhy was Y not predicted? \nWhat should change in order to make prediction Y? \nPlease type your question."
+select_msg = "Sorry, I don’t understand your question.\n Did you mean any of the below? Please select a number."
+rephrase_question_msg = "Sorry, I don't understand your question. Please rephrase your question."
+no_cf_msg = "Sorry, I couldn't find the way to modify {} to change the label"
+cant_answer_msg = "I am not capable of answering your question. Questions of type {} can currently not be answered by an explainable AI method."
+l_shap_question_ids = [3, 5, 6, 8, 67, 68, 69]
+l_dice_question_ids = [11, 12, 14, 71]
+l_anchor_question_ids = [20, 15, 13]
+l_feature_questions_ids = [6, 12]
