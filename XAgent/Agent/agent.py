@@ -35,6 +35,8 @@ from sklearn.preprocessing import OneHotEncoder
 from XAgent.Agent.answer import Answers
 from XAgent.Agent import utils
 from anchor import anchor_tabular
+
+from XAgent.Agent.constraints import *
 # import the desired library
 from XAgent.Agent.nlu import NLU
 
@@ -168,7 +170,7 @@ class Agent:
             self.predicted_class = predict
             print(predict)
             # if predict == False:
-            ans = self.data['info']['predict_prompt'][predict]
+            ans = self.data['info']['predict_prompt'][predict] + "\n" + question_msg
             # else:
             #     ans = self.data['info']['predict_prompt'][1]
             yield "I recorded the information: [" + instance + "] " + ans
@@ -184,7 +186,7 @@ class Agent:
         if f in self.data['map'].keys():
             features = ",".join(str(x) for x in self.data['map'][f].values())
             while(text not in self.data['map'][f].values()):
-                msg = f"The input value is not valid, please choose in one of the following values:{features}"
+                msg = constraints.repeat_cat_features.format(features)
                 print(msg)
                 logging.log(25,f"Xagent: {msg}")
                 print('\033[91m\033[1mUser:\033[0m')
@@ -230,7 +232,7 @@ class Agent:
                 question = self.preprocess_question(text)
                 #             print(question)
                 # print(question)
-                question = self.nlu_model.match(question, conversations)
+                question = self.nlu_model.match(question, self.data["features"], self.predicted_class, self.current_instance, self.data["classes"]),
                 # print(question)
                 # todo
                 answer = self.answer_question(question)
@@ -255,7 +257,7 @@ class Agent:
         with open(files('dataset_info').joinpath(dataset_name+".json")) as f_in:
             self.data['info'] = json.load(f_in)
         if dataset_name.lower() == "german-credit":
-            self.data["X_display"] = self.data["X"]= pd.read_csv('dataset/german-credit/german_credit_data.csv', index_col=0)
+            self.data["X_display"] = self.data["X"]= pd.read_csv('dataset/german-credit/german_credit_data.csv')
             self.data["y_display"]=  self.data["y"]  = self.data["X_display"]['Risk']
             self.data["X_display"].drop(['Risk'], axis=1, inplace=True)
             self.data["classes"] = ["bad", "good"]
@@ -386,10 +388,15 @@ class Agent:
         return cnn
     def train_model(self):
         #         self.clf = sklearn.tree.DecisionTreeClassifier(max_depth=100)
+        dataset_folder = 'dataset'
         if self.dataset == "german-credit":
             self.clf = pickle.load(open(os.path.join("models/german-credit",'rf_german_credit.pkl'), "rb"))
             self.clf_display = self.clf
             self.preprocessor = pickle.load(open(os.path.join("models/german-credit",'preprocessor.pkl'), "rb"))
+            self.dataset_anchor = utils.load_dataset('german-credit', balance=True, dataset_folder=dataset_folder,
+                                                     discretize=False)
+            self.clf_anchor = sklearn.ensemble.RandomForestClassifier(n_estimators=50, n_jobs=5)
+            self.clf_anchor.fit(self.dataset_anchor.train, self.dataset_anchor.labels_train)
             return
         if self.dataset == "mnist":
             self.data['X'] = self.data['X'].astype('float32') /255
@@ -399,7 +406,6 @@ class Agent:
             self.clf = load_model(os.path.join(PATH,'mnist_cnn.h5'))
             return
         if self.dataset == "adult":
-            dataset_folder = 'dataset'
             self.dataset_anchor = utils.load_dataset('adult', balance=True, dataset_folder=dataset_folder, discretize=False)
 
             self.clf_anchor = sklearn.ensemble.RandomForestClassifier()

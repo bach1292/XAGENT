@@ -57,12 +57,17 @@ class Answers:
         return relation
 
     def answer(self, question, conversations=[]):
+        if type(question) is tuple:
+            question = question[0]
         if question == "unknown":
-            return constraints.rephrase_question_msg
+            return constraints.question_msg
         df = pd.read_csv(os.path.join(PATH,"Median_4.csv"))
         id_question = df[df['Question'] == question]["Label"].iloc[0]
         if id_question in constraints.l_dice_question_ids:
-            class_P = None
+            if len(self.l_classes) == 2:
+                class_P =[label for label in self.l_classes if label != self.predicted_class][0]
+            else:
+                class_P = None
             for c in self.l_exist_classes:
                 if c != self.predicted_class:
                     class_P = c
@@ -74,17 +79,7 @@ class Answers:
                 class_P = input('\033[91m\033[1mUser:\033[0m')
                 conversations.append(f"User: {class_P}")
             if id_question in constraints.l_feature_questions_ids:
-                if len(self.l_exist_features) == 0:
-                    msg = "which features?"
-                    print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
-                    logging.log(25, f"Xagent: {msg}")
-                    user_input = input('\033[91m\033[1mUser:\033[0m')
-                    while user_input not in self.l_features:
-                        msg = f"please choose one of the following features: {self.l_features}"
-                        print(msg)
-                        logging.log(25, f"Xagent: {msg}")
-                        user_input = input('\033[91m\033[1mUser:\033[0m')
-                    self.l_exist_features.append(user_input)
+                ask_for_feature(self)
                 e1 = dice_answer(self, class_P, self.l_exist_features)
                 if e1.cf_examples_list[0].final_cfs_df is None:
                     return constraints.no_cf_msg.format(self.l_exist_features)
@@ -95,7 +90,6 @@ class Answers:
 
             json_e1 = e1.to_json()
             js = json.loads(json_e1)
-            print(js['cfs_list'])
 
             if id_question in constraints.l_feature_questions_ids:
                 ans = ""
@@ -108,11 +102,9 @@ class Answers:
                 if v1 != v2:
                     if type(v1) == str:
                         s = js['feature_names'][j] + " should be changed to " + str(v2)
-                        # print("you need to change " + js['feature_names'][j])
                     else:
                         if v1 < v2:
                             s = js['feature_names'][j] + " should be increased to " + str(v2)
-                            # print("you need to increase " + js['feature_names'][j])
                         else:
                             s = js['feature_names'][j] + " should be decreased to " + str(v2)
                     ans_relation.append(s)
@@ -183,8 +175,7 @@ class Answers:
         #     except:
         #         ans = "I cannot answer this question, can you rephrase the question or ask another question?"
         #         return ans
-        if id_question == df[df['Question'] == "What would happen if this instance changes to A?"]["Label"].iloc[0]:
-            #             print(3)
+        if id_question in constraints.l_new_predict_question_ids:
             temp_instance = None
             for i in range(0, len(self.l_exist_features)):
                 f = self.l_exist_features[i]
@@ -195,21 +186,22 @@ class Answers:
                 self.clf.predict([temp_instance]))
         if id_question in constraints.l_shap_question_ids:
             return shap_explainer(self, id_question)
-        if id_question == \
-                df[df['Question'] == "What is the scope of change permitted to still get the same prediction?"][
-                    "Label"].iloc[0]:
-            if self.data['info']['name'] == 'adult':
+        if id_question in constraints.l_anchor_question_ids:
+            if self.data['info']['name'] in ['adult', "german-credit"]:
                 explainer = anchor_tabular.AnchorTabularExplainer(
                     self.dataset_anchor.class_names,
                     self.dataset_anchor.feature_names,
                     self.dataset_anchor.train,
                     self.dataset_anchor.categorical_names)
                 instance = list(self.current_instance.values())
-                # print(instance)
                 for feature in self.dataset_anchor.categorical_features:
-                    instance[feature] = self.dataset_anchor.categorical_names[feature].index(instance[feature][1:])
 
-                # print('Prediction: ', explainer.class_names[self.clf_anchor.predict(np.array(instance).reshape(1, -1))[0]])
+                    if feature == 2:
+                        instance[feature] = self.dataset_anchor.categorical_names[feature].index(
+                            str(int(instance[feature])))
+                    else:
+                        instance[feature] = self.dataset_anchor.categorical_names[feature].index(instance[feature])
+
                 exp = explainer.explain_instance(np.array(instance), self.clf_anchor.predict, threshold=0.80)
                 # dice_answer(self.predicted_class,self.data['info']['num_features'])
                 return 'If you keep these conditions: %s, the prediction will stay the same.' % (' AND '.join(exp.names()))

@@ -6,6 +6,9 @@ import dice_ml
 from XAgent.Agent import constraints
 from alibi.explainers import CounterfactualProto
 from tensorflow.keras.models import Model, load_model
+
+from XAgent.Agent.utils import ask_for_feature
+
 PATH = os.path.dirname(__file__)
 def shap_explainer(self, id_question):
     if self.data['info']['name'] == 'mnist':
@@ -21,8 +24,6 @@ def shap_explainer(self, id_question):
                                               max_samples=100)
         explainer = shap.Explainer(self.clf['classifier'], masker=background, algorithm="tree")
         shap_values = explainer.shap_values(X_transform)
-        print(shap_values)
-        print(explainer(X_transform))
         # shap_values = explainer_values.values
         predicted_cls = self.data["classes"].index(self.predicted_class)
         shap_values_original_input = []
@@ -42,15 +43,10 @@ def shap_explainer(self, id_question):
         explainer_values.values = shap_values_original_input[predicted_cls].reshape(1,-1)
         # explainer_values.values = shap_values_original_input
         if id_question in constraints.l_feature_questions_ids:
-            if len(self.l_exist_features) == 0:
-                print("which features?")
-                user_input = input('\033[91m\033[1mUser:\033[0m')
-                self.l_exist_features.append(user_input)
+            ask_for_feature(self)
             index = [ self.df_display_instance.columns.get_loc(self.l_exist_features[0])]
             # shap.force_plot(explainer.expected_value[predicted_cls][index], shap_values[predicted_cls][index], self.df_display_instance.columns[index],figsize=(15,3), show = True, matplotlib=True)
-            print(explainer_values)
             # print(index)
-            print(shap_values_original_input[predicted_cls][index])
             # shap.plots.waterfall(explainer_values[0][index])
             shap.force_plot(explainer.expected_value[predicted_cls], shap_values_original_input[predicted_cls][index],
                             self.df_display_instance.columns[index], figsize=(15, 3), show=True, matplotlib=True)

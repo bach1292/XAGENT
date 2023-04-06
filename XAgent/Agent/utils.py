@@ -5,6 +5,7 @@ import sklearn
 import numpy as np
 import lime
 import lime.lime_tabular
+import logging
 # import string
 import os
 import sys
@@ -14,6 +15,19 @@ class Bunch(object):
     def __init__(self, adict):
         self.__dict__.update(adict)
 
+def ask_for_feature(self):
+    if len(self.l_exist_features) == 0:
+        msg = "which features?"
+        print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
+        logging.log(25, f"Xagent: {msg}")
+        user_input = input('\033[91m\033[1mUser:\033[0m')
+        while user_input not in self.l_features:
+            msg = f"please choose one of the following features: {self.l_features}"
+            print(msg)
+            logging.log(25, f"Xagent: {msg}")
+            user_input = input('\033[91m\033[1mUser:\033[0m')
+            logging.log(25, f"User: {user_input}")
+        self.l_exist_features.append(user_input)
 
 def map_array_values(array, value_map):
     # value map must be { src : target }
@@ -39,6 +53,13 @@ def load_dataset(dataset_name, balance=False, discretize=True, dataset_folder='.
             feature_names=feature_names, features_to_use=features_to_use,
             categorical_features=categorical_features, discretize=discretize,
             balance=balance, feature_transformations=None)
+    elif dataset_name == 'german-credit':
+        categorical_features = [1, 2, 3, 4, 5, 8]
+        dataset = load_csv_dataset(
+                os.path.join(dataset_folder, 'german-credit/german_credit_data.csv'), -1, ',',
+                categorical_features=categorical_features, discretize=discretize,
+                balance=balance)
+        # print(dataset.categorical_features)
     return dataset
 
 
@@ -61,6 +82,7 @@ def load_csv_dataset(data, target_idx, delimiter=',',
                                delimiter=delimiter,
                                na_filter=True,
                                dtype=str).fillna(fill_na).values
+    # print(data[0])
     if target_idx < 0:
         target_idx = data.shape[1] + target_idx
     ret = Bunch({})
