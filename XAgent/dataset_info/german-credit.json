@@ -7,7 +7,7 @@
   "why_ans": "The above graph shows important features for this prediction. The red features strengthen your credit, while the blue features weaken it.",
   "change_ans": ["bad credit", "good credit"],
   "feature_description": {
-    "Age": "The age of the applicant in years.",
+    "Age": "The age of the applicant in years",
     "Sex": "The gender of the applicant",
     "Job": "The type of job the applicant has",
     "Housing": "The type of housing the applicant lives in",
