@@ -4,6 +4,8 @@ import logging
 
 import shap
 from dtreeviz.trees import *
+
+from XAgent.Agent.utils import print_log
 from XAgent.Agent.xai_methods import *
 # print the JS visualization code to the notebook
 shap.initjs()
@@ -17,7 +19,7 @@ from tensorflow.keras.models import Model, load_model
 import matplotlib.pyplot as plt
 import numpy as np
 from alibi.explainers import CounterfactualProto
-from anchor import anchor_tabular
+
 import os
 PATH = os.path.dirname(__file__)
 l_shap_questions = []
@@ -73,11 +75,8 @@ class Answers:
                     class_P = c
             if class_P == None:
                 msg = f"Please give me the target label in {str(self.data['classes'])}: "
-                print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
-                logging.log(25, f"Xagent: {msg}")
-                conversations.append(f"Xagent: {msg}")
-                class_P = input('\033[91m\033[1mUser:\033[0m')
-                conversations.append(f"User: {class_P}")
+                print_log("xagent",msg)
+                class_P = print_log("user")
             if id_question in constraints.l_feature_questions_ids:
                 ask_for_feature(self)
                 e1 = dice_answer(self, class_P, self.l_exist_features)
@@ -90,10 +89,11 @@ class Answers:
 
             json_e1 = e1.to_json()
             js = json.loads(json_e1)
-
-            if id_question in constraints.l_feature_questions_ids:
-                ans = ""
-            else:
+            ans = ""
+            # if id_question in constraints.l_feature_questions_ids:
+            #     ans = ""
+            # else:
+            if id_question in constraints.l_dice_question_relation_ids:
                 relation = self.extract_relation(js['test_data'][0][0], js['cfs_list'][0], js['feature_names'])
                 ans = "There are multiple reasons for this result, one of them is: \n"
                 ans += " and ".join([str(k) + " is " + str(v) for k, v in relation[0].items()]) + "."
@@ -111,70 +111,6 @@ class Answers:
             ans += "The " + " and ".join(ans_relation) + ", to get " + self.data['info']['change_ans'][
                 self.l_classes.index(class_P)]
             return ans
-        # if id_question == \
-        #         df[df['Question'] == "How should this Instance change to get a different prediction?"]["Label"].iloc[0]:
-        #     class_P = None
-        #     for c in self.l_exist_classes:
-        #         if c != self.predicted_class:
-        #             class_P = c
-        #     if self.data['info']['name'] == "mnist":
-        #         return cf_proto(self, class_P)
-        #
-        #     e1 = dice_answer(self, class_P)
-        #     json_e1 = e1.to_json()
-        #     js = json.loads(json_e1)
-        #     ans_relation = []
-        #     for j, (v1, v2) in enumerate(zip(js['test_data'][0][0], js['cfs_list'][0][0][:-1])):
-        #         if v1 != v2:
-        #             if type(v1) == str:
-        #                 s = js['feature_names'][j] + " changes to " + str(v2)
-        #                 # print("you need to change " + js['feature_names'][j])
-        #             else:
-        #                 if v1 < v2:
-        #                     s = js['feature_names'][j] + " increases to " + str(v2)
-        #                     # print("you need to increase " + js['feature_names'][j])
-        #                 else:
-        #                     s = js['feature_names'][j] + " decreases to " + str(v2)
-        #             ans_relation.append(s)
-        #     return "Sounds easy! If " + " and ".join(ans_relation) + ", you will get " + self.data['info']['change_ans'][self.l_classes.index(class_P)]
-        #
-        # if id_question == \
-        #         df[df['Question'] == "How should this feature change for this instance to get a different prediction?"][
-        #             "Label"].iloc[0]:
-        #     #             print(self.l_exist_features)
-        #     try:
-        #         if len(self.l_exist_features) == 0:
-        #             print("which features?")
-        #             user_input = input('\033[91m\033[1mUser:\033[0m')
-        #             self.l_exist_features.append(user_input)
-        #         else:
-        #             class_Q = self.predicted_class
-        #             class_P = None
-        #             for c in self.l_exist_classes:
-        #                 if c != self.predicted_class:
-        #                     class_P = c
-        #             print(self.l_exist_features)
-        #             e1 = dice_answer(self, class_P, self.l_exist_features)
-        #             json_e1 = e1.to_json()
-        #             js = json.loads(json_e1)
-        #             ans_relation = []
-        #             for j, (v1, v2) in enumerate(zip(js['test_data'][0][0], js['cfs_list'][0][0][:-1])):
-        #                 if v1 != v2:
-        #                     if type(v1) == str:
-        #                         s = js['feature_names'][j] + " should be changed to " + str(v2)
-        #                         # print("you need to change " + js['feature_names'][j])
-        #                     else:
-        #                         if v1 < v2:
-        #                             s = js['feature_names'][j] + " should be increased to " + str(v2)
-        #                             # print("you need to increase " + js['feature_names'][j])
-        #                         else:
-        #                             s = js['feature_names'][j] + " should be decreased to " + str(v2)
-        #                     ans_relation.append(s)
-        #             ans = "The " +  " and ".join(ans_relation) + ", to get " + self.data['info']['change_ans'][self.l_classes.index(class_P)]
-        #             return ans
-        #     except:
-        #         ans = "I cannot answer this question, can you rephrase the question or ask another question?"
-        #         return ans
         if id_question in constraints.l_new_predict_question_ids:
             temp_instance = None
             for i in range(0, len(self.l_exist_features)):
@@ -187,23 +123,5 @@ class Answers:
         if id_question in constraints.l_shap_question_ids:
             return shap_explainer(self, id_question)
         if id_question in constraints.l_anchor_question_ids:
-            if self.data['info']['name'] in ['adult', "german-credit"]:
-                explainer = anchor_tabular.AnchorTabularExplainer(
-                    self.dataset_anchor.class_names,
-                    self.dataset_anchor.feature_names,
-                    self.dataset_anchor.train,
-                    self.dataset_anchor.categorical_names)
-                instance = list(self.current_instance.values())
-                for feature in self.dataset_anchor.categorical_features:
-
-                    if feature == 2:
-                        instance[feature] = self.dataset_anchor.categorical_names[feature].index(
-                            str(int(instance[feature])))
-                    else:
-                        instance[feature] = self.dataset_anchor.categorical_names[feature].index(instance[feature])
-
-                exp = explainer.explain_instance(np.array(instance), self.clf_anchor.predict, threshold=0.80)
-                # dice_answer(self.predicted_class,self.data['info']['num_features'])
-                return 'If you keep these conditions: %s, the prediction will stay the same.' % (' AND '.join(exp.names()))
-            return "Sorry, I don't support this question for this dataset, let try another data"
+            return anchor_answer(self)
         return constraints.cant_answer_msg

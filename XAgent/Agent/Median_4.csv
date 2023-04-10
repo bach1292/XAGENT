@@ -226,7 +226,7 @@
 224,What are the limitations of the data?,25
 225,Why is {A} predicted {P} but {B} predicted {Q}?,73
 226,Which field is the reason for the prediction?,69
-227,Why did it give this prediction?,0
+227,Why did it give this prediction?,67
 228,How much experience with this type of data does the system have?,29
 229,Why is {A} predicted to produce {P} but {B} to produce {Q}?,73
 230,Why did you chose not to use this rule?,33
@@ -370,7 +370,7 @@
 368,How many items are considered in this result?,21
 369,How is this instance not predicted {Q}?,71
 370,What data is the system not using?,24
-371,What needs to change for this prediction to be different?,12
+371,What needs to change for this prediction to be different?,11
 372,How is this instance given this prediction?,67
 373,What is the precision of the prediction?,60
 374,Why will the model change over time?,30

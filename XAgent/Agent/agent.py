@@ -48,6 +48,9 @@ from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.utils import to_categorical
 import PIL
+
+from XAgent.Agent.utils import print_log
+
 # from IPython.display import display
 MODE_INPUT = 0
 MODE_QUESTION = 1
@@ -89,7 +92,6 @@ class Agent:
         # extract instance from question
         l_instances = [[], []]
         self.l_instances = l_instances
-        #         print("self.l_instances", self.l_instances)
         if len(l_features) > 0:
             query = ""
             for f in l_features:
@@ -101,7 +103,6 @@ class Agent:
             question = re.sub(regex_search_term, "<instance>", question)
             self.l_exist_features = []
             for f in l_features:
-                # print(f)
                 regex_search_term = re.compile(f)
                 result = regex_search_term.findall(question)
                 if len(result) == 1:
@@ -118,17 +119,18 @@ class Agent:
                 self.l_exist_classes.append(c)
             regex_replacement = "<class>"
             question = re.sub(c, regex_replacement, question)
-        # print(question)
         return question
     def request_instance(self):
         if self.mode == MODE_INPUT:
             if self.dataset == "mnist":
-                print("Give me the image's name, in the folder, I already have an example with 7.png")
-                user_input = input()
+                msg = "Give me the image's name, in the folder, I already have an example with 7.png"
+                print_log("xagent", msg)
+                user_input = print_log("user")
                 image = PIL.Image.open(user_input)
                 # display(image)
                 image_array = np.array(image)
-                print('\033[1m\033[94m' + 'X-Agent'+': ' + '\033[0m' + "This is your input image.")
+                msg = "This is your input image."
+                print_log("xagent", msg)
                 plt.figure(figsize=(2, 2))
                 plt.imshow(image_array[:,:,0])
                 plt.show()
@@ -136,23 +138,20 @@ class Agent:
                 self.predicted_class = self.clf.predict(self.current_instance .reshape(1, 28, 28, 1)).argmax()
                 self.mode = MODE_QUESTION
                 yield "My prediction for this image is number " + str(self.predicted_class) + "."
-            l_questions = ["How about your ", "What is your ", "Give me your "]
             for f, fn in zip(self.data["features"], self.data["feature_names"]):
                 self.current_feature = f
-                #categorical features
-                # print(self.data['map'])
-                #map: {'Workclass': {7: ' State-gov', 6: ' Self-emp-not-inc', 4: ' Private', 1: ' Federal-gov', 2: ' Local-gov', 0: ' ?', 5: ' Self-emp-inc', 8: ' Without-pay', 3: ' Never-worked'}
+                # feature_description = self.data['info']['feature_description'][fn] if fn in  self.data['info']['feature_description'] else ""
+                msg = random.choice(l_questions) + str(fn)
+                if fn in  self.data['info']['feature_description']:
+                    msg += f"({self.data['info']['feature_description'][fn]})"
                 if f in self.data['map'].keys():
-                    features = ",".join(str(x) for x in self.data['map'][f].values())
-
-                    yield (random.choice(l_questions) + str(
-                        fn) + f"? Please choose one of the following values: [{features}]")
-                else:
                     if self.dataset == "german-credit" and f == "Job":
-                        yield (random.choice(l_questions) + str(
-                        fn) + "? Please choose one of the following numbers:" + " [0 - unskilled and non-resident, 1 - unskilled and resident, 2 - skilled, 3 - highly skilled]")
+                        yield (msg + "? Please choose one of the following numbers:" + " [0 - unskilled and non-resident, 1 - unskilled and resident, 2 - skilled, 3 - highly skilled]")
                     else:
-                        yield (random.choice(l_questions) + str(fn) + "? Please give me a number")
+                        features = ",".join(str(x) for x in self.data['map'][f].values())
+                        yield (msg + f"? Please choose one of the following values: [{features}]")
+                else:
+                    yield (msg + "? Please give me a number")
                     # self.current_instance[f] = float(text)
             self.mode = MODE_QUESTION
             self.current_feature = None
@@ -162,40 +161,30 @@ class Agent:
             for k, v in self.current_instance.items():
                 display_instance[k] = [v]
             self.df_display_instance = pandas.DataFrame(display_instance)
-            # if self.dataset == "german-credit":
-            #     print(self.df_display_instance)
-            #     predict = self.clf_display.predict(self.preprocessor.transform(self.df_display_instance))[0]
-            # else:
             predict = self.clf_display.predict(self.df_display_instance)[0]
             self.predicted_class = predict
-            print(predict)
-            # if predict == False:
             ans = self.data['info']['predict_prompt'][predict] + "\n" + question_msg
-            # else:
-            #     ans = self.data['info']['predict_prompt'][1]
             yield "I recorded the information: [" + instance + "] " + ans
-            # yield "instance confirm"
-            # return #self.input_collection(text)
     def collect_instance(self, text):
         f = self.current_feature
 
-        # print(f)
         if f is None:
             return
-
         if f in self.data['map'].keys():
             features = ",".join(str(x) for x in self.data['map'][f].values())
+            # print(self.data['map'][f].values())
+            # print(text)
             while(text not in self.data['map'][f].values()):
                 msg = constraints.repeat_cat_features.format(features)
-                print(msg)
-                logging.log(25,f"Xagent: {msg}")
-                print('\033[91m\033[1mUser:\033[0m')
-                text = input()
-                logging.log(25,f"Xagent: {text}")
+                print_log("xagent", msg)
+                text = print_log("user")
             if self.data['info']['name'] == 'adult':
                 self.current_instance[f] = str(" " + str(text))
             else:
-                self.current_instance[f] = str(text)
+                if text.isnumeric():
+                    self.current_instance[f] = int(text)
+                else:
+                    self.current_instance[f] = str(text)
         else:
             self.current_instance[f] = float(text)
     def dataset_response(self, text, conversations = []):
@@ -215,25 +204,21 @@ class Agent:
                 self.mode = MODE_INPUT
                 self.get_dataset_info(self.dataset)
                 ans = constraints.wait_msg
-                logging.log(25,f"Xagent: {ans}")
-                # conversations.append(f"Xagent: {ans}")
-                print(ans)
+                print_log("xagent", ans)
                 self.train_model()
                 self.current_instance = {}
                 self.request_iterator = self.request_instance()
                 ans = f"Welcome to {self.dataset} dataset, are you ready to input the instance?"
                 # logging.info(ans)
-                return ans
+                print_log(None, ans)
+                # return ans
         else:
             if self.mode == MODE_INPUT:
                 self.collect_instance(text)
                 answer = next(self.request_iterator, None)
             else:
                 question = self.preprocess_question(text)
-                #             print(question)
-                # print(question)
                 question = self.nlu_model.match(question, self.data["features"], self.predicted_class, self.current_instance, self.data["classes"]),
-                # print(question)
                 # todo
                 answer = self.answer_question(question)
             # logging.info(answer)
@@ -261,15 +246,13 @@ class Agent:
             self.data["y_display"]=  self.data["y"]  = self.data["X_display"]['Risk']
             self.data["X_display"].drop(['Risk'], axis=1, inplace=True)
             self.data["classes"] = ["bad", "good"]
-            # print(self.data["y_display"].shape())
             self.data["cls_mapping"] = {}
             self.data["features"] = self.data["X_display"].columns.tolist()
             self.data["feature_names"] = self.data["features"]
             mapping = {}
             for f in self.data["features"]:
-                # print(f)
                 if f not in self.data['info']["num_features"]:
-                    mapping[f] = {value : value for value in self.data["X_display"][f].unique()}
+                    mapping[f] = {str(value) : str(value) for value in self.data["X_display"][f].unique()}
             self.data["map"] = mapping
             return
         if dataset_name.lower() == "mnist":
@@ -297,7 +280,6 @@ class Agent:
             X_display.drop(['Survived'], axis=1, inplace=True)
             self.data["X_display"] = X_display
             self.data["y_display"] = y_display
-            # print(self.data["y_display"].shape())
             self.data["X"] = X_display.copy(deep=True)
             self.data["y"] = y_display.copy(deep=True)
             self.data["classes"] = ["False","True"]
@@ -306,7 +288,6 @@ class Agent:
             self.data["features"] = self.data["X_display"].columns.tolist()
             self.data["feature_names"] = ["Class (1st, 2nd, 3rd)","Gender","Age","Fare","Port of Embarkation(C = Cherbourg, Q = Queenstown, S = Southampton)","Title","Deck","Family size"]
             for f in self.data['info']['cat_features']:
-                # print(f)
                 self.data["X_display"][f] = self.data["X_display"][f].astype(
                     pandas.core.dtypes.dtypes.CategoricalDtype(categories=self.data["X_display"][f].unique(),
                                                                ordered=True))
@@ -319,7 +300,6 @@ class Agent:
             features = ['sepal length', 'sepal width', 'petal length', 'petal width']
             self.data["X_display"] = pd.DataFrame(data = X_display, columns=features)
             self.data["y_display"] = pd.Series(y_display)
-            # print(self.data["y_display"].shape())
             self.data["X"] = self.data["X_display"].copy(deep=True)
             self.data["y"] = self.data["y_display"].copy(deep=True)
             self.data["classes"] = list(iris.target_names)
@@ -328,12 +308,10 @@ class Agent:
             self.data["feature_names"] = self.data["features"]
         mapping = {}
         for f in self.data["X_display"].columns:
-            print(type(self.data["X_display"][f].dtype))
             if type(self.data["X_display"][f].dtype) == pandas.core.dtypes.dtypes.CategoricalDtype:
                 mapping[f] = dict(zip(self.data["X_display"][f].cat.codes, self.data["X_display"][f]))
                 self.data["X"][f] = self.data["X_display"][f].cat.codes
         self.data['map'] = mapping
-        # print(mapping)
 
 
     def get_model(self, dataset_name, name_clf: str = "sklearn.tree._classes.DecisionTreeClassifier",
@@ -347,8 +325,6 @@ class Agent:
         evals = openml.evaluations.list_evaluations(
             function=metric, tasks=[task_id], output_format="dataframe"
         )
-        #         print(evals)
-        #         print(flow_ids)
         run_id = evals[evals['flow_id'].isin(flow_ids)]['run_id'].iloc[-1]
         run_downloaded = openml.runs.get_run(run_id)
         task = openml.tasks.get_task(task_id)

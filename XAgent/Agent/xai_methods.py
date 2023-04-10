@@ -6,6 +6,7 @@ import dice_ml
 from XAgent.Agent import constraints
 from alibi.explainers import CounterfactualProto
 from tensorflow.keras.models import Model, load_model
+from anchor import anchor_tabular
 
 from XAgent.Agent.utils import ask_for_feature
 
@@ -39,14 +40,12 @@ def shap_explainer(self, id_question):
                 start += count_value
             shap_values_original_input.append(np.array(sub_array))
         explainer_values = explainer(X_transform)
-        # print(len(shap_values_original_input))
         explainer_values.values = shap_values_original_input[predicted_cls].reshape(1,-1)
         # explainer_values.values = shap_values_original_input
         if id_question in constraints.l_feature_questions_ids:
             ask_for_feature(self)
             index = [ self.df_display_instance.columns.get_loc(self.l_exist_features[0])]
             # shap.force_plot(explainer.expected_value[predicted_cls][index], shap_values[predicted_cls][index], self.df_display_instance.columns[index],figsize=(15,3), show = True, matplotlib=True)
-            # print(index)
             # shap.plots.waterfall(explainer_values[0][index])
             shap.force_plot(explainer.expected_value[predicted_cls], shap_values_original_input[predicted_cls][index],
                             self.df_display_instance.columns[index], figsize=(15, 3), show=True, matplotlib=True)
@@ -76,6 +75,8 @@ def dice_answer(self, target_class=0, features='all'):
         if target_class == str(c):
             target = i
     train_dataset = self.data['X_display'].assign(Label=self.data['y_display'])
+    # print(train_dataset.head())
+    # print(self.df_display_instance)
     d = dice_ml.Data(dataframe=train_dataset, continuous_features=self.data['info']['num_features'],
                      outcome_name='Label')
     # Using sklearn backend
@@ -103,12 +104,32 @@ def cf_proto(self, class_P):
     X = self.current_instance.reshape((1,) + self.data['X'][1].shape)
     plt.figure(figsize=(2, 2))
     plt.imshow(X.reshape(28, 28));
-    # print(type(class_P))
     explanation_2 = cf.explain(X, k=5, k_type='mean', target_class=[int(class_P)])
     if explanation_2.cf is None:
         return "It is hard to change this instance to " + class_P
-    # print(explanation_2.id_proto)
     proto_2 = explanation_2.id_proto
     plt.imshow(explanation_2.cf['X'].reshape(28, 28));
     plt.show()
     return "Here you go! I just modified your image a bit to make it look like number " + str(class_P)
+def anchor_answer(self):
+    if self.data['info']['name'] in ['adult', "german-credit"]:
+        explainer = anchor_tabular.AnchorTabularExplainer(
+            self.dataset_anchor.class_names,
+            self.dataset_anchor.feature_names,
+            self.dataset_anchor.train,
+            self.dataset_anchor.categorical_names)
+        instance = list(self.current_instance.values())
+        for feature in self.dataset_anchor.categorical_features:
+            # print(self.dataset_anchor.categorical_names[feature])
+            if instance[feature] == "nan":
+                instance[feature] = ""
+            if feature == 2:
+                instance[feature] = self.dataset_anchor.categorical_names[feature].index(
+                    str(int(instance[feature])))
+            else:
+                instance[feature] = self.dataset_anchor.categorical_names[feature].index(instance[feature])
+
+        exp = explainer.explain_instance(np.array(instance), self.clf_anchor.predict, threshold=0.80)
+        # dice_answer(self.predicted_class,self.data['info']['num_features'])
+        return 'If you keep these conditions: %s, the prediction will stay the same.' % (' AND '.join(exp.names()))
+    return "Sorry, I don't support this question for this dataset, let try another data"

@@ -14,19 +14,30 @@ class Bunch(object):
     """bla"""
     def __init__(self, adict):
         self.__dict__.update(adict)
+def print_log(turn, msg = None, state=None):
+    if turn == "xagent":
+        print(f"\033[1m\033[94mX-Agent:\033[0m")
 
+    if msg is not None:
+        print(msg)
+    if turn == "user":
+        print('\033[91m\033[1mUser:\033[0m')
+        msg = input()
+    logging.log(25, f"{turn}: {msg}")
+    if state is not None:
+        logging.log(25, state)
+    return msg
 def ask_for_feature(self):
     if len(self.l_exist_features) == 0:
-        msg = "which features?"
-        print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
-        logging.log(25, f"Xagent: {msg}")
-        user_input = input('\033[91m\033[1mUser:\033[0m')
+        msg = "which feature?"
+        # print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
+        # logging.log(25, f"Xagent: {msg}")
+        print_log("xagent",msg)
+        user_input = print_log("user")
         while user_input not in self.l_features:
             msg = f"please choose one of the following features: {self.l_features}"
-            print(msg)
-            logging.log(25, f"Xagent: {msg}")
-            user_input = input('\033[91m\033[1mUser:\033[0m')
-            logging.log(25, f"User: {user_input}")
+            print_log("xagent", msg)
+            user_input = print_log("user")
         self.l_exist_features.append(user_input)
 
 def map_array_values(array, value_map):
