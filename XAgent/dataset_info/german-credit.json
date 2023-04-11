@@ -5,7 +5,7 @@
   "predict_prompt": {"good":"you have a good credit",
                       "bad":"you have a bad credit"},
   "why_ans": "The above graph shows important features for this prediction. The red features strengthen your credit, while the blue features weaken it.",
-  "feature_ans": "The model used all features, however, may have a significant impact on the model's prediction for your loan application. ",
+  "feature_ans": "The model used all features, however, some features may have a significant impact on the model's prediction for your loan application. ",
   "dataset_description": "Assuming you are an applicant applying for credit, the model will predict whether you are likely to default on your loan, based on your personal and financial information.",
   "change_ans": ["bad credit", "good credit"],
   "feature_description": {
