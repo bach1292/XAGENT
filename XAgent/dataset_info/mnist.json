@@ -4,4 +4,6 @@
   "num_features": [],
   "predict_prompt": ["Unfortunately, this person will die", "Congrats, you will survive"],
   "why_ans": "On the right image above, I highlight the important parts (red color) of the image that impact this prediction.",
-  "change_ans":  []}
+  "change_ans":  [],
+  "feature_description": {}
+}

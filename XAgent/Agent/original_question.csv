@@ -1,0 +1,73 @@
+Question,Label
+Is feature {X} used or not used for the predictions?,6
+How often does the system make mistakes?,62
+What is the system's overall logic?,2
+What are the biases of the data?,26
+What features does the system consider?,3
+What features of this instance lead to the system's prediction?,69
+What is the highest feature one can have to still get the same prediction?,20
+Why are instance {A} and instance {B} given the same prediction?,68
+How precise are the predictions?,60
+How will the system improve over time?,30
+How were the ground-truth produced?,27
+What kind of data does the system learn from?,21
+What will the system adapt over time?,30
+How is the output used for other system component(s)?,53
+What will the system change over time?,30
+What is the scope of the system's capability?Can it do {A}?,51
+What kind of instance gets this prediction?,13
+What kind of instance gets a different prediction?,14
+Why does it not use this feature?,34
+Why are instances {A} and {B} given different predictions?,73
+Why is this instance predicted {P} instead of {Q}?,71
+How will the system adapt over time?,30
+How does it weigh different features?,8
+How were the labels produced?,27
+What are the top rules it uses?,4
+What is the lowest feature one can have to still get the same prediction?,17
+How accurate are the predictions?,60
+How can I best utilize the output of the system?,54
+How should this Instance change to get a different prediction?,11
+What kind of mistakes is the system likely to make?,55
+What are the top features it uses?,5
+What kind of output does the system give?,50
+What would the system predict if this feature of the instance changes to {A}?,64
+What would the system predict if this instance changes to {A}?,64
+What kind of algorithm is used?,1
+What is the sample size?,21
+How should this feature change for this instance to get a different prediction?,12
+Why will the system change over time?,30
+What data is the system not using?,24
+In what situations is the system likely to be correct?,59
+How reliable are the predictions?,60
+Is the system's performance good enough for {A}?,57
+How does feature {X} impact its predictions?,6
+How are the parameters set?,10
+How is this instance given this prediction?,67
+What are the results of other people using the system?,44
+What are the limitations of the data?,25
+What is the scope of change permitted to still get the same prediction?,15
+What would the system predict for [a different instance]?,64
+How to improve the system?,49
+Why does it not use this data?,35
+Why does it use this feature?,37
+What does ML terminology mean?,43
+What is the source of the data?,21
+What are the necessary features present or absent to guarantee this prediction?,16
+Why will the system adapt over time?,30
+How does the system make predictions?,7
+What are the limitations of the system?,56
+How is this instance not predicted {A}?,71
+What does the system output mean?,52
+Why does it use this rule?,36
+Why will the system improve over time?,30
+In what situations is the system likely to be incorrect?,58
+How will the system drift over time?,30
+How will the system change over time?,30
+What will the system improve over time?,30
+What rules does it use?,0
+Why is this instance given this prediction?,67
+How much data like this is the system trained on?,29
+What is the highest feature value one can have to still get the same prediction?,20
+Why does it use this data?,38
+Why does it not use this rule?,33

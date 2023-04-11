@@ -1,0 +1,515 @@
+,Question,Label
+0,What do different features contribute?,8
+1,Show me what the system would predict on [another instance].,64
+2,What was the result when other people used the system?,44
+3,What should be changed about the system?,49
+4,Is feature X used or not used for the predictions?,6
+5,How often does the system make mistakes?,62
+6,What is the system's overall logic?,2
+7,How to change this feature to get a different prediction?,12
+8,What are the biases of the data?,26
+9,What features does the system consider?,3
+10,Does this model use this feature X?,6
+11,What features does the system consider?,3
+12,What features of this instance lead to the system's prediction?,69
+13,What is the highest feature one can have to still get the same prediction?,20
+14,Why did you ignore that data?,35
+15,What algorithm is being used?,1
+16,Why are instance A and instance B given the same prediction?,68
+17,What features does the system consider?,3
+18,What does using this feature achieve?,37
+19,How precise are the predictions?,60
+20,How will the system improve over time?,30
+21,Give me the reason for this prediction.,67
+22,How precise are the predictions?,60
+23,How did you arrive at this number?,67
+24,How were the ground-truth produced?,27
+25,What are the most predictive rules?,4
+26,What kind of data does the system learn from?,21
+27,What is the definition of ML terminology?,43
+28,What type of output does the system give?,50
+29,What is the minimum value of feature one must have to still get this prediction?,17
+30,What will the system adapt over time?,30
+31,How is the output used for other system component(s)?,53
+32,What will the system change over time?,30
+33,How were the ground truth given?,27
+34,What are the drawbacks of this dataset?,25
+35,Where did you get this data from?,21
+36,What are the conditions for the same prediction?,15
+37,What kind of data does the system learn from?,21
+38,What do you mean by ML terminology?,43
+39,What is the scope of the system's capability?Can it do [A]?,51
+40,How should I interpret this result in terms of bias?,26
+41,What kind of instance gets this prediction?,13
+42,What kind of instance gets a different prediction?,14
+43,How will the accuracy/precision/recall improve?,30
+44,Why does it not use this feature?,34
+45,What is the system's overall logic?,2
+46,How did you get this result?,67
+47,What is the weakness of the data?,25
+48,Why are instances A and B given different predictions?,73
+49,Why is this instance predicted P instead of Q?,71
+50,Which algorithm does X use?,1
+51,How is the output used for other system component(s)?,53
+52,How will the system adapt over time?,30
+53,What kind of data does the system learn from?,21
+54,What are the conditions that must be met to guarantee this result?,16
+55,What features of this instance lead to the system's prediction?,69
+56,What is the reason for adaptation?,30
+57,Where did the data come from?,21
+58,How does the system weigh different features?,8
+59,How does it weigh different features?,8
+60,How will the system performance improve over time?,30
+61,What will cause the system to learn?,30
+62,Why do you use this feature?,37
+63,What features of this instance lead to the system's prediction?,69
+64,How were the labels produced?,27
+65,What are the top rules it uses?,4
+66,How were the labels generated?,27
+67,What is the lowest feature one can have to still get the same prediction?,17
+68,What is the importance of each feature?,8
+69,How accurate are the predictions?,60
+70,What does the system use to make predictions?,7
+71,In what conditions will this prediction be different?,15
+72,How often does the system make mistakes?,62
+73,What are the weights of the parameters?,10
+74,Where is the system not effective?,56
+75,How is not label A?,71
+76,How were the ground-truth produced?,27
+77,What is the scope of its capability?,51
+78,Which feature is given importance?,8
+79,Why is this instance predicted P instead of Q?,71
+80,What does this output represent?,52
+81,What characteristic of this data must be present or absent?,16
+82,How can I best utilize the output of the system?,54
+83,What is the reason for this prediction?,67
+84,How should this Instance change to get a different prediction?,11
+85,Which feature is the model using?,37
+86,What kind of mistakes is the system likely to make?,55
+87,What is the highest feature one can have to still get the same prediction?,20
+88,What features does the system consider?,3
+89,What is the justification for using that rule?,36
+90,How accurate are the predictions?,60
+91,How can I best utilize the output of the system?,54
+92,How are the predictions made?,7
+93,What are the top features it uses?,5
+94,Why is this instance predicted P instead of Q?,71
+95,How often does the system make mistakes?,62
+96,What are the weaknesses of the system?,56
+97,What kind of output does the system give?,50
+98,How are the weights of the parameters set?,10
+99,What are the top rules it uses?,4
+100,What would the system predict if this feature of the instance changes to A?,64
+101,Give me the reason why the system will improve over time.,30
+102,What is the highest feature one can have to still get the same prediction?,20
+103,How accurate are the predictions?,60
+104,What would the system predict if this instance changes to A?,64
+105,Which instance type gets this prediction?,13
+106,What kind of instance gets a different prediction?,14
+107,Why are instance A and instance B given the same prediction?,68
+108,Under what conditions will this prediction not change?,15
+109,What kind of algorithm is used?,1
+110,What was type of data used?,21
+111,What is the sample size?,21
+112,How is label A not applied for this instance?,71
+113,What kind of data is the system not using?,24
+114,How should this feature change for this instance to get a different prediction?,12
+115,How is the current instance given a particular prediction?,67
+116,How precise are the predictions?,60
+117,Why will the system change over time?,30
+118,Under which circumstances will the model be wrong?,58
+119,How will the prediction change over time?,30
+120,What data is the model NOT using?,24
+121,What features of this instance lead to the system's prediction?,69
+122,Why is this instance predicted P instead of Q?,71
+123,Why are instance A and B predicted differently?,73
+124,What will the system do with new data?,30
+125,What data is the system not using?,24
+126,How often does the system make mistakes?,62
+127,In what situations is the system likely to be correct?,59
+128,How reliable are the predictions?,60
+129,Is the system's performance good enough for [A]?,57
+130,How precise are the predictions?,60
+131,What is the scope of the system's capability?Can it do [A]?,51
+132,How should this feature change for this instance to get a different prediction?,12
+133,Tell me how the system improves over time.,30
+134,Why will the result improve over time?,30
+135,In what situations is the system likely to be correct?,59
+136,How can I best utilize the output of the system?,54
+137,Are the predictions accurate?,60
+138,Why is this instance predicted P instead of Q?,71
+139,Why are instances A and B given different predictions?,73
+140,What are the top features it uses?,5
+141,What is the sample size?,21
+142,How would the system predict on [another instance]?,64
+143,How does feature X impact its predictions?,6
+144,Why is this instance predicted P instead of Q?,71
+145,What are the required features for this prediction?,16
+146,How does feature X impact its predictions?,6
+147,Why is this instance predicted P instead of Q?,71
+148,How do you set the parameter values?,10
+149,How does feature X impact its predictions?,6
+150,How should this feature change for this instance to get a different prediction?,12
+151,What is the interpretation of this result?,52
+152,What is the lowest feature one can have to still get the same prediction?,17
+153,What are the rules that make this prediction?,0
+154,When is the system likely to be wrong?,59
+155,What data is the system not using?,24
+156,Give me the features that need to be present or absent to deliver this prediction,16
+157,How come this instance was given this prediction?,67
+158,How to improve the model training?,49
+159,How are the parameters set?,10
+160,How is this instance given this prediction?,67
+161,What are the results of other people using the system?,44
+162,What data is the system not using?,24
+163,Why do instances A and B get different predictions?,73
+164,Why does the model make this choice?,36
+165,How many instances are there like this?,29
+166,What will the system change in the future?,30
+167,How can I best utilize the output of the system?,54
+168,How high do feature values have to be to still be predicted the same thing?,20
+169,What/where is the data from?,21
+170,What kind of mistakes is the system likely to make?,55
+171,How does it know to apply this rule?,36
+172,What are the reasons for incorrect classification?,58
+173,What are the necessary conditions for this result?,16
+174,How was this prediction made?,67
+175,What would the system predict if this feature of the instance changes to A?,64
+176,Which parts of the system improve over time?,30
+177,How much is feature X used for the predictions?,6
+178,What is the scope of the system's capability?Can it do [A]?,51
+179,What features of this instance lead to the system's prediction?,69
+180,What features of this instance lead to the system's prediction?,69
+181,What is the reason given for this prediction?,67
+182,Is there performance data published for this model?,44
+183,Why is this data used?,38
+184,What is the reason that the system will improve over time?,30
+185,How does the system learn to change?,30
+186,How is this prediction made?,7
+187,What kind of mistakes is the system likely to make?,55
+188,What are the limitations of the data?,25
+189,How come this instance was given this class?,67
+190,How will this system improve over time?,30
+191,What are the necessary features required for this result?,16
+192,How should this Instance change to get a different prediction?,11
+193,What is the confidence on the prediction?,60
+194,What kind of output does the system give?,50
+195,How was this instance given this prediction?,67
+196,What will be the change in this system after some time?,30
+197,When is an instance predicted differently?,14
+198,"For a given prediction, what is the highest value of feature one can have?",20
+199,Please describe the conditions under which this prediction might be incorrect.,58
+200,Give me an overall explanation of the system.,2
+201,What kind of mistakes is the system likely to make?,55
+202,How do you determine these parameters?,10
+203,In what situations is the system likely to be correct?,59
+204,Give me the top rules,4
+205,Why does it not use this feature?,34
+206,How does the system improve itself?,30
+207,How were the labels made?,27
+208,Is the system's performance good enough for [A]?,57
+209,What features of this instance lead to the system's prediction?,69
+210,What would the system predict if this feature of the instance changes to A?,64
+211,How much data was used to make this prediction?,29
+212,What is the lowest feature one can have to still get the same prediction?,17
+213,Why did they make that prediction about this instance?,67
+214,Why did the model not use this data?,35
+215,What is the scope of change permitted to still get the same prediction?,15
+216,What would the system predict if this instance changes to A?,64
+217,What features did it use?,5
+218,What are the flaws in the data?,26
+219,What is the sample size?,21
+220,Why is this instance predicted P instead of Q?,71
+221,How is feature X used for your prediction?,6
+222,Why is this instance predicted P instead of Q?,71
+223,Why is this instance predicted P instead of Q?,71
+224,What are the limitations of the data?,25
+225,Why is A predicted A but B predicted B?,73
+226,Which field is the reason for the prediction?,69
+227,Why did it give this prediction?,67
+228,How much experience with this type of data does the system have?,29
+229,Why is A predicted to produce X but B to produce Y?,73
+230,Why did you chose not to use this rule?,33
+231,What features of this instance lead to the system's prediction?,69
+232,What features of this instance lead to the system's prediction?,69
+233,How to improve the model?,49
+234,What features of this instance lead to the system's prediction?,69
+235,What will happen to the system in the future?,30
+236,What was the data used to create these labels?,27
+237,What are the biases of the data?,26
+238,What makes this instance different from the others?,67
+239,How A is not the result for this instance?,71
+240,What kind of mistakes is the system likely to make?,55
+241,What sort of constraints are there on the data?,25
+242,How was this instance given this value/category?,67
+243,What must I do to improve the system?,49
+244,What is the purpose of using this feature?,37
+245,Give me an example of the system drifting.,30
+246,Which item gets this prediction?,13
+247,How is this result achieved?,7
+248,Why is this instance predicted P instead of Q?,71
+249,How should this Instance change to get a different prediction?,11
+250,What rules does it use to make this prediction?,0
+251,Give me the reason for using this data.,38
+252,How is feature X used for predictions?,6
+253,How were the labels created?,27
+254,How is the output used by other component(s)?,53
+255,Why are instance A and instance B given the same prediction?,68
+256,What are the rules that generated this prediction?,0
+257,How does it weigh different features?,8
+258,What would the system predict for [a different instance]?,64
+259,What are the results of other people using the system?,44
+260,How to improve the system?,49
+261,Is feature X used to make the predictions?,6
+262,When is the system incorrect?,62
+263,Which factors are included in the reasoning process?,2
+264,How should this feature change for this instance to get a different prediction?,12
+265,What was the data skew like?,26
+266,Which attributes are used by the model?,3
+267,Is feature X used or not used for the predictions?,6
+268,Which features does it take into account?,3
+269,Why did the system give this prediction?,67
+270,Give me the highest feature that would give me this prediction.,20
+271,Why does it not use this data?,35
+272,What kind of algorithm is used?,1
+273,What are the reasons for the same prediction of A and B?,68
+274,Which attributes does the model use?,3
+275,Why does it use this feature?,37
+276,How accurate is this prediction?,60
+277,How does the system become better over time?,30
+278,What features of this instance lead to the system's prediction?,69
+279,What is the reliability of this result?,60
+280,How is this instance given this prediction?,67
+281,In which way were the ground-truth created?,27
+282,What are the top rules it uses?,4
+283,Which data type is the model trained on?,21
+284,What does ML terminology mean?,43
+285,What kind of output does the system give?,50
+286,What is the lowest feature one can have to still get the same prediction?,17
+287,How will the model change over time?,30
+288,What is the output used for?,53
+289,What will happen to the system over time?,30
+290,How were the ground-truth produced?,27
+291,What are the limitations of the data?,25
+292,What is the source of the data?,21
+293,What is the scope of change permitted to still get the same prediction?,15
+294,What kind of data does it learn from?,21
+295,What does ML terminology mean?,43
+296,Show me the scope of [the model's] work.,51
+297,What are the biases of the data?,26
+298,What is the type of instance getting this result?,13
+299,Which instances would get a different result?,14
+300,How will the system improve over time?,30
+301,Why did you ignore this feature?,34
+302,What is the system's overall reasoning?,2
+303,How is this instance given this prediction?,67
+304,What are the limitations of the data?,25
+305,Why are A and B predicted differently?,73
+306,Why is this instance P rather than Q?,71
+307,What kind of algorithm is used?,1
+308,How do other system components use the output?,53
+309,How does the system learn to adapt?,30
+310,From which kind of data does the system learn?,21
+311,What are the necessary features present or absent to guarantee this prediction?,16
+312,Which features lead to the prediction?,69
+313,Why will the system adapt over time?,30
+314,What is the source of the data?,21
+315,How does it weigh different features?,8
+316,How does the model prioritize features?,8
+317,How will the system improve over time?,30
+318,Why will the system adapt over time?,30
+319,Why does it use this feature?,37
+320,What features are related to the prediction?,69
+321,Where did the labels come from?,27
+322,What are the most salient rules that it uses?,4
+323,How were the labels produced?,27
+324,What is the smallest feature one can have to still get the same result?,17
+325,How does it weigh different features?,8
+326,What percentage of predictions are correct?,60
+327,How does the system make predictions?,7
+328,What is the scope of change permitted to still get the same prediction?,15
+329,How often does it get the wrong prediction?,62
+330,How are the parameters set?,10
+331,What are the limitations of the system?,56
+332,How is this instance not predicted A?,71
+333,What was the source of the ground-truth?,27
+334,What is the scope of the system's capability?Can it do [A]?,51
+335,How does it weigh different features?,8
+336,Why Q is not predicted but P?,71
+337,What does the system output mean?,52
+338,What are the necessary features present or absent to guarantee this prediction?,16
+339,What would be best to use the output for?,54
+340,How is this instance given this prediction?,67
+341,What should I change in this instance to get a different prediction?,11
+342,Why does it use this feature?,37
+343,How to best avoid the mistakes made by the system.,55
+344,What feature has the largest possible value for which one can still receive the same result?,20
+345,Which features are considered by the model?,3
+346,Why does it use this rule?,36
+347,How often is the system correct?,60
+348,How can I make best use of this output?,54
+349,How does the system make predictions?,7
+350,Give me the list/names of top features.,5
+351,Why the result for this instance is P instead of Q?,71
+352,How often does the system get it wrong?,62
+353,What are the limitations of the system?,56
+354,What is the kind of output?,50
+355,How are the parameters set?,10
+356,What are the most important rules?,4
+357,What would the prediction of the class change to if a data point had A value of this attribute?,64
+358,Why will the system improve over time?,30
+359,For this prediction what is/are the highest value(s) of feature(s) which always leads to this prediction?,20
+360,What is the confidence score of this prediction.,60
+361,What would happen if this instance changes to A?,64
+362,What kind of instance gets this prediction?,13
+363,What kind of instance gets a different result?,14
+364,How are these instances the same?,68
+365,What is the scope of change permitted to still get the same prediction?,15
+366,What kind of algorithm is this?,1
+367,What kind of data does the system learn from?,21
+368,How many items are considered in this result?,21
+369,How is this instance not predicted A?,71
+370,What data is the system not using?,24
+371,What needs to change for this prediction to be different?,12
+372,How is this instance given this prediction?,67
+373,What is the precision of the prediction?,60
+374,Why will the model change over time?,30
+375,In what situations is the system likely to be incorrect?,58
+376,How will the system drift over time?,30
+377,What data is the system not using?,24
+378,Which field of this instance led to this prediction?,69
+379,Why does this instance receive P as a prediction instead of Q?,71
+380,Why are instances A and B given different predictions?,73
+381,How will the system change over time?,30
+382,What data isn't being used by the model?,24
+383,How accurate is the system?,62
+384,When is the system likely to be correct?,59
+385,How sure are you about this prediction?,60
+386,Do you consider the system's performance as good enough for [A]?,57
+387,How accurate is the prediction?,60
+388,Can this system do [A]?,51
+389,What should be the value of this feature in order to change the prediction,12
+390,What will the system improve over time?,30
+391,Why will the system improve over time?,30
+392,Where is the system likely to be valid?,59
+393,What should I do with the output?,54
+394,How reliable are the predictions?,60
+395,Why prediction P is the result for this instance?,71
+396,Why do you give different prediction for A and B?,73
+397,Which features are most used?,5
+398,How many items are used to make this prediction?,21
+399,What would the system predict for [a different instance]?,64
+400,Why is input X important to this prediction?,6
+401,Why Q is not the result for this instance?,71
+402,What are the necessary features present or absent to guarantee this prediction?,16
+403,What does feature X impact regarding predictions?,6
+404,Why is this instance not a Q but a P?,71
+405,How are the parameters set?,10
+406,How does input X impact the model?,6
+407,How should this feature change for this instance to get a different result?,12
+408,What does the system output mean?,52
+409,How much lower can the value of the feature be than this one and still give the same prediction?,17
+410,What rules does it use?,0
+411,In what situations is the system likely to be correct?,59
+412,What kind of data is not used?,24
+413,What are the necessary features present or absent to guarantee this prediction?,16
+414,Why is this instance given this prediction?,67
+415,How to improve the system?,49
+416,What are the parameters of this model?,10
+417,Which factors lead to this result?,67
+418,Give me the results from other users.,44
+419,Which kind of data is not being used?,24
+420,Why are instances A and B given different predictions?,73
+421,Why does it use this rule?,36
+422,How much data like this is the system trained on?,29
+423,What will the system change over time?,30
+424,What use is the output of this system?,54
+425,What is the highest feature value one can have to still get the same prediction?,20
+426,What is the source of the data?,21
+427,What kind of errors are likely to happen?,55
+428,Why does it use this rule?,36
+429,In what situations is the system likely to be incorrect?,58
+430,What are the necessary features present or absent to guarantee this prediction?,16
+431,How is this instance given this prediction?,67
+432,If the feature of the instance changes to A  what will the system predict?,64
+433,What will the system improve over time?,30
+434,Is feature X used or not used for the predictions?,6
+435,How much does this system know?,51
+436,What data element was used to make this prediction?,69
+437,What causes the system to give this prediction?,67
+438,What features of this instance lead to the system's prediction?,69
+439,What are the results of other people using the system?,44
+440,Why does it use this data?,38
+441,Why will the system improve over time?,30
+442,How will the system adapt over time?,30
+443,How does the system make predictions?,7
+444,What could go wrong?,55
+445,Which factors limit the data?,25
+446,Why is this instance given this prediction?,67
+447,Why will the system improve over time?,30
+448,What are the necessary features present or absent to guarantee this prediction?,16
+449,How can I modify this instance to get a different result?,11
+450,How reliable are the predictions?,60
+451,What is the nature of this output?,50
+452,How is this instance given this prediction?,67
+453,How will the system change over time?,30
+454,What kind of instance gets a different prediction?,14
+455,What is the highest feature value one can have to still get the same prediction?,20
+456,In what situations is the system likely to be incorrect?,58
+457,What is the system's overall logic?,2
+458,Summarize some of the types of errors that might be made by this system.,55
+459,How are the parameters set?,10
+460,Under what conditions will the prediction be true?,59
+461,What are the top rules it uses?,4
+462,Why is this feature not used?,34
+463,What will the system improve over time?,30
+464,How were the labels produced?,27
+465,How satisfied are you with the system's performance for [A]?,57
+466,Which feature of this object led to this prediction?,69
+467,If the value of this feature changes to A  what will the system predict?,64
+468,How much data like this is the system trained on?,29
+469,At what feature level does this prediction happen?,17
+470,How is this instance given this prediction?,67
+471,Why does it not use this data?,35
+472,What is the range of change allowed before the prediction changes?,15
+473,What would be the new prediction if this instance changes to A?,64
+474,What are the top features it uses?,5
+475,What are the biases of the data?,26
+476,How many did they sample?,21
+477,Why this instance has class P but Q does not?,71
+478,Is feature X used or not used for the predictions?,6
+479,Why is not label Q?,71
+480,Why P is predicted instead of Q?,71
+481,What are the weaknesses of the data?,25
+482,Why are instances A and B given different predictions?,73
+483,What features of this instance lead to the system's prediction?,69
+484,What rules does it use?,0
+485,How much data like this is the system trained on?,29
+486,Why are instances A and B given different predictions?,73
+487,Why does it not use this rule?,33
+488,Which part of the data lead to the prediction?,69
+489,What are the important properties of this instance that led to the prediction?,69
+490,How to improve the system?,49
+491,What characteristics of this instance led you to this prediction?,69
+492,How will the system change over time?,30
+493,How were the labels produced?,27
+494,What biases does the data have?,26
+495,Why is this instance given this prediction?,67
+496,How is this instance not predicted A?,71
+497,What should I be aware of while using this system?,55
+498,What are the limitations of the data?,25
+499,How is this instance given this prediction?,67
+500,How to improve the system?,49
+501,Why does it use this feature?,37
+502,How will the system drift over time?,30
+503,What kind of instance gets this prediction?,13
+504,How does the system make predictions?,7
+505,Give me the reason for this prediction.,67
+506,How should the instance be changed to get a different (better or worse) prediction?,11
+507,What rules does it use?,0
+508,Why does it use this data?,38
+509,How does feature X impact its predictions?,6
+510,How were the labels produced?,27
+511,How is the output used for other system component(s)?,53
+512,Why do A and B have the same label?,68
+513,What rules does it use?,0
