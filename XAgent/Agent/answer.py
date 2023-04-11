@@ -100,7 +100,7 @@ class Answers:
             ans_relation = []
             for j, (v1, v2) in enumerate(zip(js['test_data'][0][0], js['cfs_list'][0][0][:-1])):
                 if v1 != v2:
-                    if type(v1) == str:
+                    if type(v1) == str or type(v2) == str:
                         s = js['feature_names'][j] + " should be changed to " + str(v2)
                     else:
                         if v1 < v2:

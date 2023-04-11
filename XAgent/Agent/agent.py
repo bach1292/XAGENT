@@ -208,7 +208,7 @@ class Agent:
                 self.train_model()
                 self.current_instance = {}
                 self.request_iterator = self.request_instance()
-                ans = f"Welcome to {self.dataset} dataset, are you ready to input the instance?"
+                ans = f"Welcome to {self.dataset} dataset. {self.data['info']['dataset_description']} Are you ready to input the instance?"
                 # logging.info(ans)
                 print_log(None, ans)
                 # return ans
@@ -220,7 +220,9 @@ class Agent:
                 question = self.preprocess_question(text)
                 question = self.nlu_model.match(question, self.data["features"], self.predicted_class, self.current_instance, self.data["classes"]),
                 # todo
+                logging.log(26,f"question = {question}")
                 answer = self.answer_question(question)
+                logging.log(26, f"answer = {answer}")
             # logging.info(answer)
             return answer
 
