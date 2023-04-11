@@ -49,7 +49,7 @@ class Answers:
             relation.append({})
             for j, (v1, v2) in enumerate(zip(test_data, clf[:-1])):
                 if v1 != v2:
-                    if type(v1) == str:
+                    if type(v1) == str or type(v2) == str:
                         relation[i][feature_name[j]] = "not suitable"
                     else:
                         if v1 < v2:
@@ -121,7 +121,13 @@ class Answers:
             return "new instance is: " + str(temp_instance) + " and the predicted class is" + str(
                 self.clf.predict([temp_instance]))
         if id_question in constraints.l_shap_question_ids:
-            return shap_explainer(self, id_question)
+            shap_explainer(self, id_question)
+            if id_question in constraints.l_shap_question_feature:
+                return self.data['info']["feature_ans"] + self.data['info']['why_ans']
+            elif id_question in constraints.l_shap_question_single_feature:
+                return constraints.ans_shap_question_single_feature + self.data['info']['why_ans']
+            else:
+                return self.data['info']['why_ans']
         if id_question in constraints.l_anchor_question_ids:
             return anchor_answer(self)
         return constraints.cant_answer_msg

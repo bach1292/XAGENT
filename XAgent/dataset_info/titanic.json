@@ -4,5 +4,6 @@
   "num_features": ["Age", "Fare", "Family_Size"],
   "predict_prompt": ["Unfortunately, you will die for sure. RIP. Better luck next time!", "Congrats, you will survive"],
   "why_ans": "Look at the graph! Red features increase the survived probability, blue features decrease the chance",
+  "feature_ans": "The model used all features, however, may have a significant impact on the model's prediction for your survival rate. ",
   "feature_description": {}
 }

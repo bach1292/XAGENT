@@ -4,6 +4,7 @@
   "num_features": ["sepal length", "sepal width","petal length", "petal width"],
   "predict_prompt": ["the flower looks like setosa", "the flower looks like versicolor", "the flower looks like virginica"],
   "why_ans": "Look at the graph! Red features increase the probability, blue features decrease it",
+  "feature_ans": "The model used all features, however, may have a significant impact on the model's prediction. ",
   "change_ans": ["to setosa flower", "to versicolor flower", "to get virginica flower"],
   "feature_description": {}
 }

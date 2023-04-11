@@ -196,7 +196,7 @@ class Agent:
             # logging.info(ans)
             return ans
         if self.mode is None:
-            if text not in ["iris","adult","titanic","mnist", "german-credit","yes"]:
+            if text not in ["iris","adult","titanic", "german-credit","yes"]:
                 return constraints.dataset_error_msg
             else:
                 if text != "yes":

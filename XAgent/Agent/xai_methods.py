@@ -66,7 +66,6 @@ def shap_explainer(self, id_question):
         shap_values = explainer.shap_values(np.array(num_instance))
         shap.force_plot(explainer.expected_value[predicted_cls], shap_values[predicted_cls],
                         self.df_display_instance.columns, figsize=(15, 3), show=True, matplotlib=True)
-    return self.data['info']['why_ans']
 
 
 def dice_answer(self, target_class=0, features='all'):
