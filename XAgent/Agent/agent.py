@@ -178,13 +178,10 @@ class Agent:
                 msg = constraints.repeat_cat_features.format(features)
                 print_log("xagent", msg)
                 text = print_log("user")
-            if self.data['info']['name'] == 'adult':
-                self.current_instance[f] = str(" " + str(text))
+            if text.isnumeric():
+                self.current_instance[f] = int(text)
             else:
-                if text.isnumeric():
-                    self.current_instance[f] = int(text)
-                else:
-                    self.current_instance[f] = str(text)
+                self.current_instance[f] = str(text)
         else:
             self.current_instance[f] = float(text)
     def dataset_response(self, text, conversations = []):
@@ -266,6 +263,9 @@ class Agent:
         if dataset_name.lower() == "adult":
             self.data["X"], self.data["y"] = shap.datasets.adult()
             self.data["X_display"], self.data["y_display"] = shap.datasets.adult(display=True)
+            for col in self.data["X_display"].columns:
+                if (type(self.data["X_display"][col].dtype) == pd.core.dtypes.dtypes.CategoricalDtype):
+                    self.data["X_display"][col] = self.data["X_display"][col].apply(lambda x: x.strip())
             self.data["classes"] = ["False","True"]
             self.data["cls_mapping"] = {"False": ["<=50K", "less than 50K"],
                                         "K ?": ["K\?"],
@@ -377,8 +377,8 @@ class Agent:
             self.clf_anchor.fit(self.dataset_anchor.train, self.dataset_anchor.labels_train)
             return
         if self.dataset == "mnist":
-            self.data['X'] = self.data['X'].astype('float32') /255
-            self.data['X'] = np.reshape(self.data['X'] , self.data['X'] .shape + (1,))
+            self.data["X"] = self.data["X"].astype('float32') /255
+            self.data["X"] = np.reshape(self.data["X"] , self.data["X"] .shape + (1,))
             self.data['y'] = to_categorical(self.data['y'])
             self.clf = self.model()
             self.clf = load_model(os.path.join(PATH,'mnist_cnn.h5'))

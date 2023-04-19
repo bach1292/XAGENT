@@ -1,4 +1,4 @@
-welcome_msg = "Welcome. I am a conversational agent and can explain decisions made by machine learning models. Currently, the default dataset is german-credit. Would you like to go on with this dataset? Please type 'yes' to continue, otherwise, type one of the supported dataset in this list [Adult, Iris, Titanic]?"
+welcome_msg = "Welcome. I am a conversational agent and can explain decisions made by machine learning models. Currently, the default dataset is german-credit. Would you like to go on with this dataset? Please type 'yes' to continue, otherwise, type one of the supported dataset in this list [adult, iris, titanic]?"
 dataset_error_msg = "I only support adult, iris, titanic and german-credit dataset, please type a correct name"
 wait_msg = "Wait a min, I need to learn it"
 list_feature_request_msgs = ["How about your ", "What is your ", "Give me your "]
