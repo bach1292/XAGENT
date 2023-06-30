@@ -7,22 +7,32 @@ import lime
 import lime.lime_tabular
 import logging
 # import string
+import streamlit as st
 import os
 import sys
-
+def on_input_change():
+    # user_input = st.session_state.user_input
+    # st.session_state.dialog.append({'type': 'normal', 'role': 'user', 'data': user_input})
+    st.session_state.user_input = ''
+    # print(f"User: {user_input}" )
 class Bunch(object):
     """bla"""
     def __init__(self, adict):
         self.__dict__.update(adict)
 def print_log(turn, msg = None, state=None):
     if turn == "xagent":
-        print(f"\033[1m\033[94mX-Agent:\033[0m")
-
-    if msg is not None:
-        print(msg)
+        # print(f"\033[1m\033[94mX-Agent:\033[0m")
+        st.session_state.dialog.append({'type': 'normal', 'role': 'bot', 'data': msg})
     if turn == "user":
-        print('\033[91m\033[1mUser:\033[0m')
-        msg = input()
+        # print('\033[91m\033[1mUser:\033[0m')
+        # msg = input()
+        msg = st.session_state.user_input
+        # if msg:
+        #     st.experimental_rerun()
+        # else:
+        #     st.stop()
+        st.session_state.dialog.append({'type': 'normal', 'role': 'user', 'data': msg})
+
     logging.log(25, f"{turn}: {msg}")
     if state is not None:
         logging.log(25, state)

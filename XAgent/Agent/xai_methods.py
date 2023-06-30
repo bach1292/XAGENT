@@ -6,8 +6,9 @@ import dice_ml
 from XAgent.Agent import constraints
 from alibi.explainers import CounterfactualProto
 from tensorflow.keras.models import Model, load_model
+import streamlit as st
 from anchor import anchor_tabular
-
+from XAgent.Agent.utils import print_log
 from XAgent.Agent.utils import ask_for_feature
 
 PATH = os.path.dirname(__file__)
@@ -48,10 +49,10 @@ def shap_explainer(self, id_question):
             # shap.force_plot(explainer.expected_value[predicted_cls][index], shap_values[predicted_cls][index], self.df_display_instance.columns[index],figsize=(15,3), show = True, matplotlib=True)
             # shap.plots.waterfall(explainer_values[0][index])
             shap.force_plot(explainer.expected_value[predicted_cls], shap_values_original_input[predicted_cls][index],
-                            self.df_display_instance.columns[index], figsize=(15, 3), show=True, matplotlib=True)
+                            self.df_display_instance.columns[index], figsize=(15, 3), show=False, matplotlib=True)
         else:
             shap.force_plot(explainer.expected_value[predicted_cls], shap_values_original_input[predicted_cls],
-                            self.df_display_instance.columns, figsize=(15, 3), show=True, matplotlib=True)
+                            self.df_display_instance.columns, figsize=(15, 3), show=False, matplotlib=True)
     else:
         explainer = shap.Explainer(self.clf)
         num_instance = []
@@ -62,10 +63,15 @@ def shap_explainer(self, id_question):
                         num_instance.append(k)
             else:
                 num_instance.append(self.df_display_instance[f][0])
-        predicted_cls = self.data["classes"].index(str(self.predicted_class))
+        predicted_cls = self.data["classes"].index(self.predicted_class)
         shap_values = explainer.shap_values(np.array(num_instance))
         shap.force_plot(explainer.expected_value[predicted_cls], shap_values[predicted_cls],
-                        self.df_display_instance.columns, figsize=(15, 3), show=True, matplotlib=True)
+                        self.df_display_instance.columns, figsize=(15, 3), show=False, matplotlib=True)
+    # msg = 'temp.png'
+    filename = 'static/temp.jpg'
+    plt.savefig(filename, bbox_inches='tight')
+    # print_log("xagent", f'<img height="100%" width="100%" src="/app/{filename}"/>')
+    return f'</br></br><img height="100%" width="100%" src="/app/{filename}"/></br></br></br></br></br></br></br></br></br>'
 
 
 def dice_answer(self, target_class=0, features='all'):

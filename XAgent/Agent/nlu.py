@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import sys
 import  logging
+import streamlit as st
 # sys.path.append('/homes/bach/XAGENT/XAgent/Agent')
 # silence command-line output temporarily
 # sys.stdout, sys.stderr = os.devnull, os.devnull
@@ -41,11 +42,11 @@ class NLU:
         if "{X}" in question:
             question = question.replace("{X}", f"{{{features[0]},{features[1]}, ...}}")
         if "{P}" in question:
-            question = question.replace("{P}", prediction)
+            question = question.replace("{P}", str(prediction))
         if "{Q}" in question:
             question = question.replace("{Q}", str([label for label in labels if label != prediction]))
         return question
-    def match(self, question, features, prediction, current_instance, labels):
+    def match(self, question):
         threshold = 0.6
         match_results = self.model.search(question, threshold=threshold)
         logging.log(26, f"question = {question}")
@@ -54,11 +55,14 @@ class NLU:
             match_question, score = match_results[0]
             # print("hallo" + match_question)
             return match_question
-        else:
-            match_results = self.model.search(question, threshold=0, top_k=topk)
-            questions = self.get_list_questions(match_results)
-            # print(match_results)
-            # ans = "I am not sure what you mean. Can you please choose one of the following questions if there is a match, otherwise, choose 6 to get more questions\n"
+        return None
+    def suggest_questions(self, question, features, prediction, current_instance, labels):
+        if "match_results" not in st.session_state:
+            st.session_state.match_results = self.model.search(question, threshold=0, top_k=topk)
+        questions = self.get_list_questions(st.session_state.match_results)
+        # print(match_results)
+        # ans = "I am not sure what you mean. Can you please choose one of the following questions if there is a match, otherwise, choose 6 to get more questions\n"
+        if "choice" not in st.session_state:
             ans = select_msg
             # print_log("xagent", ans)
             for idx, question in enumerate(questions[:5]):
@@ -73,33 +77,40 @@ class NLU:
             # print(msg)
             # ans += f"{msg}\n"
             # logging.log(25, f"Xagent: {ans}")
-            print_log("xagent", ans)
-            choice = print_log("user")
-            while(True):
-                if choice.isnumeric():
-                    if int(choice) <= topk+1:
-                        break
-                msg = request_number_msg
-                print_log("xagent", msg)
-                choice = print_log("user")
-            ans = request_more_msg
-            if int(choice) == 0:
-                return "unknown"
-            if int(choice) == 6:
-                for idx, question in enumerate(questions[5:15], start=5):
-                    question = self.replace_information(question, features, prediction, current_instance, labels)
-                    msg = f"{idx+1}. {question}"
-                    ans+=f"{msg}\n"
-                print_log("xagent", ans)
-                choice = print_log("user")
-                if int(choice) == 0:
-                    return "unknown"
-                while (True):
-                    if choice.isnumeric():
-                        if int(choice) < 15:
-                            break
-                    msg = request_number_msg
-                    print_log("xagent", msg)
-                    choice = print_log("user")
-            return questions[int(choice) - 1]
-        return "unknown"
+            # print_log("xagent", ans)
+            # print_log("user")
+            return ans
+
+        if st.session_state.choice.isnumeric() == False or int(st.session_state.choice) >= topk+1:
+            msg = request_number_msg
+            # print_log("xagent", msg)
+            # print_log("user")
+            return msg
+
+        ans = request_more_msg
+        if int(st.session_state.choice) == 0:
+            st.session_state.question = "unknown"
+            st.session_state.suggest_question = False
+        if int(st.session_state.choice) == 6:
+            for idx, question in enumerate(questions[5:15], start=5):
+                question = self.replace_information(question, features, prediction, current_instance, labels)
+                msg = f"{idx+1}. {question}"
+                ans+=f"{msg}\n"
+            # print_log("xagent", ans)
+            return ans
+            # choice = print_log("user")
+            # if int(st.sesssion_state.choice) == 0:
+            #     st.session_state.question = "unknown"
+            #     st.session_state.suggest_question = False
+            # while (True):
+            #     if st.sesssion_state.choice.isnumeric():
+            #         if int(st.sesssion_state.choice) < 15:
+            #             break
+            #     msg = request_number_msg
+            #     # print_log("xagent", msg)
+            #     # choice = print_log("user")
+            #     return msg
+        st.session_state.suggest_question = False
+        st.session_state.question = questions[int(st.session_state.choice) - 1]
+        print("nlu 115 st.session_state.question")
+        return None

@@ -59,6 +59,7 @@ class Answers:
         return relation
 
     def answer(self, question, conversations=[]):
+        print(question)
         if type(question) is tuple:
             question = question[0]
         if question == "unknown":
@@ -121,13 +122,13 @@ class Answers:
             return "new instance is: " + str(temp_instance) + " and the predicted class is" + str(
                 self.clf.predict([temp_instance]))
         if id_question in constraints.l_shap_question_ids:
-            shap_explainer(self, id_question)
+            img = shap_explainer(self, id_question)
             if id_question in constraints.l_shap_question_feature:
-                return self.data['info']["feature_ans"] + self.data['info']['why_ans']
+                return self.data['info']["feature_ans"] + self.data['info']['why_ans'] + img
             elif id_question in constraints.l_shap_question_single_feature:
-                return constraints.ans_shap_question_single_feature + self.data['info']['why_ans']
+                return constraints.ans_shap_question_single_feature + self.data['info']['why_ans'] + img
             else:
-                return self.data['info']['why_ans']
+                return self.data['info']['why_ans'] + img
         if id_question in constraints.l_anchor_question_ids:
             return anchor_answer(self)
         return constraints.cant_answer_msg

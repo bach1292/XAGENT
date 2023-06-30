@@ -25,7 +25,7 @@ from openml.tasks import TaskType
 import numpy as np
 # print the JS visualization code to the notebook
 # shap.initjs()
-
+import streamlit as st
 import pandas
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
@@ -210,18 +210,30 @@ class Agent:
                 self.request_iterator = self.request_instance()
                 ans = f"Welcome to {self.dataset} dataset. {self.data['info']['dataset_description']} Are you ready to input the instance?"
                 # logging.info(ans)
-                print_log(None, ans)
-                # return ans
+                # print_log("xagent", ans)
+                return ans
         else:
             if self.mode == MODE_INPUT:
                 self.collect_instance(text)
                 answer = next(self.request_iterator, None)
             else:
+                print(st.session_state.question)
+                print("agent 221")
                 question = self.preprocess_question(text)
-                question = self.nlu_model.match(question, self.data["features"], self.predicted_class, self.current_instance, self.data["classes"]),
-                # todo
+                if st.session_state.question is None:
+                    if st.session_state.suggest_question == False:
+                        st.session_state.question = self.nlu_model.match(question)
+                    if st.session_state.question is None:
+                        st.session_state.suggest_question = True
+                        print(st.session_state.suggest_question)
+                        print("agent 227")
+                        result = self.nlu_model.suggest_questions(question, self.data["features"], self.predicted_class,
+                                                    self.current_instance, self.data["classes"])
+                        if st.session_state.question is None:
+                            return result
                 logging.log(26,f"question = {question}")
-                answer = self.answer_question(question)
+                answer = self.answer_question(st.session_state.question)
+                st.session_state.question = None
                 logging.log(26, f"answer = {answer}")
             # logging.info(answer)
             return answer
@@ -304,7 +316,8 @@ class Agent:
             self.data["y_display"] = pd.Series(y_display)
             self.data["X"] = self.data["X_display"].copy(deep=True)
             self.data["y"] = self.data["y_display"].copy(deep=True)
-            self.data["classes"] = list(iris.target_names)
+            self.data["classes"] = [0,1,2]
+            print(self.data["classes"])
             self.data["cls_mapping"] = {}
             self.data["features"] = features
             self.data["feature_names"] = self.data["features"]
