@@ -10,6 +10,10 @@ import logging
 import streamlit as st
 import os
 import sys
+
+from XAgent.Agent.mode import MODE_ASK_FOR_FEATURE
+
+
 def on_input_change():
     # user_input = st.session_state.user_input
     # st.session_state.dialog.append({'type': 'normal', 'role': 'user', 'data': user_input})
@@ -43,12 +47,14 @@ def ask_for_feature(self):
         # print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
         # logging.log(25, f"Xagent: {msg}")
         print_log("xagent",msg)
-        user_input = print_log("user")
-        while user_input not in self.l_features:
-            msg = f"please choose one of the following features: {self.l_features}"
-            print_log("xagent", msg)
-            user_input = print_log("user")
-        self.l_exist_features.append(user_input)
+        st.session_state.mode = MODE_ASK_FOR_FEATURE
+        st.experimental_rerun()
+        # user_input = print_log("user")
+        # while user_input not in self.l_features:
+        #     msg = f"please choose one of the following features: {self.l_features}"
+        #     print_log("xagent", msg)
+        #     user_input = print_log("user")
+        # self.l_exist_features.append(user_input)
 
 def map_array_values(array, value_map):
     # value map must be { src : target }

@@ -47,13 +47,14 @@ import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D, Input
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.utils import to_categorical
+from XAgent.Agent.mode import *
 import PIL
 
 from XAgent.Agent.utils import print_log
 
 # from IPython.display import display
-MODE_INPUT = 0
-MODE_QUESTION = 1
+# MODE_INPUT = 0
+# MODE_QUESTION = 1
 # MODE_DATASET = 1
 
 
@@ -69,7 +70,7 @@ class Agent:
         self.current_instance = None
         self.clf = None
         self.predicted_class = None
-        self.mode = None
+        # self.mode = None
         self.data = {"X": None, "y": None, "features": None, "classes": None}
         self.nlu_model = NLU()
         self.list_node = []
@@ -121,7 +122,8 @@ class Agent:
             question = re.sub(c, regex_replacement, question)
         return question
     def request_instance(self):
-        if self.mode == MODE_INPUT:
+        print("Hey, I am here agent 125")
+        if st.session_state.mode == MODE_INPUT:
             if self.dataset == "mnist":
                 msg = "Give me the image's name, in the folder, I already have an example with 7.png"
                 print_log("xagent", msg)
@@ -136,7 +138,7 @@ class Agent:
                 plt.show()
                 self.current_instance = image_array[:,:,0].astype('float32') / 255
                 self.predicted_class = self.clf.predict(self.current_instance .reshape(1, 28, 28, 1)).argmax()
-                self.mode = MODE_QUESTION
+                st.session_state.mode = MODE_QUESTION
                 yield "My prediction for this image is number " + str(self.predicted_class) + "."
             for f, fn in zip(self.data["features"], self.data["feature_names"]):
                 self.current_feature = f
@@ -153,7 +155,7 @@ class Agent:
                 else:
                     yield (msg + "? Please give me a number")
                     # self.current_instance[f] = float(text)
-            self.mode = MODE_QUESTION
+            st.session_state.mode = MODE_QUESTION
             self.current_feature = None
             string_convert = [str(v) for v in self.current_instance.values()]
             instance = ",".join(string_convert)
@@ -195,13 +197,13 @@ class Agent:
             ans = constraints.welcome_msg
             # logging.info(ans)
             return ans
-        if self.mode is None:
+        if st.session_state.mode is None:
             if text not in ["iris","adult","titanic", "german-credit","yes"]:
                 return constraints.dataset_error_msg
             else:
                 if text != "yes":
                     self.dataset = text
-                self.mode = MODE_INPUT
+                st.session_state.mode = MODE_INPUT
                 self.get_dataset_info(self.dataset)
                 ans = constraints.wait_msg
                 print_log("xagent", ans)
@@ -213,27 +215,34 @@ class Agent:
                 # print_log("xagent", ans)
                 return ans
         else:
-            if self.mode == MODE_INPUT:
+            if st.session_state.mode == MODE_INPUT:
                 self.collect_instance(text)
                 answer = next(self.request_iterator, None)
+
             else:
+                print("Hey agent 223")
+                print(st.session_state.mode)
                 print(st.session_state.question)
-                print("agent 221")
                 question = self.preprocess_question(text)
                 if st.session_state.question is None:
-                    if st.session_state.suggest_question == False:
+                    if st.session_state.mode == MODE_QUESTION:
                         st.session_state.question = self.nlu_model.match(question)
-                    if st.session_state.question is None:
-                        st.session_state.suggest_question = True
-                        print(st.session_state.suggest_question)
-                        print("agent 227")
+                        print("match")
+                        if st.session_state.question is None:
+                            print("suggest")
+                            st.session_state.mode = MODE_SUGGEST_QUESTION
+                    if st.session_state.mode == MODE_SUGGEST_QUESTION:
+                        print("suggest in")
                         result = self.nlu_model.suggest_questions(question, self.data["features"], self.predicted_class,
                                                     self.current_instance, self.data["classes"])
-                        if st.session_state.question is None:
+                        if st.session_state.question is None: # question not yet decided
                             return result
                 logging.log(26,f"question = {question}")
                 answer = self.answer_question(st.session_state.question)
-                st.session_state.question = None
+                print(st.session_state.mode)
+                if st.session_state.mode != MODE_ASK_FOR_CLS:
+                    print("Did you come here")
+                    st.session_state.question = None
                 logging.log(26, f"answer = {answer}")
             # logging.info(answer)
             return answer

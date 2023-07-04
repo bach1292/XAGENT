@@ -8,6 +8,7 @@ import streamlit as st
 # sys.stdout, sys.stderr = os.devnull, os.devnull
 from importlib_resources import files
 from simcse import SimCSE
+from XAgent.Agent.mode import *
 
 from XAgent.Agent.constraints import select_msg, l_support_questions_ids, request_number_msg, request_more_msg
 from XAgent.Agent.utils import print_log
@@ -110,7 +111,8 @@ class NLU:
             #     # print_log("xagent", msg)
             #     # choice = print_log("user")
             #     return msg
-        st.session_state.suggest_question = False
+        st.session_state.mode = MODE_QUESTION
         st.session_state.question = questions[int(st.session_state.choice) - 1]
-        print("nlu 115 st.session_state.question")
+        st.session_state.pop("match_results")
+        st.session_state.pop("choice")
         return None
