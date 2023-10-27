@@ -8,10 +8,10 @@ import streamlit as st
 # sys.stdout, sys.stderr = os.devnull, os.devnull
 from importlib_resources import files
 from simcse import SimCSE
-from XAgent.Agent.mode import *
+from Agent.mode import *
 
-from XAgent.Agent.constraints import select_msg, l_support_questions_ids, request_number_msg, request_more_msg
-from XAgent.Agent.utils import print_log
+from Agent.constraints import select_msg, l_support_questions_ids, request_number_msg, request_more_msg
+from Agent.utils import print_log
 
 # unsilence command-line output
 
@@ -50,6 +50,8 @@ class NLU:
     def match(self, question):
         threshold = 0.6
         match_results = self.model.search(question, threshold=threshold)
+        print("Match_result")
+        print(match_results)
         logging.log(26, f"question = {question}")
         logging.log(26, f"result = {match_results}")
         if len(match_results) > 0:

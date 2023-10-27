@@ -11,7 +11,7 @@ import streamlit as st
 import os
 import sys
 
-from XAgent.Agent.mode import MODE_ASK_FOR_FEATURE
+from Agent.mode import MODE_ASK_FOR_FEATURE
 
 
 def on_input_change():
@@ -26,7 +26,8 @@ class Bunch(object):
 def print_log(turn, msg = None, state=None):
     if turn == "xagent":
         # print(f"\033[1m\033[94mX-Agent:\033[0m")
-        st.session_state.dialog.append({'type': 'normal', 'role': 'bot', 'data': msg})
+        # st.session_state.messages.append({'type': 'normal', 'role': 'assistant', 'content': msg})
+        pass
     if turn == "user":
         # print('\033[91m\033[1mUser:\033[0m')
         # msg = input()
@@ -35,7 +36,7 @@ def print_log(turn, msg = None, state=None):
         #     st.experimental_rerun()
         # else:
         #     st.stop()
-        st.session_state.dialog.append({'type': 'normal', 'role': 'user', 'data': msg})
+        st.session_state.messages.append({'type': 'normal', 'role': 'user', 'content': msg})
 
     logging.log(25, f"{turn}: {msg}")
     if state is not None:

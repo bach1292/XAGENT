@@ -5,28 +5,26 @@ import logging
 import shap
 from dtreeviz.trees import *
 
-from XAgent.Agent.mode import *
-from XAgent.Agent.utils import print_log
-from XAgent.Agent.xai_methods import *
+from Agent.mode import *
+from Agent.utils import print_log
+from Agent.xai_methods import *
 # print the JS visualization code to the notebook
 shap.initjs()
 
-
-from XAgent.Agent import constraints
+from streamlit_server_state import server_state
+from Agent import constraints
 import tensorflow as tf
 tf.get_logger().setLevel(40) # suppress deprecation messages
 tf.compat.v1.disable_v2_behavior() # disable TF2 behaviour as alibi code still relies on TF1 constructs
-from tensorflow.keras.models import Model, load_model
 import matplotlib.pyplot as plt
 import numpy as np
-from alibi.explainers import CounterfactualProto
 
 import os
 PATH = os.path.dirname(__file__)
 l_shap_questions = []
 class Answers:
     def __init__(self, list_node, clf, clf_display, current_instance, question, l_exist_classes, l_exist_features,
-                 l_instances, data, df_display_instance, predicted_class, dataset_anchor, clf_anchor, preprocessor=None):
+                 l_instances, data, df_display_instance, predicted_class, dataset_anchor, clf_anchor, orig_quest, preprocessor=None):
         self.list_node = list_node
         self.clf = clf
         self.clf_display = clf_display
@@ -46,6 +44,7 @@ class Answers:
         self.df_display_instance = df_display_instance
         self.predicted_class = predicted_class
         self.preprocessor = preprocessor
+        self.original_question = orig_quest
 
     def extract_relation(self, test_data, clf_list, feature_name):
         relation = []
@@ -135,11 +134,25 @@ class Answers:
         if st.session_state.id_question in constraints.l_shap_question_ids:
             img = shap_explainer(self, st.session_state.id_question)
             if st.session_state.id_question in constraints.l_shap_question_feature:
-                return self.data['info']["feature_ans"] + self.data['info']['why_ans'] + img
+                return (self.data['info']["feature_ans"] + self.data['info']['why_ans'],img)
             elif st.session_state.id_question in constraints.l_shap_question_single_feature:
-                return constraints.ans_shap_question_single_feature + self.data['info']['why_ans'] + img
+                return (constraints.ans_shap_question_single_feature + self.data['info']['why_ans'], img)
             else:
-                return self.data['info']['why_ans'] + img
+                return (self.data['info']['why_ans'], img)
         if st.session_state.id_question in constraints.l_anchor_question_ids:
             return anchor_answer(self)
+        if st.session_state.id_question in constraints.l_terminology_question_ids:
+            prompt ="""
+            Question:{}. Explain it in 100 tokens.
+            Answer:
+            """.format(self.original_question) 
+            sequence = st.llm(prompt,
+            do_sample=True,
+            top_k=50,
+            num_return_sequences=1,
+            max_new_tokens=100
+            )
+            answer = sequence[0]['generated_text'].split("Answer:")[1]
+            return answer
+
         return constraints.cant_answer_msg

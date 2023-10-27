@@ -68,10 +68,15 @@ def shap_explainer(self, id_question):
         shap.force_plot(explainer.expected_value[predicted_cls], shap_values[predicted_cls],
                         self.df_display_instance.columns, figsize=(15, 3), show=False, matplotlib=True)
     # msg = 'temp.png'
-    filename = 'static/temp.jpg'
-    plt.savefig(filename, bbox_inches='tight')
+    temp_dir = "static"
+    if not os.path.isdir(temp_dir):
+        os.makedirs(temp_dir)
+
+    filename = 'temp.jpg'
+    file_path = os.path.join(temp_dir, filename)
+    plt.savefig(file_path, bbox_inches='tight')
     # print_log("xagent", f'<img height="100%" width="100%" src="/app/{filename}"/>')
-    return f'</br></br><img height="100%" width="100%" src="/app/{filename}"/></br></br></br></br></br></br></br></br></br>'
+    return file_path
 
 
 def dice_answer(self, target_class=0, features='all'):

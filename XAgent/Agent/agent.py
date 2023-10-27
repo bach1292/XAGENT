@@ -16,7 +16,7 @@ import shap
 import sklearn
 from importlib_resources import files
 import pickle
-from XAgent.Agent import constraints
+from Agent import constraints
 import sys
 
 # sys.path.append('/homes/bach/XAGENT/XAgent/Agent/')
@@ -32,13 +32,13 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-from XAgent.Agent.answer import Answers
-from XAgent.Agent import utils
+from Agent.answer import Answers
+from Agent import utils
 from anchor import anchor_tabular
 
-from XAgent.Agent.constraints import *
+from Agent.constraints import *
 # import the desired library
-from XAgent.Agent.nlu import NLU
+from Agent.nlu import NLU
 
 # import sys
 # sys.stdout = sys.__stdout__
@@ -47,10 +47,10 @@ import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D, Input
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.utils import to_categorical
-from XAgent.Agent.mode import *
+from Agent.mode import *
 import PIL
 
-from XAgent.Agent.utils import print_log
+from Agent.utils import print_log
 
 # from IPython.display import display
 # MODE_INPUT = 0
@@ -171,15 +171,17 @@ class Agent:
         f = self.current_feature
 
         if f is None:
-            return
+            return None
+        #categorical features
         if f in self.data['map'].keys():
             features = ",".join(str(x) for x in self.data['map'][f].values())
             # print(self.data['map'][f].values())
             # print(text)
             while(text not in self.data['map'][f].values()):
                 msg = constraints.repeat_cat_features.format(features)
-                print_log("xagent", msg)
-                text = print_log("user")
+                yield msg
+                # print_log("xagent", msg)
+                # text = print_log("user")
             if self.data['info']['name'] == 'adult':
                 self.current_instance[f] = str(" " + str(text))
             else:
@@ -188,7 +190,13 @@ class Agent:
                 else:
                     self.current_instance[f] = str(text)
         else:
+            #numerical feature
+            #todo: check numerical feature
+            while text.isnumeric() == False:
+                yield "Please input a number instead of letters"
             self.current_instance[f] = float(text)
+        yield None
+
     def dataset_response(self, text, conversations = []):
         if "dataset" in text:
             self.mode = None
@@ -205,8 +213,8 @@ class Agent:
                     self.dataset = text
                 st.session_state.mode = MODE_INPUT
                 self.get_dataset_info(self.dataset)
-                ans = constraints.wait_msg
-                print_log("xagent", ans)
+                # ans = constraints.wait_msg
+                # print_log("xagent", ans)
                 self.train_model()
                 self.current_instance = {}
                 self.request_iterator = self.request_instance()
@@ -216,13 +224,17 @@ class Agent:
                 return ans
         else:
             if st.session_state.mode == MODE_INPUT:
-                self.collect_instance(text)
+                check_instance = self.collect_instance(text)
+                answer = next(check_instance, None)
+                if answer != None:
+                    return answer
                 answer = next(self.request_iterator, None)
 
             else:
                 print("Hey agent 223")
                 print(st.session_state.mode)
                 print(st.session_state.question)
+                self.original_question = text
                 question = self.preprocess_question(text)
                 if st.session_state.question is None:
                     if st.session_state.mode == MODE_QUESTION:
@@ -254,7 +266,7 @@ class Agent:
 
         answer = Answers(self.list_node, self.clf, self.clf_display, self.current_instance, question,
                          self.l_exist_classes, self.l_exist_features, self.l_instances, self.data,
-                         self.df_display_instance, self.predicted_class, self.dataset_anchor, self.clf_anchor, self.preprocessor)
+                         self.df_display_instance, self.predicted_class, self.dataset_anchor, self.clf_anchor, self.original_question, self.preprocessor)
         return answer.answer(question, conversations)
 
 
