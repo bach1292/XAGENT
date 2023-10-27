@@ -1,18 +1,19 @@
 import copy
 import json
 import logging
-
+import sys, os
 import shap
 from dtreeviz.trees import *
 
-from Agent.mode import *
-from Agent.utils import print_log
-from Agent.xai_methods import *
+from mode import *
+from utils import print_log
+from xai_methods import *
 # print the JS visualization code to the notebook
 shap.initjs()
-
-from streamlit_server_state import server_state
-from Agent import constraints
+PATH = os.path.dirname(__file__)
+sys.path.append(PATH)
+import streamlit as st
+import constraints
 import tensorflow as tf
 tf.get_logger().setLevel(40) # suppress deprecation messages
 tf.compat.v1.disable_v2_behavior() # disable TF2 behaviour as alibi code still relies on TF1 constructs
@@ -20,7 +21,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import os
-PATH = os.path.dirname(__file__)
+
 l_shap_questions = []
 class Answers:
     def __init__(self, list_node, clf, clf_display, current_instance, question, l_exist_classes, l_exist_features,

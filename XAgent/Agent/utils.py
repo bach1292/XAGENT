@@ -10,8 +10,9 @@ import logging
 import streamlit as st
 import os
 import sys
-
-from Agent.mode import MODE_ASK_FOR_FEATURE
+PATH = os.path.dirname(__file__)
+sys.path.append(PATH)
+from mode import MODE_ASK_FOR_FEATURE
 
 
 def on_input_change():

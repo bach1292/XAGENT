@@ -7,11 +7,13 @@ import streamlit as st
 # silence command-line output temporarily
 # sys.stdout, sys.stderr = os.devnull, os.devnull
 from importlib_resources import files
+PATH = os.path.dirname(__file__)
+sys.path.append(PATH)
 from simcse import SimCSE
-from Agent.mode import *
+from mode import *
 
-from Agent.constraints import select_msg, l_support_questions_ids, request_number_msg, request_more_msg
-from Agent.utils import print_log
+from constraints import select_msg, l_support_questions_ids, request_number_msg, request_more_msg
+
 
 # unsilence command-line output
 

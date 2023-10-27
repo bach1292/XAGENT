@@ -16,7 +16,7 @@ import shap
 import sklearn
 from importlib_resources import files
 import pickle
-from Agent import constraints
+import constraints
 import sys
 
 # sys.path.append('/homes/bach/XAGENT/XAgent/Agent/')
@@ -32,13 +32,13 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-from Agent.answer import Answers
-from Agent import utils
+from answer import Answers
+import utils
 from anchor import anchor_tabular
 
-from Agent.constraints import *
+from constraints import *
 # import the desired library
-from Agent.nlu import NLU
+from nlu import NLU
 
 # import sys
 # sys.stdout = sys.__stdout__
@@ -47,10 +47,10 @@ import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D, Input
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.utils import to_categorical
-from Agent.mode import *
+from mode import *
 import PIL
 
-from Agent.utils import print_log
+from utils import print_log
 
 # from IPython.display import display
 # MODE_INPUT = 0
@@ -64,6 +64,8 @@ from Agent.utils import print_log
 PATH = os.path.dirname(__file__)
 
 conversations = []
+
+
 class Agent:
     def __init__(self):
         self.dataset = "german-credit"
@@ -87,7 +89,7 @@ class Agent:
     def preprocess_question(self, question):
         for c in self.data['cls_mapping']:
             for v in self.data['cls_mapping'][c]:
-                question = question.replace(str(v),str(c))
+                question = question.replace(str(v), str(c))
         l_features = self.data['features']
         l_classes = self.data['classes']
         # extract instance from question
@@ -121,6 +123,7 @@ class Agent:
             regex_replacement = "<class>"
             question = re.sub(c, regex_replacement, question)
         return question
+
     def request_instance(self):
         print("Hey, I am here agent 125")
         if st.session_state.mode == MODE_INPUT:
@@ -134,21 +137,22 @@ class Agent:
                 msg = "This is your input image."
                 print_log("xagent", msg)
                 plt.figure(figsize=(2, 2))
-                plt.imshow(image_array[:,:,0])
+                plt.imshow(image_array[:, :, 0])
                 plt.show()
-                self.current_instance = image_array[:,:,0].astype('float32') / 255
-                self.predicted_class = self.clf.predict(self.current_instance .reshape(1, 28, 28, 1)).argmax()
+                self.current_instance = image_array[:, :, 0].astype('float32') / 255
+                self.predicted_class = self.clf.predict(self.current_instance.reshape(1, 28, 28, 1)).argmax()
                 st.session_state.mode = MODE_QUESTION
                 yield "My prediction for this image is number " + str(self.predicted_class) + "."
             for f, fn in zip(self.data["features"], self.data["feature_names"]):
                 self.current_feature = f
                 # feature_description = self.data['info']['feature_description'][fn] if fn in  self.data['info']['feature_description'] else ""
                 msg = random.choice(l_questions) + str(fn)
-                if fn in  self.data['info']['feature_description']:
+                if fn in self.data['info']['feature_description']:
                     msg += f"({self.data['info']['feature_description'][fn]})"
                 if f in self.data['map'].keys():
                     if self.dataset == "german-credit" and f == "Job":
-                        yield (msg + "? Please choose one of the following numbers:" + " [0 - unskilled and non-resident, 1 - unskilled and resident, 2 - skilled, 3 - highly skilled]")
+                        yield (
+                                    msg + "? Please choose one of the following numbers:" + " [0 - unskilled and non-resident, 1 - unskilled and resident, 2 - skilled, 3 - highly skilled]")
                     else:
                         features = ",".join(str(x) for x in self.data['map'][f].values())
                         yield (msg + f"? Please choose one of the following values: [{features}]")
@@ -167,17 +171,18 @@ class Agent:
             self.predicted_class = predict
             ans = self.data['info']['predict_prompt'][predict] + "\n" + question_msg
             yield "I recorded the information: [" + instance + "] " + ans
+
     def collect_instance(self, text):
         f = self.current_feature
 
         if f is None:
             return None
-        #categorical features
+        # categorical features
         if f in self.data['map'].keys():
             features = ",".join(str(x) for x in self.data['map'][f].values())
             # print(self.data['map'][f].values())
             # print(text)
-            while(text not in self.data['map'][f].values()):
+            while (text not in self.data['map'][f].values()):
                 msg = constraints.repeat_cat_features.format(features)
                 yield msg
                 # print_log("xagent", msg)
@@ -190,14 +195,14 @@ class Agent:
                 else:
                     self.current_instance[f] = str(text)
         else:
-            #numerical feature
-            #todo: check numerical feature
+            # numerical feature
+            # todo: check numerical feature
             while text.isnumeric() == False:
                 yield "Please input a number instead of letters"
             self.current_instance[f] = float(text)
         yield None
 
-    def dataset_response(self, text, conversations = []):
+    def dataset_response(self, text, conversations=[]):
         if "dataset" in text:
             self.mode = None
             self.dataset = None
@@ -206,7 +211,7 @@ class Agent:
             # logging.info(ans)
             return ans
         if st.session_state.mode is None:
-            if text not in ["iris","adult","titanic", "german-credit","yes"]:
+            if text not in ["iris", "adult", "titanic", "german-credit", "yes"]:
                 return constraints.dataset_error_msg
             else:
                 if text != "yes":
@@ -246,10 +251,10 @@ class Agent:
                     if st.session_state.mode == MODE_SUGGEST_QUESTION:
                         print("suggest in")
                         result = self.nlu_model.suggest_questions(question, self.data["features"], self.predicted_class,
-                                                    self.current_instance, self.data["classes"])
-                        if st.session_state.question is None: # question not yet decided
+                                                                  self.current_instance, self.data["classes"])
+                        if st.session_state.question is None:  # question not yet decided
                             return result
-                logging.log(26,f"question = {question}")
+                logging.log(26, f"question = {question}")
                 answer = self.answer_question(st.session_state.question)
                 print(st.session_state.mode)
                 if st.session_state.mode != MODE_ASK_FOR_CLS:
@@ -266,19 +271,18 @@ class Agent:
 
         answer = Answers(self.list_node, self.clf, self.clf_display, self.current_instance, question,
                          self.l_exist_classes, self.l_exist_features, self.l_instances, self.data,
-                         self.df_display_instance, self.predicted_class, self.dataset_anchor, self.clf_anchor, self.original_question, self.preprocessor)
+                         self.df_display_instance, self.predicted_class, self.dataset_anchor, self.clf_anchor,
+                         self.original_question, self.preprocessor)
         return answer.answer(question, conversations)
-
-
 
     def get_dataset_info(self, dataset_name: str):
 
         self.intro = ""
-        with open(files('dataset_info').joinpath(dataset_name+".json")) as f_in:
+        with open(files('dataset_info').joinpath(dataset_name + ".json")) as f_in:
             self.data['info'] = json.load(f_in)
         if dataset_name.lower() == "german-credit":
-            self.data["X_display"] = self.data["X"]= pd.read_csv('dataset/german-credit/german_credit_data.csv')
-            self.data["y_display"]=  self.data["y"]  = self.data["X_display"]['Risk']
+            self.data["X_display"] = self.data["X"] = pd.read_csv('dataset/german-credit/german_credit_data.csv')
+            self.data["y_display"] = self.data["y"] = self.data["X_display"]['Risk']
             self.data["X_display"].drop(['Risk'], axis=1, inplace=True)
             self.data["classes"] = ["bad", "good"]
             self.data["cls_mapping"] = {}
@@ -287,25 +291,25 @@ class Agent:
             mapping = {}
             for f in self.data["features"]:
                 if f not in self.data['info']["num_features"]:
-                    mapping[f] = {str(value) : str(value) for value in self.data["X_display"][f].unique()}
+                    mapping[f] = {str(value): str(value) for value in self.data["X_display"][f].unique()}
             self.data["map"] = mapping
             return
         if dataset_name.lower() == "mnist":
-            (self.data["X"], self.data["y"]),_ = tf.keras.datasets.mnist.load_data()
-            self.data["classes"] = list(range(0,10))
+            (self.data["X"], self.data["y"]), _ = tf.keras.datasets.mnist.load_data()
+            self.data["classes"] = list(range(0, 10))
             self.data["cls_mapping"] = {"prediction?": ["predicted?"]}
             self.data["features"] = []
             return
         if dataset_name.lower() == "adult":
             self.data["X"], self.data["y"] = shap.datasets.adult()
             self.data["X_display"], self.data["y_display"] = shap.datasets.adult(display=True)
-            self.data["classes"] = ["False","True"]
+            self.data["classes"] = ["False", "True"]
             self.data["cls_mapping"] = {"False": ["<=50K", "less than 50K"],
                                         "K ?": ["K\?"],
                                         "True": [">50K"],
                                         "have": ["get"],
-                                        "instance":["profile","information"],
-                                        "prediction":["predicted"]}
+                                        "instance": ["profile", "information"],
+                                        "prediction": ["predicted"]}
             self.data["features"] = self.data["X"].columns.tolist()
             self.data["feature_names"] = self.data["features"]
 
@@ -317,11 +321,13 @@ class Agent:
             self.data["y_display"] = y_display
             self.data["X"] = X_display.copy(deep=True)
             self.data["y"] = y_display.copy(deep=True)
-            self.data["classes"] = ["False","True"]
+            self.data["classes"] = ["False", "True"]
             self.data["cls_mapping"] = {"False": ["die", "to die"],
-                                        "True": ["survive","to survive"]}
+                                        "True": ["survive", "to survive"]}
             self.data["features"] = self.data["X_display"].columns.tolist()
-            self.data["feature_names"] = ["Class (1st, 2nd, 3rd)","Gender","Age","Fare","Port of Embarkation(C = Cherbourg, Q = Queenstown, S = Southampton)","Title","Deck","Family size"]
+            self.data["feature_names"] = ["Class (1st, 2nd, 3rd)", "Gender", "Age", "Fare",
+                                          "Port of Embarkation(C = Cherbourg, Q = Queenstown, S = Southampton)",
+                                          "Title", "Deck", "Family size"]
             for f in self.data['info']['cat_features']:
                 self.data["X_display"][f] = self.data["X_display"][f].astype(
                     pandas.core.dtypes.dtypes.CategoricalDtype(categories=self.data["X_display"][f].unique(),
@@ -333,11 +339,11 @@ class Agent:
             X_display = iris.data
             y_display = iris.target
             features = ['sepal length', 'sepal width', 'petal length', 'petal width']
-            self.data["X_display"] = pd.DataFrame(data = X_display, columns=features)
+            self.data["X_display"] = pd.DataFrame(data=X_display, columns=features)
             self.data["y_display"] = pd.Series(y_display)
             self.data["X"] = self.data["X_display"].copy(deep=True)
             self.data["y"] = self.data["y_display"].copy(deep=True)
-            self.data["classes"] = [0,1,2]
+            self.data["classes"] = [0, 1, 2]
             print(self.data["classes"])
             self.data["cls_mapping"] = {}
             self.data["features"] = features
@@ -348,7 +354,6 @@ class Agent:
                 mapping[f] = dict(zip(self.data["X_display"][f].cat.codes, self.data["X_display"][f]))
                 self.data["X"][f] = self.data["X_display"][f].cat.codes
         self.data['map'] = mapping
-
 
     def get_model(self, dataset_name, name_clf: str = "sklearn.tree._classes.DecisionTreeClassifier",
                   metric: str = "predictive_accuracy"):
@@ -398,27 +403,29 @@ class Agent:
         cnn.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
         return cnn
+
     def train_model(self):
         #         self.clf = sklearn.tree.DecisionTreeClassifier(max_depth=100)
         dataset_folder = 'dataset'
         if self.dataset == "german-credit":
-            self.clf = pickle.load(open(os.path.join("models/german-credit",'rf_german_credit.pkl'), "rb"))
+            self.clf = pickle.load(open(os.path.join("models/german-credit", 'rf_german_credit.pkl'), "rb"))
             self.clf_display = self.clf
-            self.preprocessor = pickle.load(open(os.path.join("models/german-credit",'preprocessor.pkl'), "rb"))
+            self.preprocessor = pickle.load(open(os.path.join("models/german-credit", 'preprocessor.pkl'), "rb"))
             self.dataset_anchor = utils.load_dataset('german-credit', balance=True, dataset_folder=dataset_folder,
                                                      discretize=False)
             self.clf_anchor = sklearn.ensemble.RandomForestClassifier(n_estimators=50, n_jobs=5)
             self.clf_anchor.fit(self.dataset_anchor.train, self.dataset_anchor.labels_train)
             return
         if self.dataset == "mnist":
-            self.data['X'] = self.data['X'].astype('float32') /255
-            self.data['X'] = np.reshape(self.data['X'] , self.data['X'] .shape + (1,))
+            self.data['X'] = self.data['X'].astype('float32') / 255
+            self.data['X'] = np.reshape(self.data['X'], self.data['X'].shape + (1,))
             self.data['y'] = to_categorical(self.data['y'])
             self.clf = self.model()
-            self.clf = load_model(os.path.join(PATH,'mnist_cnn.h5'))
+            self.clf = load_model(os.path.join(PATH, 'mnist_cnn.h5'))
             return
         if self.dataset == "adult":
-            self.dataset_anchor = utils.load_dataset('adult', balance=True, dataset_folder=dataset_folder, discretize=False)
+            self.dataset_anchor = utils.load_dataset('adult', balance=True, dataset_folder=dataset_folder,
+                                                     discretize=False)
 
             self.clf_anchor = sklearn.ensemble.RandomForestClassifier()
             self.clf_anchor.fit(self.dataset_anchor.train, self.dataset_anchor.labels_train)
@@ -443,5 +450,3 @@ class Agent:
             self.clf_display.fit(self.data["X_display"], self.data["y_display"])
         else:
             self.clf_display = self.clf
-
-

@@ -1,5 +1,5 @@
 import shap
-import os
+import os, sys
 import numpy as np
 import matplotlib.pyplot as plt
 import dice_ml
@@ -12,6 +12,7 @@ from XAgent.Agent.utils import print_log
 from XAgent.Agent.utils import ask_for_feature
 
 PATH = os.path.dirname(__file__)
+sys.path.append(PATH)
 def shap_explainer(self, id_question):
     if self.data['info']['name'] == 'mnist':
         background = self.data['X'][np.random.choice(self.data['X'].shape[0], 100, replace=False)]
