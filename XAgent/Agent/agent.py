@@ -67,14 +67,14 @@ conversations = []
 
 
 class Agent:
-    def __init__(self):
+    def __init__(self, nlu):
         self.dataset = "german-credit"
         self.current_instance = None
         self.clf = None
         self.predicted_class = None
         # self.mode = None
         self.data = {"X": None, "y": None, "features": None, "classes": None}
-        self.nlu_model = NLU()
+        self.nlu_model = nlu
         self.list_node = []
         self.clf_display = None
         self.l_exist_classes = None
@@ -196,8 +196,7 @@ class Agent:
                     self.current_instance[f] = str(text)
         else:
             # numerical feature
-            # todo: check numerical feature
-            while text.isnumeric() == False:
+            while not text.isnumeric():
                 yield "Please input a number instead of letters"
             self.current_instance[f] = float(text)
         yield None

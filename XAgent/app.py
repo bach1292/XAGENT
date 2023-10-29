@@ -10,6 +10,9 @@ import logging
 import time
 from importlib import reload
 
+from XAgent.Agent.agent import Agent
+from XAgent.Agent.nlu import NLU
+
 logging.shutdown()
 reload(logging)
 from Agent.mode import *
@@ -27,19 +30,22 @@ st.title("Xagent")
 
 
 # Initialize chat history
+# @st.cache_resource
+# def get_agent():
+#     with open("./agent.pkl", "rb") as f:
+#         agent = pickle.load(f)
+#         return agent
 @st.cache_resource
-def get_agent():
-    with open("./agent.pkl", "rb") as f:
-        agent = pickle.load(f)
-        return agent
-
+def get_nlu_component():
+    nlu = NLU()
+    return nlu
 
 if 'xagent' not in st.session_state:
-    # agent = Agent()
+    agent = Agent(get_nlu_component())
     st.session_state.mode = None
     # 
     #     agent = pickle.load(f)
-    st.session_state.xagent = get_agent()
+    st.session_state.xagent = agent
     st.session_state.suggest_question = False
     st.session_state.question = None
     # st.llm = transformers.pipeline(
@@ -86,7 +92,7 @@ exit_list = ['exit', 'see you later', 'bye', 'quit', 'break', 'stop', 'ok, thank
 
 # conversations.append(f"Xagent: {msg}")
 llm_prompt = """
-Improve the language of the text but keep the original intent of the below text. Do not add or omit any information, only adapt the language. Please keep the information in square brackets unchanged. Only return the improved text without the double quotes. Do not ask for anything else.
+Improve the language of the text but keep the original intent of the below text. Do not add or omit any information, only adapt the language. Please keep the information in square brackets unchanged. Only return the improved text without the double quotes. Do not ask for anything else. Do not add any comments
 "{}". 
 Improved text:
 """
@@ -219,7 +225,7 @@ if prompt := st.chat_input("What is up?"):
                               num_return_sequences=1,
                               max_new_tokens=100
                               )
-        assistant_response = sequence[0]['generated_text'].split("Improved text:")[1]
+            assistant_response = sequence[0]['generated_text'].split("Improved text:")[1]
         for chunk in assistant_response.split(" "):
             if chunk == "\n":
                 chunk = "  \n"

@@ -96,6 +96,7 @@ class NLU:
         if int(st.session_state.choice) == 0:
             st.session_state.question = "unknown"
             st.session_state.suggest_question = False
+            return None
         if int(st.session_state.choice) == 6:
             for idx, question in enumerate(questions[5:15], start=5):
                 question = self.replace_information(question, features, prediction, current_instance, labels)
