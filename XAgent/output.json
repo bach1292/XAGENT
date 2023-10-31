@@ -1,0 +1,112 @@
+{
+    "6": {
+        "question": "Is feature X used or not used for the predictions?",
+        "answer": "Feature X is [used/not used] for the predictions. Its importance in the model is determined by its [specific importance metric, e.g., Gini impurity or feature importance score].",
+        "required_feature": ""
+    },
+    "62": {
+        "question": "How often does the system make mistakes?",
+        "answer": "The system's error rate depends on the specific task and model configuration. On average, it makes mistakes in approximately [mention error rate or percentage] of cases.",
+        "required_feature": ""
+    },
+    "2": {
+        "question": "What is the system's overall logic?",
+        "answer": "The system's overall logic is to make predictions based on the consensus of multiple decision trees in the Random Forest ensemble. It combines their individual decisions to achieve robust predictions.",
+        "required_feature": ""
+    },
+    "26": {
+        "question": "What are the biases of the data?",
+        "answer": "The data may contain biases related to [mention specific biases, such as demographic, geographic, or selection bias]. These biases can influence the model's predictions and require careful consideration.",
+        "required_feature": ""
+    },
+    "3": {
+        "question": "What features does the system consider?",
+        "answer": "The system considers various features, including [mention some of the key features], that are relevant to assessing creditworthiness in the German Credit dataset.",
+        "required_feature": ""
+    },
+    "69": {
+        "question": "What features of this instance lead to the system's prediction?",
+        "answer": "The system's prediction for this instance is influenced by features such as [mention specific features], with each feature contributing to the decision-making process.",
+        "required_feature": ""
+    },
+    "20": {
+        "question": "What is the highest feature one can have to still get the same prediction?",
+        "answer": "The highest value for a specific feature required to receive the same prediction depends on the model's learned thresholds and the feature's significance. For feature X, it's approximately [mention highest value].",
+        "required_feature": ""
+    },
+    "68": {
+        "question": "Why are instance A and instance B given the same prediction?",
+        "answer": "Instances A and B are given the same prediction because they exhibit similar feature values, aligning with the model's criteria for a particular credit risk category.",
+        "required_feature": ""
+    },
+    "60": {
+        "question": "How precise are the predictions?",
+        "answer": "The predictions are characterized by their precision, which is influenced by the model's accuracy in identifying true positive cases. On average, the precision is approximately [mention precision value].",
+        "required_feature": ""
+    },
+    "30": {
+        "question": "How will the system adapt over time?",
+        "answer": "The system will adapt over time by incorporating new data, updating model parameters, and refining its decision-making processes to reflect changes in the credit application landscape.",
+        "required_feature": ""
+    },
+    "27": {
+        "question": "How were the labels produced?",
+        "answer": "The labels for the German Credit dataset were produced through [mention label production method], which involved [describe the process for label production].",
+        "required_feature": ""
+    },
+    "21": {
+        "question": "What kind of data does the system learn from?",
+        "answer": "The system learns from a dataset that includes various financial and personal attributes of individuals, such as [mention some of the attributes], provided by [mention the source of the data, e.g., financial institutions].",
+        "required_feature": ""
+    },
+    "53": {
+        "question": "How is the output used for other system component(s)?",
+        "answer": "The system's output is used by other components, such as [mention specific components or processes], to automate credit approval decisions and manage risk.",
+        "required_feature": ""
+    },
+    "51": {
+        "question": "What is the scope of the system's capability? Can it do [A]?",
+        "answer": "The system's primary capability is credit risk classification. It may generalize to similar tasks, but its effectiveness for [A] is limited by its design and training data.",
+        "required_feature": ""
+    },
+    "13": {
+        "question": "What kind of instance gets this prediction?",
+        "answer": "Instances that exhibit specific features and patterns consistent with the model's learned criteria for 'good' or 'bad' credit risk are likely to receive this prediction.",
+        "required_feature": ""
+    },
+    "14": {
+        "question": "What kind of instance gets a different prediction?",
+        "answer": "Instances that significantly differ in features, such as [mention specific features], are likely to receive different predictions from the system.",
+        "required_feature": ""
+    },
+    "34": {
+        "question": "Why does it not use this feature?",
+        "answer": "The model may not use feature X because it has been found to have limited predictive power or adding it could lead to overfitting on the training data.",
+        "required_feature": ""
+    },
+    "73": {
+        "question": "Why are instances A and B given different predictions?",
+        "answer": "Instances A and B receive different predictions because they exhibit different feature values or patterns, leading to diverse model outputs.",
+        "required_feature": ""
+    },
+    "71": {
+        "question": "Why is this instance predicted P instead of Q?",
+        "answer": "This instance is predicted as P instead of Q due to its feature values, which align with the learned criteria for P but not Q.",
+        "required_feature": ""
+    },
+    "8": {
+        "question": "How does it weigh different features?",
+        "answer": "The model assigns weights to features based on their importance, with more important features contributing more significantly to the prediction.",
+        "required_feature": ""
+    },
+    "4": {
+        "question": "What are the top rules it uses?",
+        "answer": "The specific rules used by the model may not be directly interpretable, but feature importance analysis can highlight the top features that influence predictions.",
+        "required_feature": ""
+    },
+    "17": {
+        "question": "What is the lowest feature one can have to still get the same prediction?",
+        "answer": "The lowest feature value to receive the same prediction depends on the specific feature and the model's learned thresholds. For feature X, it's approximately [mention lowest value].",
+        "required_feature": ""
+    }
+}
