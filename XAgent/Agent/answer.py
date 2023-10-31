@@ -6,8 +6,9 @@ import shap
 from dtreeviz.trees import *
 
 from mode import *
-from utils import print_log
+from utils import state_log
 from xai_methods import *
+
 # print the JS visualization code to the notebook
 shap.initjs()
 PATH = os.path.dirname(__file__)
@@ -15,17 +16,21 @@ sys.path.append(PATH)
 import streamlit as st
 import constraints
 import tensorflow as tf
-tf.get_logger().setLevel(40) # suppress deprecation messages
-tf.compat.v1.disable_v2_behavior() # disable TF2 behaviour as alibi code still relies on TF1 constructs
+
+tf.get_logger().setLevel(40)  # suppress deprecation messages
+tf.compat.v1.disable_v2_behavior()  # disable TF2 behaviour as alibi code still relies on TF1 constructs
 import matplotlib.pyplot as plt
 import numpy as np
 
 import os
 
 l_shap_questions = []
+
+
 class Answers:
     def __init__(self, list_node, clf, clf_display, current_instance, question, l_exist_classes, l_exist_features,
-                 l_instances, data, df_display_instance, predicted_class, dataset_anchor, clf_anchor, orig_quest, preprocessor=None):
+                 l_instances, data, df_display_instance, predicted_class, dataset_anchor, clf_anchor, orig_quest,
+                 preprocessor=None):
         self.list_node = list_node
         self.clf = clf
         self.clf_display = clf_display
@@ -46,6 +51,9 @@ class Answers:
         self.predicted_class = predicted_class
         self.preprocessor = preprocessor
         self.original_question = orig_quest
+        file = open('Agent/qa.json', 'r')
+        self.question_answer = json.load(file)
+        file.close()
 
     def extract_relation(self, test_data, clf_list, feature_name):
         relation = []
@@ -63,17 +71,19 @@ class Answers:
         return relation
 
     def answer(self, question, conversations=[]):
+        print(f"question: {question}")
         if st.session_state.mode != MODE_ASK_FOR_CLS:
-            print(question)
+
             if type(question) is tuple:
                 question = question[0]
             if question == "unknown":
                 return constraints.question_msg
-            df = pd.read_csv(os.path.join(PATH,"Median_4.csv"))
+            df = pd.read_csv(os.path.join(PATH, "Median_4.csv"))
             st.session_state.id_question = df[df['Question'] == question]["Label"].iloc[0]
+            print(f"question id: {st.session_state.id_question}")
             if st.session_state.id_question in constraints.l_dice_question_ids:
                 if len(self.l_classes) == 2:
-                    class_P =[label for label in self.l_classes if label != self.predicted_class][0]
+                    class_P = [label for label in self.l_classes if label != self.predicted_class][0]
                 else:
                     class_P = None
                 for c in self.l_exist_classes:
@@ -81,17 +91,19 @@ class Answers:
                         class_P = c
                 if class_P == None:
                     msg = f"Please give me the target label in {str(self.data['classes'])}: "
-                    print_log("xagent",msg)
+                    # print_log("xagent", msg)
                     st.session_state.mode = MODE_ASK_FOR_CLS
                     return msg
         else:
             class_P = st.session_state.choice
             st.session_state.mode = MODE_QUESTION
-                # class_P = print_log("user")
+            # class_P = print_log("user")
         if st.session_state.id_question in constraints.l_dice_question_ids:
             if st.session_state.id_question in constraints.l_feature_questions_ids:
-                ask_for_feature(self)
+                if len(self.l_exist_features) == 0:
+                    return ask_for_feature(self)
                 e1 = dice_answer(self, class_P, st.session_state.exist_feature)
+                st.session_state.mode = MODE_QUESTION
                 if e1.cf_examples_list[0].final_cfs_df is None:
                     return constraints.no_cf_msg.format(st.session_state.exist_feature)
             else:
@@ -134,8 +146,10 @@ class Answers:
                 self.clf.predict([temp_instance]))
         if st.session_state.id_question in constraints.l_shap_question_ids:
             img = shap_explainer(self, st.session_state.id_question)
+            if img == "Which feature?":
+                return img
             if st.session_state.id_question in constraints.l_shap_question_feature:
-                return (self.data['info']["feature_ans"] + self.data['info']['why_ans'],img)
+                return (self.data['info']["feature_ans"] + self.data['info']['why_ans'], img)
             elif st.session_state.id_question in constraints.l_shap_question_single_feature:
                 return (constraints.ans_shap_question_single_feature + self.data['info']['why_ans'], img)
             else:
@@ -143,17 +157,21 @@ class Answers:
         if st.session_state.id_question in constraints.l_anchor_question_ids:
             return anchor_answer(self)
         if st.session_state.id_question in constraints.l_terminology_question_ids:
-            prompt ="""
+            prompt = """
             Question:{}. Explain it in 100 tokens.
             Answer:
-            """.format(self.original_question) 
+            """.format(self.original_question)
             sequence = st.llm(prompt,
-            do_sample=True,
-            top_k=50,
-            num_return_sequences=1,
-            max_new_tokens=100
-            )
+                              do_sample=True,
+                              top_k=50,
+                              num_return_sequences=1,
+                              max_new_tokens=100
+                              )
             answer = sequence[0]['generated_text'].split("Answer:")[1]
             return answer
+        if st.session_state.id_question in constraints.l_others:
+            str_id = str(st.session_state.id_question)
+            if str_id in self.question_answer:
+                return self.question_answer[str_id]['answer']
 
         return constraints.cant_answer_msg

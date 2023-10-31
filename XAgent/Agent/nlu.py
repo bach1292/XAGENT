@@ -96,6 +96,9 @@ class NLU:
         if int(st.session_state.choice) == 0:
             st.session_state.question = "unknown"
             st.session_state.suggest_question = False
+            st.session_state.mode = MODE_QUESTION
+            st.session_state.pop("choice")
+            st.session_state.pop("match_results")
             return None
         if int(st.session_state.choice) == 6:
             for idx, question in enumerate(questions[5:15], start=5):

@@ -8,7 +8,9 @@ from alibi.explainers import CounterfactualProto
 from tensorflow.keras.models import Model, load_model
 import streamlit as st
 from anchor import anchor_tabular
-from XAgent.Agent.utils import print_log
+
+from XAgent.Agent.mode import MODE_QUESTION
+from XAgent.Agent.utils import state_log
 from XAgent.Agent.utils import ask_for_feature
 
 PATH = os.path.dirname(__file__)
@@ -45,12 +47,15 @@ def shap_explainer(self, id_question):
         explainer_values.values = shap_values_original_input[predicted_cls].reshape(1,-1)
         # explainer_values.values = shap_values_original_input
         if id_question in constraints.l_feature_questions_ids:
-            ask_for_feature(self)
+            # ask_for_feature(self)
+            if len(self.l_exist_features) == 0:
+                return ask_for_feature(self)
             index = [ self.df_display_instance.columns.get_loc(self.l_exist_features[0])]
             # shap.force_plot(explainer.expected_value[predicted_cls][index], shap_values[predicted_cls][index], self.df_display_instance.columns[index],figsize=(15,3), show = True, matplotlib=True)
             # shap.plots.waterfall(explainer_values[0][index])
             shap.force_plot(explainer.expected_value[predicted_cls], shap_values_original_input[predicted_cls][index],
                             self.df_display_instance.columns[index], figsize=(15, 3), show=False, matplotlib=True)
+            st.session_state.mode = MODE_QUESTION
         else:
             shap.force_plot(explainer.expected_value[predicted_cls], shap_values_original_input[predicted_cls],
                             self.df_display_instance.columns, figsize=(15, 3), show=False, matplotlib=True)

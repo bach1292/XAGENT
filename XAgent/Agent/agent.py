@@ -50,7 +50,7 @@ from tensorflow.keras.utils import to_categorical
 from mode import *
 import PIL
 
-from utils import print_log
+from utils import state_log
 
 # from IPython.display import display
 # MODE_INPUT = 0
@@ -129,13 +129,13 @@ class Agent:
         if st.session_state.mode == MODE_INPUT:
             if self.dataset == "mnist":
                 msg = "Give me the image's name, in the folder, I already have an example with 7.png"
-                print_log("xagent", msg)
-                user_input = print_log("user")
+                # print_log("xagent", msg)
+                user_input = state_log("user")
                 image = PIL.Image.open(user_input)
                 # display(image)
                 image_array = np.array(image)
                 msg = "This is your input image."
-                print_log("xagent", msg)
+                # print_log("xagent", msg)
                 plt.figure(figsize=(2, 2))
                 plt.imshow(image_array[:, :, 0])
                 plt.show()
@@ -256,7 +256,7 @@ class Agent:
                 logging.log(26, f"question = {question}")
                 answer = self.answer_question(st.session_state.question)
                 print(st.session_state.mode)
-                if st.session_state.mode != MODE_ASK_FOR_CLS:
+                if st.session_state.mode not in [MODE_ASK_FOR_CLS, MODE_ASK_FOR_FEATURE]:
                     print("Did you come here")
                     st.session_state.question = None
                 logging.log(26, f"answer = {answer}")

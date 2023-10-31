@@ -3,7 +3,7 @@ import random
 import pickle
 
 # from XAgent.Agent.agent import Agent
-from Agent.utils import print_log
+from Agent.utils import state_log
 from Agent import constraints
 import streamlit as st
 import logging
@@ -21,11 +21,7 @@ import transformers
 import torch
 
 model = "meta-llama/Llama-2-7b-chat-hf"
-now = datetime.now()
-dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
-print(dt_string)
-logging.CON = 25
-logging.basicConfig(filename=f'logs/{dt_string}.log', level=logging.CON)
+
 st.title("Xagent")
 
 
@@ -48,13 +44,17 @@ if 'xagent' not in st.session_state:
     st.session_state.xagent = agent
     st.session_state.suggest_question = False
     st.session_state.question = None
+    now = datetime.now()
+    st.session_state.dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+    logging.CON = 25
+
     # st.llm = transformers.pipeline(
     # "text-generation",
     # model=model,
     # torch_dtype=torch.float16,
     # device_map="auto")
 
-
+logging.basicConfig(filename=f'logs/{st.session_state.dt_string}.log', level=logging.CON)
 # with server_state_lock["llm"]:  # Lock the "count" state for thread-safety
 @st.cache_resource
 def get_llm():
@@ -92,7 +92,7 @@ exit_list = ['exit', 'see you later', 'bye', 'quit', 'break', 'stop', 'ok, thank
 
 # conversations.append(f"Xagent: {msg}")
 llm_prompt = """
-Improve the language of the text but keep the original intent of the below text. Do not add or omit any information, only adapt the language. Please keep the information in square brackets unchanged. Only return the improved text without the double quotes. Do not ask for anything else. Do not add any comments
+Improve the language of the text but keep the original intent of the below text. Do not add or omit any information, only adapt the language. Please keep the information in square brackets unchanged. Only return the improved text without the double quotes. Do not ask for anything else. Do not add any comments.
 "{}". 
 Improved text:
 """
@@ -100,40 +100,38 @@ Improved text:
 
 def response(user_input):
     print(st.session_state.mode)
-    logging.log(logging.CON, f"Xagent: {user_input}")
     if user_input.lower() in exit_list:
         msg = 'Chat with you later, and remember... stay safe!'
-        print_log("xagent", msg)
+        # print_log("xagent", msg)
     else:
         # print('\033[1m\033[94m' + bot_name+': ' + '\033[0m')
         if msg := greeting_response(user_input):
-            # print(greeting)
-            # logging.log(logging.CON,f"Xagent: {greeting}")
-            print_log("xagent", msg)
-            #             conversations.append(f"Xagent: {greeting}")
+            pass
         elif msg := status_response(user_input):
+            pass
             # print(status)
             # logging.log(logging.CON,f"Xagent: {status}")
-            print_log("xagent", msg)
+            # print_log("xagent", msg)
             #             conversations.append(f"Xagent: {status}")
         elif msg := st.session_state.xagent.dataset_response(user_input, []):
+            pass
             # logging.log(logging.CON,f"Xagent: {dataset}")
-            print_log("xagent", msg)
+            # print_log("xagent", msg)
     return msg
 
 
-def ask_for_feature():
-    if len(st.session_state.exist_feature) == 0:
-        msg = "which feature?"
-        # print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
-        # logging.log(25, f"Xagent: {msg}")
-        print_log("xagent", msg)
-        user_input = print_log("user")
-        while user_input not in st.session_state.feature:
-            msg = f"please choose one of the following features: {st.session_state.feature}"
-            print_log("xagent", msg)
-            user_input = print_log("user")
-        st.session_state.exist_feature.append(user_input)
+# def ask_for_feature():
+#     if len(st.session_state.exist_feature) == 0:
+#         msg = "which feature?"
+#         # print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
+#         # logging.log(25, f"Xagent: {msg}")
+#         # print_log("xagent", msg)
+#         # user_input = print_log("user")
+#         while user_input not in st.session_state.feature:
+#             msg = f"please choose one of the following features: {st.session_state.feature}"
+#             print_log("xagent", msg)
+#             user_input = print_log("user")
+#         st.session_state.exist_feature.append(user_input)
 
 
 def on_input_change(prompt):
@@ -153,9 +151,11 @@ def on_input_change(prompt):
         if user_input not in st.session_state.feature:
             msg = f"please choose one of the following features: {st.session_state.feature}"
             # print_log("xagent", msg)
-            st.experimental_rerun()
-            st.session_state.exist_feature.append(user_input)
-        st.session_state.mode = MODE_QUESTION
+            return msg
+        st.session_state.exist_feature.append(user_input)
+        # st.session_state.mode = MODE_QUESTION
+
+
     # st.session_state.dialog.append({'type': 'normal', 'role': 'user', 'data': user_input})
     # st.session_state.dialog.append({'type': 'normal', 'role': 'user', 'data': '<img width="100%" height="200" src="./temp.png"/>'})
     # st.session_state.user_input = ''
@@ -184,6 +184,7 @@ bot_name = "X-Agent"
 if "messages" not in st.session_state:
     st.session_state.messages = []
     st.session_state.messages.append({"role": "assistant", "content": constraints.welcome_msg, "type": "text"})
+    state_log("assistant", constraints.welcome_msg)
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         if message['type'] == "image":
@@ -194,6 +195,8 @@ for message in st.session_state.messages:
 if prompt := st.chat_input("What is up?"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt, "type": "text"})
+    state_log("user", prompt)
+    # logging.log(25, f"user: {prompt}")
     # Display user message in chat message container
     with st.chat_message("user"):
         st.markdown(prompt)
@@ -237,8 +240,10 @@ if prompt := st.chat_input("What is up?"):
     # Add assistant response to chat history
 
     st.session_state.messages.append({"role": "assistant", "content": full_response, "type": "text"})
+    state_log("assistant", full_response)
     if image is not None:
         st.session_state.messages.append({"role": "assistant", "content": image, "type": "image"})
+        state_log("assistant", image)
 
 # chat_placeholder = st.empty()
 # with chat_placeholder.container():

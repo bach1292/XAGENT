@@ -24,39 +24,40 @@ class Bunch(object):
     """bla"""
     def __init__(self, adict):
         self.__dict__.update(adict)
-def print_log(turn, msg = None, state=None):
-    if turn == "xagent":
-        # print(f"\033[1m\033[94mX-Agent:\033[0m")
-        # st.session_state.messages.append({'type': 'normal', 'role': 'assistant', 'content': msg})
-        pass
-    if turn == "user":
-        # print('\033[91m\033[1mUser:\033[0m')
-        # msg = input()
-        msg = st.session_state.user_input
-        # if msg:
-        #     st.experimental_rerun()
-        # else:
-        #     st.stop()
-        st.session_state.messages.append({'type': 'normal', 'role': 'user', 'content': msg})
+def state_log(turn, msg = None, state=None):
+    print(f"log: {turn}:{msg}")
+    # if turn == "xagent":
+    #     # print(f"\033[1m\033[94mX-Agent:\033[0m")
+    #     # st.session_state.messages.append({'type': 'normal', 'role': 'assistant', 'content': msg})
+    #     pass
+    # if turn == "user":
+    #     # print('\033[91m\033[1mUser:\033[0m')
+    #     # msg = input()
+    #     msg = st.session_state.user_input
+    #     # if msg:
+    #     #     st.experimental_rerun()
+    #     # else:
+    #     #     st.stop()
+    #     st.session_state.messages.append({'type': 'normal', 'role': 'user', 'content': msg})
 
     logging.log(25, f"{turn}: {msg}")
     if state is not None:
         logging.log(25, state)
-    return msg
 def ask_for_feature(self):
     if len(self.l_exist_features) == 0:
-        msg = "which feature?"
+        msg = "Which feature?"
         # print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
         # logging.log(25, f"Xagent: {msg}")
-        print_log("xagent",msg)
+        # print_log("xagent",msg)
         st.session_state.mode = MODE_ASK_FOR_FEATURE
-        st.experimental_rerun()
+        # st.rerun()
         # user_input = print_log("user")
         # while user_input not in self.l_features:
         #     msg = f"please choose one of the following features: {self.l_features}"
         #     print_log("xagent", msg)
         #     user_input = print_log("user")
         # self.l_exist_features.append(user_input)
+        return msg
 
 def map_array_values(array, value_map):
     # value map must be { src : target }
