@@ -15,7 +15,7 @@
     "Housing": "The type of housing the applicant lives in",
     "Saving accounts": "The amount of money the applicant has saved in a savings account",
     "Checking account": "The amount of money the applicant has in a checking account",
-    "Credit amount": "The amount of credit the applicant is requesting.",
+    "Credit amount": "The amount of credit in Deutsche Mark (1 DM = 0.5 Euro) the applicant is requesting.",
     "Duration": "The duration of the credit in months.",
     "Purpose": "Purpose of the loan"
   }

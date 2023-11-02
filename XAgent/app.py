@@ -113,7 +113,7 @@ def response(user_input):
             # logging.log(logging.CON,f"Xagent: {status}")
             # print_log("xagent", msg)
             #             conversations.append(f"Xagent: {status}")
-        elif msg := st.session_state.xagent.dataset_response(user_input, []):
+        elif msg := st.session_state.xagent.response(user_input, []):
             pass
             # logging.log(logging.CON,f"Xagent: {dataset}")
             # print_log("xagent", msg)
@@ -183,7 +183,7 @@ bot_name = "X-Agent"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
-    st.session_state.messages.append({"role": "assistant", "content": constraints.welcome_msg, "type": "text"})
+    st.session_state.messages.append({"role": "assistant", "content": constraints.welcome_msg_test, "type": "text"})
     state_log("assistant", constraints.welcome_msg)
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):

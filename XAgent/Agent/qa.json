@@ -1,9 +1,4 @@
 {
-    "6": {
-        "question": "Is feature X used or not used for the predictions?",
-        "answer": "Feature X is [used/not used] for the predictions. Its importance in the model is determined by its [specific importance metric, e.g., Gini impurity or feature importance score].",
-        "required_feature": ""
-    },
     "62": {
         "question": "How often does the system make mistakes?",
         "answer": "The system's error rate depends on the specific task and model configuration. On average, it makes mistakes in approximately [mention error rate or percentage] of cases.",

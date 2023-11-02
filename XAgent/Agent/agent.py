@@ -201,31 +201,27 @@ class Agent:
             self.current_instance[f] = float(text)
         yield None
 
-    def dataset_response(self, text, conversations=[]):
-        if "dataset" in text:
+    def response(self, text, conversations=[]):
+        if "[reset]" in text:
             self.mode = None
             self.dataset = None
             self.current_instance = None
-            ans = constraints.welcome_msg
+            ans = constraints.welcome_msg_test
             # logging.info(ans)
             return ans
         if st.session_state.mode is None:
-            if text not in ["iris", "adult", "titanic", "german-credit", "yes"]:
-                return constraints.dataset_error_msg
-            else:
-                if text != "yes":
-                    self.dataset = text
-                st.session_state.mode = MODE_INPUT
-                self.get_dataset_info(self.dataset)
-                # ans = constraints.wait_msg
-                # print_log("xagent", ans)
-                self.train_model()
-                self.current_instance = {}
-                self.request_iterator = self.request_instance()
-                ans = f"Welcome to {self.dataset} dataset. {self.data['info']['dataset_description']} Are you ready to input the instance?"
-                # logging.info(ans)
-                # print_log("xagent", ans)
-                return ans
+            # if text not in ["iris", "adult", "titanic", "german-credit", "yes"]:
+            #     return constraints.dataset_error_msg
+            # else:
+            #     if text != "yes":
+            #         self.dataset = text
+            st.session_state.mode = MODE_INPUT
+            self.get_dataset_info(self.dataset)
+            self.train_model()
+            self.current_instance = {}
+            self.request_iterator = self.request_instance()
+            ans = f"Welcome to {self.dataset} dataset. {self.data['info']['dataset_description']}. I will ask you some questions to collect your information. Are you ready to input information?"
+            return ans
         else:
             if st.session_state.mode == MODE_INPUT:
                 check_instance = self.collect_instance(text)
