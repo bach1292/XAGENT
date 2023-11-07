@@ -39,6 +39,7 @@ def get_nlu_component():
 if 'xagent' not in st.session_state:
     agent = Agent(get_nlu_component())
     st.session_state.mode = None
+    st.session_state.use_llm = True
     # 
     #     agent = pickle.load(f)
     st.session_state.xagent = agent
@@ -184,7 +185,7 @@ bot_name = "X-Agent"
 if "messages" not in st.session_state:
     st.session_state.messages = []
     st.session_state.messages.append({"role": "assistant", "content": constraints.welcome_msg_test, "type": "text"})
-    state_log("assistant", constraints.welcome_msg)
+    state_log("assistant", constraints.welcome_msg_test)
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         if message['type'] == "image":
@@ -220,13 +221,14 @@ if prompt := st.chat_input("What is up?"):
         #     ]
         # )
         # Simulate stream of response with milliseconds delay
-        if st.session_state.mode != MODE_SUGGEST_QUESTION:
+        if st.session_state.mode != MODE_SUGGEST_QUESTION and st.session_state.use_llm == True:
             temp_prompt = llm_prompt.format(assistant_response)
+            len_txt = len(assistant_response.split())
             sequence = st.llm(temp_prompt,
                               do_sample=True,
                               top_k=50,
                               num_return_sequences=1,
-                              max_new_tokens=100
+                              max_new_tokens=len_txt*2
                               )
             assistant_response = sequence[0]['generated_text'].split("Improved text:")[1]
         for chunk in assistant_response.split(" "):

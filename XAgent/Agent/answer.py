@@ -111,26 +111,35 @@ class Answers:
                     return cf_proto(self, class_P)
                 e1 = dice_answer(self, class_P)
 
-            json_e1 = e1.to_json()
-            js = json.loads(json_e1)
+            # json_e1 = e1.to_json()
+            # js = json.loads(json_e1)
             ans = ""
             # if id_question in constraints.l_feature_questions_ids:
             #     ans = ""
             # else:
+            # js = {'cfs_list': e1.cf_examples_list[0].final_cfs_df.to_list()
+
+            if e1.cf_examples_list[0].final_cfs_df is None:
+                return constraints.no_cf_msg.format(st.session_state.exist_feature)
+            test_instance_df = e1.cf_examples_list[0].test_instance_df
+            features = test_instance_df.columns[:-1]
+            test_instance_df = test_instance_df.values.tolist()[0]
+            cf_instance = e1.cf_examples_list[0].final_cfs_df.values.tolist()
+
             if st.session_state.id_question in constraints.l_dice_question_relation_ids:
-                relation = self.extract_relation(js['test_data'][0][0], js['cfs_list'][0], js['feature_names'])
+                relation = self.extract_relation(test_instance_df, cf_instance, features )
                 ans = "There are multiple reasons for this result, one of them is: \n"
                 ans += " and ".join([str(k) + " is " + str(v) for k, v in relation[0].items()]) + "."
             ans_relation = []
-            for j, (v1, v2) in enumerate(zip(js['test_data'][0][0], js['cfs_list'][0][0][:-1])):
+            for j, (v1, v2) in enumerate(zip(test_instance_df, cf_instance[0][:-1])):
                 if v1 != v2:
                     if type(v1) == str or type(v2) == str:
-                        s = js['feature_names'][j] + " should be changed to " + str(v2)
+                        s = features[j] + " should be changed to " + str(v2)
                     else:
                         if v1 < v2:
-                            s = js['feature_names'][j] + " should be increased to " + str(v2)
+                            s = features[j] + " should be increased to " + str(v2)
                         else:
-                            s = js['feature_names'][j] + " should be decreased to " + str(v2)
+                            s = features[j] + " should be decreased to " + str(v2)
                     ans_relation.append(s)
             ans += "The " + " and ".join(ans_relation) + ", to get " + self.data['info']['change_ans'][
                 self.l_classes.index(class_P)]

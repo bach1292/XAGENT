@@ -44,7 +44,7 @@ from nlu import NLU
 # sys.stdout = sys.__stdout__
 # sys.stderr = sys.__stderr__
 import tensorflow as tf
-from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D, Input
+from tensorflow.keras .layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D, Input
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.utils import to_categorical
 from mode import *
@@ -209,20 +209,43 @@ class Agent:
             ans = constraints.welcome_msg_test
             # logging.info(ans)
             return ans
+        if "change instance!" in text:
+            st.session_state.mode = MODE_INPUT
+            self.request_iterator = self.request_instance()
+            ans = f"Welcome to {self.dataset} dataset. {self.data['info']['dataset_description']}. I will ask you some questions to collect your information. Are you ready to input information?"
         if st.session_state.mode is None:
             # if text not in ["iris", "adult", "titanic", "german-credit", "yes"]:
             #     return constraints.dataset_error_msg
             # else:
             #     if text != "yes":
             #         self.dataset = text
-            st.session_state.mode = MODE_INPUT
+
             self.get_dataset_info(self.dataset)
             self.train_model()
-            self.current_instance = {}
-            self.request_iterator = self.request_instance()
-            ans = f"Welcome to {self.dataset} dataset. {self.data['info']['dataset_description']}. I will ask you some questions to collect your information. Are you ready to input information?"
+            # for i
+            # self.data['X']
+            self.current_instance = self.data['X'].iloc[1]
+            self.df_display_instance = pandas.DataFrame(self.current_instance).T
+            predict = self.clf_display.predict(self.df_display_instance)[0]
+            self.predicted_class = predict
+            self.current_instance = self.current_instance.to_dict()
+            ans = "We prepared a sample instance for you, here is the information of the sample instance: \n "
+            for feature in self.current_instance.keys():
+                ans += f"{feature}"
+                if feature in self.data['info']['feature_description']:
+                    ans += f" ({self.data['info']['feature_description'][feature]})"
+                ans += f": {self.current_instance[feature]} \n "
+            ans += "If you like to go on with this instance, please type 'yes'. Otherwise, if you like to input a different instance, please type the 'change instance!'. You can change the instance anytime by the command"
+            st.session_state.use_llm = False
+            st.session_state.mode = MODE_CHOOSE_INSTANCE
+            return ans
+        elif st.session_state.mode == MODE_CHOOSE_INSTANCE:
+            st.session_state.use_llm = False
+            ans = f"The prediction for this instance is {self.predicted_class}. {question_msg}"
+            st.session_state.mode = MODE_QUESTION
             return ans
         else:
+            st.session_state.use_llm = True
             if st.session_state.mode == MODE_INPUT:
                 check_instance = self.collect_instance(text)
                 answer = next(check_instance, None)

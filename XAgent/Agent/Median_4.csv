@@ -218,7 +218,7 @@
 216,What would the system predict if this instance changes to {A}?,64
 217,What features did it use?,5
 218,What are the flaws in the data?,26
-219,What is the sample size?,21
+219,What is the sample size?,22
 220,Why is this instance predicted {P} instead of {Q}?,71
 221,How is feature {X} used for your prediction?,6
 222,Why is this instance predicted {P} instead of {Q}?,71
