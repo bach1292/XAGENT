@@ -42,7 +42,8 @@
     "24": {
         "question": "What data is the system not using?",
         "answer": "The system is not using certain data such as applicants' social security numbers or specific address details, as they were deemed irrelevant for credit risk assessment.",
-        "required_feature": "",
+        "required_feature": ""
+    },
     "62": {
         "question": "How often does the system make mistakes?",
         "answer": "The system's error rate depends on the specific task and model configuration. On average, it makes mistakes in approximately 15% of cases.",
