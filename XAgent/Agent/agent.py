@@ -79,6 +79,7 @@ class Agent:
         self.clf_display = None
         self.l_exist_classes = None
         self.l_exist_features = None
+        self.l_exist_values = {}
         self.l_instances = None
         self.df_display_instance = None
         self.current_feature = None
@@ -112,6 +113,16 @@ class Agent:
                     self.l_exist_features.append(f)
                 regex_replacement = "<feature>"
                 question = re.sub(regex_search_term, regex_replacement, question)
+                if f not in self.data['info']["num_features"]:
+                    for v in self.data['feature_values'][f]:
+                        if v == None:
+                            v = "None"
+                        regex_search_term = re.compile(str(v))
+                        result = regex_search_term.findall(question)
+                        if len(result) == 1:
+                            self.l_exist_values[f] = v
+
+
         self.l_exist_classes = []
 
         for c in l_classes:
@@ -209,10 +220,18 @@ class Agent:
             ans = constraints.welcome_msg_test
             # logging.info(ans)
             return ans
-        if "change instance!" in text:
+        if "/change instance" in text:
             st.session_state.mode = MODE_INPUT
             self.request_iterator = self.request_instance()
             ans = f"Welcome to {self.dataset} dataset. {self.data['info']['dataset_description']}. I will ask you some questions to collect your information. Are you ready to input information?"
+        if st.session_state.mode == MODE_ASK_FOR_FEATURE:
+            self.l_exist_feature = []
+            self.preprocess_question(text)
+            if len(self.l_exist_features) == 0:
+                msg = f"please choose one or more features from this list of features: {st.session_state.feature}"
+                # print_log("xagent", msg)
+                return msg
+            st.session_state.mode = MODE_QUESTION
         if st.session_state.mode is None:
             # if text not in ["iris", "adult", "titanic", "german-credit", "yes"]:
             #     return constraints.dataset_error_msg
@@ -228,7 +247,7 @@ class Agent:
             self.df_display_instance = pandas.DataFrame(self.current_instance).T
             predict = self.clf_display.predict(self.df_display_instance)[0]
             self.predicted_class = predict
-            self.current_instance = self.current_instance.to_dict()
+            # self.current_instance = self.current_instance.to_dict()
             ans = "We prepared a sample instance for you, here is the information of the sample instance: \n "
 
             for feature in self.current_instance.keys():
@@ -239,15 +258,17 @@ class Agent:
                     ans += f": {map_job[self.current_instance[feature]]} \n "
                 else:
                     ans += f": {self.current_instance[feature]} \n "
-            ans += "If you like to go on with this instance, please type 'yes'. Otherwise, if you like to input a different instance, please type the 'change instance!'. You can change the instance anytime by the command"
+            ans += "If you like to go on with this instance, please type 'yes'. Otherwise, if you like to input a different instance, please type the '/change instance'. You can change the instance anytime by the command."
             st.session_state.use_llm = False
             st.session_state.mode = MODE_CHOOSE_INSTANCE
             return ans
         elif st.session_state.mode == MODE_CHOOSE_INSTANCE:
             st.session_state.use_llm = False
-            ans = f"The prediction for this instance is {self.predicted_class}. {question_msg}"
+            ans = f"The prediction for this instance is {self.data['info']['predict_prompt'][self.predicted_class]}. {question_msg}"
             st.session_state.mode = MODE_QUESTION
             return ans
+
+            # st.session_state.exist_feature.append(user_input)
         else:
             st.session_state.use_llm = True
             if st.session_state.mode == MODE_INPUT:
@@ -292,7 +313,7 @@ class Agent:
     def answer_question(self, question, conversations=[]):
 
         answer = Answers(self.list_node, self.clf, self.clf_display, self.current_instance, question,
-                         self.l_exist_classes, self.l_exist_features, self.l_instances, self.data,
+                         self.l_exist_classes, self.l_exist_features, self.l_instances, self.l_exist_values, self.data,
                          self.df_display_instance, self.predicted_class, self.dataset_anchor, self.clf_anchor,
                          self.original_question, self.preprocessor)
         return answer.answer(question, conversations)
@@ -306,14 +327,20 @@ class Agent:
             self.data["X_display"] = self.data["X"] = pd.read_csv('dataset/german-credit/german_credit_data.csv')
             self.data["y_display"] = self.data["y"] = self.data["X_display"]['Risk']
             self.data["X_display"].drop(['Risk'], axis=1, inplace=True)
+            #todo: apply text preprocessing to both classes and questions
             self.data["classes"] = ["bad", "good"]
             self.data["cls_mapping"] = {}
             self.data["features"] = self.data["X_display"].columns.tolist()
             self.data["feature_names"] = self.data["features"]
             mapping = {}
+            feature_value = {}
             for f in self.data["features"]:
                 if f not in self.data['info']["num_features"]:
                     mapping[f] = {str(value): str(value) for value in self.data["X_display"][f].unique()}
+                    feature_value[f] = self.data["X_display"][f].unique()
+                else:
+                    feature_value[f] = 0
+            self.data["feature_values"] = feature_value
             self.data["map"] = mapping
             return
         if dataset_name.lower() == "mnist":

@@ -1,5 +1,5 @@
 welcome_msg = "Welcome. I am a conversational agent and can explain decisions made by machine learning models. Currently, the default dataset is german-credit. Would you like to go on with this dataset? Please type 'yes' to continue, otherwise, type one of the supported dataset in this list [Adult, Iris, Titanic]?"
-welcome_msg_test = "Hello, I am XAgent, an AI model designed to provide explanations for predictions made by AI models trained on the German Credit dataset. My role is to help you understand how the model arrived at a specific prediction and provide insights into the factors that influenced that prediction. However, first, you need to assume the role of a customer who wants a loan from a bank and provide your information. An AI model will then predict whether you have good or bad credit. After that, you can ask questions about the predictions. Do you get the idea?"
+welcome_msg_test = "Hello, I am XAgent, an AI model designed to provide explanations for predictions made by AI models trained on the German Credit dataset. My role is to help you understand how the model arrived at a specific prediction and provide insights into the factors that influenced that prediction. However, first, you need to assume the role of a customer who wants a loan from a bank and provide your information. An AI model will then predict whether you are able to get a loan or not. After that, you can ask questions about the predictions. Do you get the idea?"
 dataset_error_msg = "I only support adult, iris, titanic and german-credit dataset, please type a correct name"
 wait_msg = "Wait a min, I need to learn it"
 list_feature_request_msgs = ["How about your ", "What is your ", "Give me your "]
@@ -12,7 +12,7 @@ no_cf_msg = "Sorry, I couldn't find the way to modify {} to change the label"
 cant_answer_msg = "I am not capable of answering your question. Questions of this type can currently not be answered by an explainable AI method."
 repeat_cat_features = "The input value is not valid, please choose in one of the following values:{}"
 repeat_num_features = "Please input numbers only"
-request_number_msg = "It is not a number or not an appropiate number. Please choose another number"
+request_number_msg = "It is not a number or not an appropriate number. Please choose another number"
 request_more_msg = "Here are some example questions. Pick a number to choose one of them or type 0 to enter a new question \n "
 ans_shap_question_single_feature = "Here is the impact of this feature. "
 l_shap_question_ids = [3, 5, 6, 8, 67, 69]

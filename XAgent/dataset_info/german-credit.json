@@ -2,12 +2,13 @@
   "target_column": "Risk",
   "cat_features": [],
   "num_features": ["Age","Credit amount", "Duration"],
-  "predict_prompt": {"good":"you have a good credit",
-                      "bad":"you have a bad credit"},
-  "why_ans": "The below graph shows important features for this prediction. The red features strengthen your credit, while the blue features weaken it.",
+  "predict_prompt": {"good":"You will get the loan",
+                      "bad":"You will not get the loan"},
+  "why_ans": {"bad":"The below graph shows important features for this prediction. The red features weaken your chance to get the loan, while the blue features strengthen it.",
+    "good":"The below graph shows important features for this prediction. The red features strengthen your chance to get the loan, while the blue features weaken it."},
   "feature_ans": "The model used all features, however, may have a significant impact on the model's prediction for your loan application. ",
   "dataset_description": "Pretend you are an applicant applying for credit, the model will predict whether you are likely to default on your loan, based on your personal and financial information.",
-  "change_ans": ["bad credit", "good credit"],
+  "change_ans": ["denied loan", "your loan accepted"],
   "feature_description": {
     "Age": "The age of the applicant in years",
     "Sex": "The gender of the applicant",
@@ -15,7 +16,7 @@
     "Housing": "The type of housing the applicant lives in",
     "Saving accounts": "The amount of money the applicant has saved in a savings account",
     "Checking account": "The amount of money the applicant has in a checking account",
-    "Credit amount": "The amount of credit in Deutsche Mark (1 DM = 0.5 Euro) the applicant is requesting.",
+    "Credit amount": "The amount of credit in Euro the applicant is requesting.",
     "Duration": "The duration of the credit in months.",
     "Purpose": "Purpose of the loan"
   }

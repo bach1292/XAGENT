@@ -45,7 +45,7 @@ def state_log(turn, msg = None, state=None):
         logging.log(25, state)
 def ask_for_feature(self):
     if len(self.l_exist_features) == 0:
-        msg = "Which feature?"
+        msg = f"Could you provide features you want to modify from this list of features {st.session_state.feature}?"
         # print(f"\033[1m\033[94mX-Agent:\033[0m {msg}")
         # logging.log(25, f"Xagent: {msg}")
         # print_log("xagent",msg)

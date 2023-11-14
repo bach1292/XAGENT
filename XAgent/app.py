@@ -142,18 +142,13 @@ def on_input_change(prompt):
     print(st.session_state.question)
     if st.session_state.mode == MODE_SUGGEST_QUESTION:
         st.session_state.choice = user_input
-    if st.session_state.mode == MODE_ASK_FOR_CLS:
-        st.session_state.choice = user_input
-        if st.session_state.choice not in st.session_state.data:
-            msg = f"Please give me the target label in {str(st.session_state.data)}: "
-            # print_log("xagent", msg)
-            st.experimental_rerun()
-    if st.session_state.mode == MODE_ASK_FOR_FEATURE:
-        if user_input not in st.session_state.feature:
-            msg = f"please choose one of the following features: {st.session_state.feature}"
-            # print_log("xagent", msg)
-            return msg
-        st.session_state.exist_feature.append(user_input)
+    # if st.session_state.mode == MODE_ASK_FOR_CLS:
+    #     st.session_state.choice = user_input
+    #     if st.session_state.choice not in st.session_state.data:
+    #         msg = f"Please give me the target label in {str(st.session_state.data)}: "
+    #         # print_log("xagent", msg)
+    #         st.experimental_rerun()
+
         # st.session_state.mode = MODE_QUESTION
 
 
@@ -228,7 +223,7 @@ if prompt := st.chat_input("What is up?"):
                               do_sample=True,
                               top_k=50,
                               num_return_sequences=1,
-                              max_new_tokens=len_txt*2
+                              max_new_tokens=len_txt*3
                               )
             assistant_response = sequence[0]['generated_text'].split("Improved text:")[1]
         for chunk in assistant_response.split(" "):

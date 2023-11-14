@@ -29,7 +29,7 @@ l_shap_questions = []
 
 class Answers:
     def __init__(self, list_node, clf, clf_display, current_instance, question, l_exist_classes, l_exist_features,
-                 l_instances, data, df_display_instance, predicted_class, dataset_anchor, clf_anchor, orig_quest,
+                 l_instances, l_exist_values, data, df_display_instance, predicted_class, dataset_anchor, clf_anchor, orig_quest,
                  preprocessor=None):
         self.list_node = list_node
         self.clf = clf
@@ -42,6 +42,7 @@ class Answers:
         self.l_exist_features = l_exist_features
         st.session_state.exist_feature = l_exist_features
         self.l_instances = l_instances
+        self.l_exist_values = l_exist_values
         self.l_classes = data['classes']
         st.session_state.data = data['classes']
         self.l_features = data['features']
@@ -99,6 +100,7 @@ class Answers:
             st.session_state.mode = MODE_QUESTION
             # class_P = print_log("user")
         if st.session_state.id_question in constraints.l_dice_question_ids:
+            #todo: map class_P to human text
             if st.session_state.id_question in constraints.l_feature_questions_ids:
                 if len(self.l_exist_features) == 0:
                     return ask_for_feature(self)
@@ -127,7 +129,7 @@ class Answers:
             cf_instance = e1.cf_examples_list[0].final_cfs_df.values.tolist()
             if features[2] == "Job":
                 test_instance_list[2] = constraints.map_job[test_instance_list[2]]
-                cf_instance[0][2] = constraints.map_job[cf_instance[0][2]]
+                cf_instance[0][2] = constraints.map_job[int(cf_instance[0][2])]
             if st.session_state.id_question in constraints.l_dice_question_relation_ids:
                 relation = self.extract_relation(test_instance_list, cf_instance, features )
                 ans = "There are multiple reasons for this result, one of them is: \n"
@@ -148,23 +150,27 @@ class Answers:
             return ans
         if st.session_state.id_question in constraints.l_new_predict_question_ids:
             temp_instance = None
-            for i in range(0, len(st.session_state.exist_feature)):
-                f = st.session_state.exist_feature[i]
-                index_feature = self.l_features.index(f)
+            for i in range(0, len(self.l_exist_features)):
+                f = self.l_exist_features[i]
+                # index_feature = self.l_features.index(f)
                 temp_instance = copy.copy(self.current_instance)
-                temp_instance[index_feature] = self.l_instances[0][i]
-            return "new instance is: " + str(temp_instance) + " and the predicted class is" + str(
-                self.clf.predict([temp_instance]))
+                temp_instance[f] = self.l_exist_values[f]
+                temp_instance = pd.DataFrame(temp_instance).T
+            predicted_class = self.clf_display.predict(temp_instance)[0]
+            if predicted_class == self.predicted_class:
+                return f"The prediction stays the same as before as {self.data['info']['predict_prompt'][predicted_class]}"
+            else:
+                return f"The prediction change to {self.data['info']['predict_prompt'][predicted_class]}"
         if st.session_state.id_question in constraints.l_shap_question_ids:
             img = shap_explainer(self, st.session_state.id_question)
             if img == "Which feature?":
                 return img
             if st.session_state.id_question in constraints.l_shap_question_feature:
-                return (self.data['info']["feature_ans"] + self.data['info']['why_ans'], img)
+                return (self.data['info']["feature_ans"] + self.data['info']['why_ans'][self.predicted_class], img)
             elif st.session_state.id_question in constraints.l_shap_question_single_feature:
-                return (constraints.ans_shap_question_single_feature + self.data['info']['why_ans'], img)
+                return (constraints.ans_shap_question_single_feature + self.data['info']['why_ans'][self.predicted_class], img)
             else:
-                return (self.data['info']['why_ans'], img)
+                return (self.data['info']['why_ans'][self.predicted_class], img)
         if st.session_state.id_question in constraints.l_anchor_question_ids:
             return anchor_answer(self)
         if st.session_state.id_question in constraints.l_terminology_question_ids:

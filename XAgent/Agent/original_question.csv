@@ -17,7 +17,7 @@ What will the system change over time?,30
 What is the scope of the system's capability?Can it do {A}?,51
 What kind of instance gets this prediction?,13
 What kind of instance gets a different prediction?,14
-Why does it not use this feature?,34
+Why does it not use a feature?,34
 Why are instances {A} and {B} given different predictions?,73
 Why is this instance predicted {P} instead of {Q}?,71
 How will the system adapt over time?,30
@@ -31,11 +31,11 @@ How should this Instance change to get a different prediction?,11
 What kind of mistakes is the system likely to make?,55
 What are the top features it uses?,5
 What kind of output does the system give?,50
-What would the system predict if this feature of the instance changes to {A}?,64
+What would the system predict if a feature of the instance changes to {A}?,64
 What would the system predict if this instance changes to {A}?,64
 What kind of algorithm is used?,1
 What is the sample size?,21
-How should this feature change for this instance to get a different prediction?,12
+How should a feature change for this instance to get a different prediction?,12
 Why will the system change over time?,30
 What data is the system not using?,24
 In what situations is the system likely to be correct?,59
@@ -50,7 +50,7 @@ What is the scope of change permitted to still get the same prediction?,15
 What would the system predict for [a different instance]?,64
 How to improve the system?,49
 Why does it not use this data?,35
-Why does it use this feature?,37
+Why does it use a feature?,37
 What does ML terminology mean?,43
 What is the source of the data?,21
 What are the necessary features present or absent to guarantee this prediction?,16
