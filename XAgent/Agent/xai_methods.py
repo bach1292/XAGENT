@@ -134,7 +134,7 @@ def anchor_answer(self):
             self.dataset_anchor.feature_names,
             self.dataset_anchor.train,
             self.dataset_anchor.categorical_names)
-        instance = list(self.current_instance.values())
+        instance = list(self.current_instance.values)
         for feature in self.dataset_anchor.categorical_features:
             # print(self.dataset_anchor.categorical_names[feature])
             if instance[feature] == "nan":

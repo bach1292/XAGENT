@@ -149,11 +149,11 @@ class Answers:
                 self.l_classes.index(class_P)]
             return ans
         if st.session_state.id_question in constraints.l_new_predict_question_ids:
-            temp_instance = None
+            temp_instance = copy.copy(self.current_instance)
             for i in range(0, len(self.l_exist_features)):
                 f = self.l_exist_features[i]
                 # index_feature = self.l_features.index(f)
-                temp_instance = copy.copy(self.current_instance)
+
                 temp_instance[f] = self.l_exist_values[f]
                 temp_instance = pd.DataFrame(temp_instance).T
             predicted_class = self.clf_display.predict(temp_instance)[0]

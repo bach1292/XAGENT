@@ -19,7 +19,8 @@ from Agent.mode import *
 from datetime import datetime
 import transformers
 import torch
-
+PATH = os.path.dirname(__file__)
+sys.path.append(PATH)
 model = "meta-llama/Llama-2-7b-chat-hf"
 
 st.title("Xagent")
