@@ -78,7 +78,7 @@ def shap_explainer(self, id_question):
     if not os.path.isdir(temp_dir):
         os.makedirs(temp_dir)
 
-    filename = 'temp.jpg'
+    filename = f"{st.session_state.dt_string}.jpg"
     file_path = os.path.join(temp_dir, filename)
     plt.savefig(file_path, bbox_inches='tight')
     # print_log("xagent", f'<img height="100%" width="100%" src="/app/{filename}"/>')
