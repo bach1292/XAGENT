@@ -155,7 +155,7 @@ class Answers:
                 # index_feature = self.l_features.index(f)
 
                 temp_instance[f] = self.l_exist_values[f]
-                temp_instance = pd.DataFrame(temp_instance).T
+            temp_instance = pd.DataFrame(temp_instance).T
             predicted_class = self.clf_display.predict(temp_instance)[0]
             if predicted_class == self.predicted_class:
                 return f"The prediction stays the same as before as {self.data['info']['predict_prompt'][predicted_class]}"
@@ -163,7 +163,7 @@ class Answers:
                 return f"The prediction change to {self.data['info']['predict_prompt'][predicted_class]}"
         if st.session_state.id_question in constraints.l_shap_question_ids:
             img = shap_explainer(self, st.session_state.id_question)
-            if img == "Which feature?":
+            if st.session_state.mode == MODE_ASK_FOR_FEATURE:
                 return img
             if st.session_state.id_question in constraints.l_shap_question_feature:
                 return (self.data['info']["feature_ans"] + self.data['info']['why_ans'][self.predicted_class], img)

@@ -87,11 +87,21 @@ class NLU:
             return ans
 
         if st.session_state.choice.isnumeric() == False or int(st.session_state.choice) >= topk+1:
+            # msg = request_number_msg
+            # # print_log("xagent", msg)
+            # # print_log("user")
+            # return msg
+            st.session_state.question = "unknown"
+            st.session_state.suggest_question = False
+            st.session_state.mode = MODE_QUESTION
+            st.session_state.pop("choice")
+            st.session_state.pop("match_results")
+            return None
+        if st.session_state.choice.isnumeric() == True and int(st.session_state.choice) >= topk + 1:
             msg = request_number_msg
             # print_log("xagent", msg)
             # print_log("user")
             return msg
-
         ans = request_more_msg
         if int(st.session_state.choice) == 0:
             st.session_state.question = "unknown"

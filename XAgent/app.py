@@ -9,7 +9,7 @@ import streamlit as st
 import logging
 import time
 from importlib import reload
-
+import json
 from XAgent.Agent.agent import Agent
 from XAgent.Agent.nlu import NLU
 
@@ -180,8 +180,15 @@ bot_name = "X-Agent"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
-    st.session_state.messages.append({"role": "assistant", "content": constraints.welcome_msg_test, "type": "text"})
-    state_log("assistant", constraints.welcome_msg_test)
+    intro_msg = constraints.welcome_msg_test
+    # f = open("dataset_info/german-credit.json","r")
+    # german_info = json.load(f)
+    # feature_info = german_info["feature_description"]
+    # for feature in feature_info:
+    #     intro_msg += f"  \n{feature} | {feature_info[feature]}  \n "
+    st.session_state.messages.append(
+                {"role": "assistant", "content": constraints.welcome_msg_test, "type": "text"})
+    state_log("assistant", intro_msg)
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         if message['type'] == "image":

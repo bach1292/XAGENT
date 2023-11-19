@@ -1,13 +1,13 @@
 welcome_msg = "Welcome. I am a conversational agent and can explain decisions made by machine learning models. Currently, the default dataset is german-credit. Would you like to go on with this dataset? Please type 'yes' to continue, otherwise, type one of the supported dataset in this list [Adult, Iris, Titanic]?"
-welcome_msg_test = "Hello, I am XAgent, an AI model designed to provide explanations for predictions made by AI models trained on the **German Credit dataset**. \
-My role is to help you understand how the model arrived at a specific prediction and provide insights into the factors that influenced that prediction. However, first, **you need to assume the role of a customer who wants a loan from a bank and provide your information**. An AI model will then predict whether you are able to **get a loan or not**. After that, you can ask questions about the predictions. Do you get the idea?"
+welcome_msg_test = "Hello, I am XAgent, an AI model designed to provide explanations for predictions made by an AI model trained on the **German Credit dataset**. \
+My role is to help you understand how the model arrived at a specific prediction and provide insights into the factors that influenced that prediction. However, first, **you need to assume the role of a customer who wants a loan from a bank and provide your information**. An AI model will then predict whether you are able to **get a loan or not**. After that, you can ask questions about the predictions. Type anything when we shall start"
 dataset_error_msg = "I only support adult, iris, titanic and german-credit dataset, please type a correct name"
 wait_msg = "Wait a min, I need to learn it"
 list_feature_request_msgs = ["How about your ", "What is your ", "Give me your "]
 record_info_msg = "I recorded the information {} "
 predict_msg = "you have {}"
 question_msg = "You can ask questions about a machine learning model, such as: \n Why was the prediction made? \n Why was Y not predicted? \n What should change in order to make prediction Y? \nPlease type your question."
-select_msg = "Sorry, I am not exactly sure whether I understood your question correctly. \n Did you mean any of the below? Please select a number. \n 0. Type a new question. \n "
+select_msg = "Sorry, I am not exactly sure whether I understood your question correctly. \n Did you mean any of the below? Please select a number or type a new question\n "
 rephrase_question_msg = "Sorry, I don't understand your question. Please rephrase your question."
 no_cf_msg = "Sorry, I couldn't find the way to modify {} to change the label"
 cant_answer_msg = "I am not capable of answering your question. Questions of this type can currently not be answered by an explainable AI method."
