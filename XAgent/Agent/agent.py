@@ -300,8 +300,17 @@ class Agent:
                             st.session_state.mode = MODE_SUGGEST_QUESTION
                     if st.session_state.mode == MODE_SUGGEST_QUESTION:
                         print("suggest in")
-                        result = self.nlu_model.suggest_questions(question, self.data["features"], self.predicted_class,
-                                                                  self.current_instance, self.data["classes"])
+
+                        result = self.nlu_model.suggest_questions(question, self.data["features"], self.data['info']['map_label'][self.predicted_class],
+                                                                  self.current_instance,
+                                                                  self.data['info']['map_label'].values())
+                        if result is None and st.session_state.question is None:
+                            result = self.nlu_model.suggest_questions(question, self.data["features"],
+                                                                      self.data['info']['map_label'][
+                                                                          self.predicted_class],
+                                                                      self.current_instance,
+                                                                      self.data['info']['map_label'].values())
+                            return result
                         if st.session_state.question is None:  # question not yet decided
                             return result
                 logging.log(26, f"question = {question}")

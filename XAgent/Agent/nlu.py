@@ -60,6 +60,7 @@ class NLU:
             match_question, score = match_results[0]
             # print("hallo" + match_question)
             return match_question
+        st.session_state.mode = MODE_SUGGEST_QUESTION
         return None
     def suggest_questions(self, question, features, prediction, current_instance, labels):
         if "match_results" not in st.session_state:
@@ -91,12 +92,13 @@ class NLU:
             # # print_log("xagent", msg)
             # # print_log("user")
             # return msg
-            st.session_state.question = "unknown"
+            # st.session_state.question = self.match(question)
             st.session_state.suggest_question = False
             st.session_state.mode = MODE_QUESTION
             st.session_state.pop("choice")
             st.session_state.pop("match_results")
-            return None
+            st.session_state.question = self.match(question)
+            return self.match(question)
         if st.session_state.choice.isnumeric() == True and int(st.session_state.choice) >= topk + 1:
             msg = request_number_msg
             # print_log("xagent", msg)

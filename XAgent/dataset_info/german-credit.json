@@ -4,6 +4,8 @@
   "num_features": ["Age","Credit amount", "Duration"],
   "predict_prompt": {"good":"You will get the loan",
                       "bad":"You will not get the loan"},
+  "map_label": {"good": "loan accepted",
+                "bad": "loan rejected"},
   "why_ans": {"bad":"The below graph shows important features for this prediction. The red features weaken your chance to get the loan, while the blue features strengthen it.",
     "good":"The below graph shows important features for this prediction. The red features strengthen your chance to get the loan, while the blue features weaken it."},
   "feature_ans": "The model used all features, however, may have a significant impact on the model's prediction for your loan application. ",
