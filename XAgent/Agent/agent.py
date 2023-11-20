@@ -253,7 +253,7 @@ class Agent:
                 ans += f"| **{feature}**"
                 if feature in self.data['info']['feature_description']:
                     ans += f" ({self.data['info']['feature_description'][feature]})"
-            ans += " \n We prepared a sample instance for you, here is the information of the sample instance: \n "
+            ans += " \n \n We prepared a sample instance for you, here is the information of the sample instance: \n "
             for feature in self.current_instance.keys():
                 ans += f"|{feature}| "
             ans += " \n "
@@ -265,7 +265,7 @@ class Agent:
 
 
 
-            ans += """ \n If you like to continue with this instance, please type anything. Otherwise, if you like to input a different instance, please type the **```/change instance```** . You can change the instance anytime by the command."""
+            ans += """ \n \n If you like to continue with this instance, please type anything. Otherwise, if you like to input a different instance, please type the **```/change instance```** . You can change the instance anytime by the command."""
             st.session_state.use_llm = False
             st.session_state.mode = MODE_CHOOSE_INSTANCE
             return ans
