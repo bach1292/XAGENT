@@ -4,7 +4,7 @@ My role is to help you understand how the model arrived at a specific prediction
 dataset_error_msg = "I only support adult, iris, titanic and german-credit dataset, please type a correct name"
 wait_msg = "Wait a min, I need to learn it"
 list_feature_request_msgs = ["How about your ", "What is your ", "Give me your "]
-record_info_msg = "I recorded the information {} "
+record_info_msg = "I recorded the information {}, "
 predict_msg = "you have {}"
 question_msg = "You can ask questions about a machine learning model, such as: \n Why was the prediction made? \n Why was Y not predicted? \n What should change in order to make prediction Y? \nPlease type your question."
 select_msg = "Sorry, I am not exactly sure whether I understood your question correctly. \n Did you mean any of the below? Please select a number or type a new question: \n "

@@ -180,8 +180,8 @@ class Agent:
             self.df_display_instance = pandas.DataFrame(display_instance)
             predict = self.clf_display.predict(self.df_display_instance)[0]
             self.predicted_class = predict
-            ans = self.data['info']['predict_prompt'][predict] + "\n" + question_msg
-            yield "I recorded the information: [" + instance + "] " + ans
+            ans = self.data['info']['predict_prompt'][predict] + " \n " + question_msg
+            yield "I recorded the information: [" + instance + "]. " + ans
 
     def collect_instance(self, text):
         f = self.current_feature

@@ -94,7 +94,7 @@ exit_list = ['exit', 'see you later', 'bye', 'quit', 'break', 'stop', 'ok, thank
 
 # conversations.append(f"Xagent: {msg}")
 llm_prompt = """
-Improve the language of the text but keep the original intent of the below text. Do not add or omit any information, only adapt the language. Please keep the information in square brackets unchanged. Only return the improved text without the double quotes. Do not ask for anything else. Do not add any comments.
+Improve the language of the text but keep the original intent of the below text. Do not add or omit any information, only adapt the language. Please keep the information in square brackets unchanged. Only return the text without the double quotes. Do not ask for anything else. Do not add any comments.
 "{}". 
 Improved text:
 """
