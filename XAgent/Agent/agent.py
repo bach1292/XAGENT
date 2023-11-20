@@ -250,9 +250,9 @@ class Agent:
             # self.current_instance = self.current_instance.to_dict()
             ans = "The dataset has the following attributes: \n "
             for feature in self.current_instance.keys():
-                ans += f"| {feature}"
+                ans += f"| **{feature}**"
                 if feature in self.data['info']['feature_description']:
-                    ans += f"({self.data['info']['feature_description'][feature]})"
+                    ans += f" ({self.data['info']['feature_description'][feature]})"
             ans += " \n We prepared a sample instance for you, here is the information of the sample instance: \n "
             for feature in self.current_instance.keys():
                 ans += f"|{feature}| "
