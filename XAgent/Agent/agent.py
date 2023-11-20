@@ -172,7 +172,7 @@ class Agent:
                     # self.current_instance[f] = float(text)
             st.session_state.mode = MODE_QUESTION
             self.current_feature = None
-            string_convert = [str(v) for v in self.current_instance.values()]
+            string_convert = [str(v) for v in self.current_instance.values]
             instance = ",".join(string_convert)
             display_instance = {}
             for k, v in self.current_instance.items():
