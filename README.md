@@ -42,3 +42,19 @@ Note:
 - The interface rendering by local jupyter notebook looks better than rendering by github.
 
    
+### Reference and Citation
+Please refer to our work when using or discussing PIP-Net:
+
+```
+Van Bach Nguyen, Jörg Schlötterer, Christin Seifert (2023). “From Black Boxes to Conversations: Incorporating XAI in a Conversational Agent.". World Conference Explainable Artificial Intelligence (XAI).
+```
+
+BibTex citation:
+```
+@InProceedings{Nguyen2023_wcxai_xagent,
+  author    = {Nguyen, Van Bach and Schl{\"o}tterer, J{\"o}rg and Seifert, Christin},
+  booktitle = {Proc. World Conference Explainable Artificial Intelligence (XAI)},
+  title     = {From Black Boxes to Conversations: Incorporating XAI in a Conversational Agent},
+  year      = {2023},
+}
+```
