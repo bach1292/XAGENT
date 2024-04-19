@@ -1,0 +1,112 @@
+{
+    "60": {
+        "question": "How accurate are the predictions?",
+        "answer": "The accuracy of the predictions made by the Random Forest model is approximately 85%.",
+        "required_feature": ""
+    },
+    "54": {
+        "question": "How can I best utilize the output of the system?",
+        "answer": "You can best utilize the output of the system by using the predicted credit risk classification to make informed lending decisions, setting appropriate interest rates, and managing risk effectively.",
+        "required_feature": ""
+    },
+    "11": {
+        "question": "How should this Instance change to get a different prediction?",
+        "answer": "To obtain a different prediction for this instance, you should consider changing the 'Credit Amount' feature to a lower value, for example, from 5000 to 3000.",
+        "required_feature": ""
+    },
+    "55": {
+        "question": "What kind of mistakes is the system likely to make?",
+        "answer": "The system is likely to make mistakes in cases where there is limited data available for applicants with unique or uncommon financial situations, and in scenarios where the dataset is imbalanced in terms of 'good' and 'bad' credit applicants.",
+        "required_feature": ""
+    },
+    "50": {
+        "question": "What kind of output does the system give?",
+        "answer": "The system provides binary output, typically indicating whether a loan application is classified as 'good' or 'bad' credit risk.",
+        "required_feature": ""
+    },
+    "1": {
+        "question": "What kind of algorithm is used?",
+        "answer": "The Random Forest model employs an ensemble learning algorithm, which is a collection of decision trees for classification and regression tasks.",
+        "required_feature": ""
+    },
+    "22": {
+        "question": "What is the sample size?",
+        "answer": "The size of the dataset used to train the model consists of approximately 1,000 examples.",
+        "required_feature": ""
+    },
+    "30": {
+        "question": "Why will the system change over time?",
+        "answer": "The system may change over time due to updates in the training data, changes in the underlying distribution of credit applications, or model retraining to improve accuracy and adapt to evolving trends.",
+        "required_feature": ""
+    },
+    "24": {
+        "question": "What data is the system not using?",
+        "answer": "The system is not using certain data such as applicants' social security numbers or specific address details, as they were deemed irrelevant for credit risk assessment.",
+        "required_feature": ""
+    },
+    "62": {
+        "question": "How often does the system make mistakes?",
+        "answer": "The system's error rate depends on the specific task and model configuration. On average, it makes mistakes in approximately 15% of cases.",
+        "required_feature": ""
+    },
+    "2": {
+        "question": "What is the system's overall logic?",
+        "answer": "The system's overall logic is to make predictions based on the consensus of multiple decision trees in the Random Forest ensemble. It combines their individual decisions to achieve robust predictions.",
+        "required_feature": ""
+    },
+    "26": {
+        "question": "What are the biases of the data?",
+        "answer": "The data may contain biases related to demographic, geographic, or selection bias. These biases can influence the model's predictions and require careful consideration.",
+        "required_feature": ""
+    },
+    "68": {
+        "question": "Why are instance A and instance B given the same prediction?",
+        "answer": "Instances A and B are given the same prediction because they exhibit similar feature values, aligning with the model's criteria for a particular credit risk category.",
+        "required_feature": ""
+    },
+    "30": {
+        "question": "How will the system adapt over time?",
+        "answer": "The system will adapt over time by incorporating new data, updating model parameters, and refining its decision-making processes to reflect changes in the credit application landscape.",
+        "required_feature": ""
+    },
+    "27": {
+        "question": "How were the labels produced?",
+        "answer": "The labels for the German Credit dataset were produced through manual assessment by financial experts, which involved reviewing and categorizing credit applications based on their risk level.",
+        "required_feature": ""
+    },
+    "21": {
+        "question": "What kind of data does the system learn from?",
+        "answer": "The system learns from a dataset that includes various financial and personal attributes of individuals, such as 'Credit Amount,' 'Duration in Months,' 'Age,' and 'Job Type,' provided by financial institutions.",
+        "required_feature": ""
+    },
+    "53": {
+        "question": "How is the output used for other system component(s)?",
+        "answer": "The system's output is used by other components, such as automated loan approval systems and risk management processes, to make credit decisions and assess risk levels.",
+        "required_feature": ""
+    },
+    "51": {
+        "question": "What is the scope of the system's capability? Can it do [A]?",
+        "answer": "The system's primary capability is credit risk classification. It may generalize to similar tasks, but its effectiveness for [A] is limited by its design and training data.",
+        "required_feature": ""
+    },
+    "34": {
+        "question": "Why does it not use this feature?",
+        "answer": "The model may not use feature X because it has been found to have limited predictive power or adding it could lead to overfitting on the training data.",
+        "required_feature": ""
+    },
+    "73": {
+        "question": "Why are instances A and B given different predictions?",
+        "answer": "Instances A and B receive different predictions because they exhibit different feature values or patterns, leading to diverse model outputs.",
+        "required_feature": ""
+    },
+    "4": {
+        "question": "What are the top rules it uses?",
+        "answer": "The specific rules used by the model may not be directly interpretable, but feature importance analysis can highlight the top features that influence predictions.",
+        "required_feature": ""
+    },
+    "17": {
+        "question": "What is the lowest feature one can have to still get the same prediction?",
+        "answer": "The lowest feature value to receive the same prediction depends on the specific feature and the model's learned thresholds. For feature X, it's approximately [mention lowest value].",
+        "required_feature": ""
+    }
+}

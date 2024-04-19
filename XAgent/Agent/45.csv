@@ -2,9 +2,9 @@
 3,Show me what the system would predict on [another instance].,64
 4,What are the results of other people using the system?,44
 6,Is feature X used to make the predictions?,6
-11,How to change this feature to get a different prediction?,12
+11,How to change a feature to get a different prediction?,12
 13,What features does the system consider?,3
-15,Does this model use this feature X?,6
+15,Does this model use a feature X?,6
 20,Give me the highest feature that would give me this prediction.,20
 28,What algorithm is being used?,1
 30,What are the reasons for the same prediction of A and B?,68
@@ -24,7 +24,7 @@
 65,What kind of instance gets this prediction?,13
 67,What kind of instance gets a different prediction?,14
 68,How will the accuracy/precision/recall improve?,30
-70,Why did you ignore this feature?,34
+70,Why did you ignore a feature?,34
 71,What is the system's overall reasoning?,2
 72,How did you get this result?,67
 74,Why are A and B predicted differently?,73
@@ -37,7 +37,7 @@
 89,What is the reason for adaptation?,30
 92,How does it weigh different features?,8
 94,How will the system performance improve over time?,30
-97,Why do you use this feature?,37
+97,Why do you use a feature?,37
 99,Where did the labels come from?,27
 100,What are the most salient rules that it uses?,4
 101,How were the labels generated?,27
@@ -59,7 +59,7 @@
 142,What are the limitations of the system?,56
 143,What is the kind of output?,50
 145,What are the most important rules?,4
-146,What would the system predict if this feature of the instance changes to A?,64
+146,What would the system predict if a feature of the instance changes to A?,64
 147,Give me the reason why the system will improve over time.,30
 148,For this prediction what is/are the highest value(s) of feature(s) which always leads to this prediction?,20
 149,What is the confidence score of this prediction.,60
@@ -70,7 +70,7 @@
 160,What is the sample size?,21
 162,How is label A not applied for this instance?,71
 163,What data is the system not using?,24
-164,How should this feature change for this instance to get a different prediction?,12
+164,How should a feature change for this instance to get a different prediction?,12
 166,How precise are the predictions?,60
 168,Why will the model change over time?,30
 169,Under which circumstances will the model be wrong?,58
@@ -84,7 +84,7 @@
 187,Is the system's performance good enough for [A]?,57
 188,How accurate is the prediction?,60
 191,Can this system do [A]?,51
-192,What should be the value of this feature in order to change the prediction,12
+192,What should be the value of a feature in order to change the prediction,12
 194,Why will the result improve over time?,30
 195,Where is the system likely to be valid?,59
 197,What should I do with the output?,54
@@ -92,7 +92,7 @@
 204,What would the system predict for [a different instance]?,64
 209,How does feature X impact its predictions?,6
 211,How are the parameters set?,10
-215,How should this feature change for this instance to get a different result?,12
+215,How should a feature change for this instance to get a different result?,12
 216,What is the interpretation of this result?,52
 217,How much lower can the value of the feature be than this one and still give the same prediction?,17
 218,What are the rules that make this prediction?,0
@@ -117,7 +117,7 @@
 284,Give me an overall explanation of the system.,2
 293,Under what conditions will the prediction be true?,59
 296,Give me the top rules,4
-297,Why does it not use this feature?,34
+297,Why does it not use a feature?,34
 303,How were the labels made?,27
 314,Why did the model not use this data?,35
 315,What is the range of change allowed before the prediction changes?,15
@@ -133,7 +133,7 @@
 351,What biases does the data have?,26
 354,How is this instance not predicted A?,71
 357,What sort of constraints are there on the data?,25
-361,Why does it use this feature?,37
+361,Why does it use a feature?,37
 368,What rules does it use to make this prediction?,0
 369,Give me the reason for using this data.,38
 371,How were the labels created?,27
@@ -162,7 +162,7 @@
 74,Why are instances A and B given different predictions?,73
 75,Why is this instance P rather than Q?,71
 82,How do other system components use the output?,53
-85,How should this feature change for this instance to get a different prediction?,11
+85,How should a feature change for this instance to get a different prediction?,11
 88,Which features lead to the prediction?,69
 89,Why will the system adapt over time?,30
 90,Where did the data come from?,21
@@ -189,7 +189,7 @@
 152,Which instance type gets this prediction?,13
 153,What kind of instance gets a different result?,14
 156,What is the scope of change permitted to still get the same prediction?,15
-157,What should be the value of this feature in order to change the prediction,11
+157,What should be the value of a feature in order to change the prediction,11
 158,What kind of algorithm is this?,1
 160,How many items are considered in this result?,21
 163,What kind of data is the system not using?,24
@@ -235,9 +235,9 @@
 277,How was this instance given this prediction?,67
 283,Please describe the conditions under which this prediction might be incorrect.,58
 287,Summarize some of the types of errors that might be made by this system.,55
-297,Why is this feature not used?,34
+297,Why is a feature not used?,34
 307,Which feature of this object led to this prediction?,69
-308,If the value of this feature changes to A  what will the system predict?,64
+308,If the value of a feature changes to A  what will the system predict?,64
 314,Why does it not use this data?,35
 322,How many did they sample?,21
 327,Why is not label Q?,71
@@ -252,7 +252,7 @@
 355,What should I be aware of while using this system?,55
 358,How was this instance given this value/category?,67
 359,What must I do to improve the system?,49
-361,What is the purpose of using this feature?,37
+361,What is the purpose of using a feature?,37
 363,Which item gets this prediction?,13
 364,How is this result achieved?,7
 367,How should the instance be changed to get a different (better or worse) prediction?,11

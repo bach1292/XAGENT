@@ -1,12 +1,11 @@
 Question,Label
-Is feature {X} used or not used for the predictions?,6
+Is feature Housing used or not used for the predictions?,6
 How often does the system make mistakes?,62
 What is the system's overall logic?,2
 What are the biases of the data?,26
 What features does the system consider?,3
-What features of this instance lead to the system's prediction?,69
+What features of this instance lead to the system's prediction?,3
 What is the highest feature one can have to still get the same prediction?,20
-Why are instance {A} and instance {B} given the same prediction?,68
 How precise are the predictions?,60
 How will the system improve over time?,30
 How were the ground-truth produced?,27
@@ -18,7 +17,6 @@ What is the scope of the system's capability?Can it do {A}?,51
 What kind of instance gets this prediction?,13
 What kind of instance gets a different prediction?,14
 Why does it not use a feature?,34
-Why are instances {A} and {B} given different predictions?,73
 Why is this instance predicted {P} instead of {Q}?,71
 How will the system adapt over time?,30
 How does it weigh different features?,8
@@ -35,13 +33,13 @@ What would the system predict if a feature of the instance changes to {A}?,64
 What would the system predict if this instance changes to {A}?,64
 What kind of algorithm is used?,1
 What is the sample size?,21
-How should a feature change for this instance to get a different prediction?,12
+How should Age change for this instance to get a different prediction?,12
 Why will the system change over time?,30
 What data is the system not using?,24
 In what situations is the system likely to be correct?,59
 How reliable are the predictions?,60
 Is the system's performance good enough for {A}?,57
-How does feature {X} impact its predictions?,6
+How do features Age and Sex impact its predictions?,6
 How are the parameters set?,10
 How is this instance given this prediction?,67
 What are the results of other people using the system?,44
@@ -51,7 +49,7 @@ What would the system predict for [a different instance]?,64
 How to improve the system?,49
 Why does it not use this data?,35
 Why does it use a feature?,37
-What does ML terminology mean?,43
+What does neural network terminology mean?,43
 What is the source of the data?,21
 What are the necessary features present or absent to guarantee this prediction?,16
 Why will the system adapt over time?,30
