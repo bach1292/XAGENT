@@ -30,7 +30,7 @@ def shap_explainer(self, id_question):
         explainer = shap.Explainer(self.clf['classifier'], masker=background, algorithm="tree")
         shap_values = explainer.shap_values(X_transform)
         # shap_values = explainer_values.values
-        predicted_cls = self.data["classes"].index(self.predicted_class)
+        predicted_cls = 1-self.data["classes"].index(self.predicted_class)
         shap_values_original_input = []
         X = self.data['X_display']
         count_values = [

@@ -253,15 +253,18 @@ class Agent:
                 ans += f"| **{feature}**"
                 if feature in self.data['info']['feature_description']:
                     ans += f" ({self.data['info']['feature_description'][feature]})"
-            ans += " \n \n We prepared a sample instance for you, here is the information of the sample instance: \n "
+            ans += " \n \n We prepared the following sample instance of a customer: \n "
             for feature in self.current_instance.keys():
-                ans += f"|{feature}| "
+                ans += f"|{feature}  "
+            ans += " \n "
+            for feature in self.current_instance.keys():
+                ans += "|--"
             ans += " \n "
             for feature in self.current_instance.keys():
                 if feature == "Job":
-                    ans += f" | {map_job[self.current_instance[feature]]}"
+                    ans += f" | {map_job[self.current_instance[feature]]} "
                 else:
-                    ans += f" |{self.current_instance[feature]} "
+                    ans += f" | {self.current_instance[feature]}"
 
 
 

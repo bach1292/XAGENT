@@ -23,7 +23,7 @@ PATH = os.path.dirname(__file__)
 sys.path.append(PATH)
 model = "meta-llama/Llama-2-7b-chat-hf"
 
-st.title("Xagent")
+st.title("XAgent")
 
 
 # Initialize chat history

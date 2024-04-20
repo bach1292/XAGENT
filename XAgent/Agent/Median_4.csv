@@ -26,7 +26,7 @@
 24,How were the ground-truth produced?,27
 25,What are the most predictive rules?,4
 26,What kind of data does the system learn from?,21
-27,What is the definition of ML terminology?,43
+27,What is the definition of it?,43
 28,What type of output does the system give?,50
 29,What is the minimum value of feature one must have to still get this prediction?,17
 30,What will the system adapt over time?,30
@@ -37,7 +37,7 @@
 35,Where did you get this data from?,21
 36,What are the conditions for the same prediction?,15
 37,What kind of data does the system learn from?,21
-38,What do you mean by ML terminology?,43
+38,What do you mean by it?,43
 39,What is the scope of the system's capability? Can it do [A]?,51
 40,How should I interpret this result in terms of bias?,26
 41,What kind of instance gets this prediction?,13
@@ -283,7 +283,7 @@
 281,In which way were the ground-truth created?,27
 282,What are the top rules it uses?,4
 283,Which data type is the model trained on?,21
-284,What does ML terminology mean?,43
+284,What does it mean?,43
 285,What kind of output does the system give?,50
 286,What is the lowest feature one can have to still get the same prediction?,17
 287,How will the model change over time?,30
@@ -294,7 +294,7 @@
 292,What is the source of the data?,21
 293,What is the scope of change permitted to still get the same prediction?,15
 294,What kind of data does it learn from?,21
-295,What does ML terminology mean?,43
+295,What does it mean?,43
 296,Show me the scope of [the model's] work.,51
 297,What are the biases of the data?,26
 298,What is the type of instance getting this result?,13

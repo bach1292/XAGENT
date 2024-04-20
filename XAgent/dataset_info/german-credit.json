@@ -12,13 +12,13 @@
   "dataset_description": "Pretend you are an applicant applying for credit, the model will predict whether you are likely to default on your loan, based on your personal and financial information.",
   "change_ans": ["denied loan", "your loan accepted"],
   "feature_description": {
-    "Age": "The age of the applicant in years",
-    "Sex": "The gender of the applicant",
-    "Job": "The type of job the applicant has",
-    "Housing": "The type of housing the applicant lives in",
-    "Saving accounts": "The amount of money the applicant has saved in a savings account",
-    "Checking account": "The amount of money the applicant has in a checking account",
-    "Credit amount": "The amount of credit in Euro the applicant is requesting.",
+    "Age": "Your age in years",
+    "Sex": "Your gender",
+    "Job": "The type of job you have",
+    "Housing": "The type of housing you live in",
+    "Saving accounts": "The amount of money you have saved in a savings account",
+    "Checking account": "The amount of money you have has in a checking account",
+    "Credit amount": "The amount of credit in Euro you are requesting.",
     "Duration": "The duration of the credit in months.",
     "Purpose": "Purpose of the loan"
   }
