@@ -201,10 +201,7 @@ class Agent:
             if self.data['info']['name'] == 'adult':
                 self.current_instance[f] = str(" " + str(text))
             else:
-                if text.isnumeric():
-                    self.current_instance[f] = int(text)
-                else:
-                    self.current_instance[f] = str(text)
+                self.current_instance[f] = str(text)
         else:
             # numerical feature
             while not text.isnumeric():

@@ -17,7 +17,7 @@ PATH = os.path.dirname(__file__)
 sys.path.append(PATH)
 def shap_explainer(self, id_question):
     if self.data['info']['name'] == 'mnist':
-        background = self.data['X'][np.random.choice(self.data['X'].shape[0], 100, replace=False)]
+        background = self.data["X"][np.random.choice(self.data["X"].shape[0], 100, replace=False)]
         e = shap.DeepExplainer(self.clf, background)
         # ...or pass tensors directly
         shap_values = e.shap_values(self.current_instance.reshape(1, 28, 28, 1))
@@ -117,7 +117,7 @@ def cf_proto(self, class_P):
                              ae_model=ae, enc_model=enc, max_iterations=max_iterations,
                              feature_range=feature_range, c_init=c_init, c_steps=c_steps)
     cf.fit(x_train)
-    X = self.current_instance.reshape((1,) + self.data['X'][1].shape)
+    X = self.current_instance.reshape((1,) + self.data["X"][1].shape)
     plt.figure(figsize=(2, 2))
     plt.imshow(X.reshape(28, 28));
     explanation_2 = cf.explain(X, k=5, k_type='mean', target_class=[int(class_P)])

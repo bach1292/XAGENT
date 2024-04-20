@@ -47,7 +47,7 @@ class NLU:
         if "{P}" in question:
             question = question.replace("{P}", str(prediction))
         if "{Q}" in question:
-            question = question.replace("{Q}", str([label for label in labels if label != prediction]))
+            question = question.replace("{Q}", str([label for label in labels if str(label) != str(prediction)]))
         return question
     def match(self, question):
         threshold = 0.6

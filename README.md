@@ -10,6 +10,7 @@ Install dependencies via conda:
 ```sh
 conda env update -f environment.yml
 conda activate xagent
+pip install -e .
 ```
 
 Run Streamlit

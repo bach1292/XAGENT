@@ -5,7 +5,7 @@
   "predict_prompt": ["the flower looks like setosa", "the flower looks like versicolor", "the flower looks like virginica"],
   "dataset_description": "Assuming you have information of an iris flower, the model will classify the flowers into their respective species based on these four features. ",
   "why_ans": "Look at the graph! Red features increase the probability, blue features decrease it",
-  "feature_ans": "The model used all features, however, may have a significant impact on the model's prediction. ",
+  "feature_ans": "The model used all features, however, some features may have a significant impact on the model's prediction. ",
   "change_ans": ["to setosa flower", "to versicolor flower", "to get virginica flower"],
   "feature_description": {}
 }

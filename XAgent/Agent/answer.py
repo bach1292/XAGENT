@@ -133,7 +133,7 @@ class Answers:
             if st.session_state.id_question in constraints.l_dice_question_relation_ids:
                 relation = self.extract_relation(test_instance_list, cf_instance, features )
                 ans = "There are multiple reasons for this result, one of them is: \n"
-                ans += " and ".join([str(k) + " is " + str(v) for k, v in relation[0].items()]) + "."
+                ans += " and ".join([str(k) + " is " + str(v) for k, v in relation[0].items()]) + ". "
             ans_relation = []
             for j, (v1, v2) in enumerate(zip(test_instance_list, cf_instance[0][:-1])):
                 if v1 != v2:
