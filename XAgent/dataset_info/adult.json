@@ -7,7 +7,5 @@
   "why_ans": "The above graph shows important features for this prediction. The red features increase the income, while the blue features decrease it.",
   "feature_ans": "The model used all features, however, some features may have a significant impact on the model's prediction for your profile. ",
   "change_ans": ["income less than 50K", "income more than 50K"],
-  "feature_description": {
-    ""
-  }
+  "feature_description": {}
 }

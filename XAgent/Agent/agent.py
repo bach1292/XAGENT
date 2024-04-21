@@ -210,11 +210,11 @@ class Agent:
         yield None
 
     def response(self, text, conversations=[]):
-        if "[reset]" in text:
-            self.mode = None
+        if "/change dataset" in text:
+            st.session_state.mode = None
             self.dataset = None
             self.current_instance = None
-            ans = constraints.welcome_msg_test
+            ans = constraints.welcome_msg
             # logging.info(ans)
             return ans
         if "/change instance" in text:
@@ -225,17 +225,20 @@ class Agent:
             self.l_exist_feature = []
             self.preprocess_question(text)
             if len(self.l_exist_features) == 0:
-                msg = f"please choose one or more features from this list of features: {st.session_state.feature}"
+                msg = f"Please choose one or more features from this list of features: {st.session_state.feature}"
                 # print_log("xagent", msg)
                 return msg
             st.session_state.mode = MODE_QUESTION
         if st.session_state.mode is None:
-            # if text not in ["iris", "adult", "titanic", "german-credit", "yes"]:
-            #     return constraints.dataset_error_msg
-            # else:
-            #     if text != "yes":
-            #         self.dataset = text
-
+            if self.dataset == None:
+                if text.lower() not in ["iris", "adult", "titanic", "german-credit", "yes"]:
+                    return constraints.dataset_error_msg
+                else:
+                    if text != "yes":
+                        self.dataset = text
+                    else:
+                        self.dataset = "german-credit"
+            print(self.dataset)
             self.get_dataset_info(self.dataset)
             self.train_model()
             # for i
@@ -337,7 +340,8 @@ class Agent:
     def get_dataset_info(self, dataset_name: str):
 
         self.intro = ""
-        with open(files('dataset_info').joinpath(dataset_name + ".json")) as f_in:
+        print(files('dataset_info').joinpath(dataset_name.lower() + ".json"))
+        with open(files('dataset_info').joinpath(dataset_name.lower() + ".json")) as f_in:
             self.data['info'] = json.load(f_in)
         if dataset_name.lower() == "german-credit":
             self.data["X_display"] = self.data["X"] = pd.read_csv('dataset/german-credit/german_credit_data.csv')
