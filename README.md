@@ -43,7 +43,6 @@ Note:
 
    
 ### Reference and Citation
-Please refer to our work when using or discussing PIP-Net:
 
 ```
 Van Bach Nguyen, Jörg Schlötterer, Christin Seifert (2023). “From Black Boxes to Conversations: Incorporating XAI in a Conversational Agent.". World Conference Explainable Artificial Intelligence (XAI).
